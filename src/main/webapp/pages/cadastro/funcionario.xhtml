@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
+	<c:metadata>
+		<c:event listener="#{permissaoController.permissaoGerente()}" type="preRenderView" />
+	</c:metadata>
+	<ui:define name="corpoLayout">
+
+		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
+
+		<h:form id="cadastroFuncionarioForm">
+		<h:panelGrid style="width:50%;margin:auto"  >
+			<h3>Cadastro Funcionario</h3>
+			<hr/>
+			<h:panelGrid columns="2" style="margin:50px" >
+				<p:outputLabel for="nomeFuncionario" value="Nome:" />
+				<p:inputText size="30" required="true" id="nomeFuncionario" value="#{cadastroFuncionarioController.cadastroFuncionarioVM.funcionario.nome}" />
+			</h:panelGrid>
+			<p:row>
+				<p:commandButton style="float:right;margin-left:20px" value="Salvar" process="cadastroFuncionarioForm" action="#{cadastroFuncionarioController.salvar()}" 
+				update="msgs cadastroFuncionarioForm" />
+				<p:commandButton style="float:right" value="Cancelar" process="@this" action="/pages/home/home-gerente.xhtml" />
+			</p:row>
+		</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

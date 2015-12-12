@@ -5,8 +5,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import com.restaurante.library.Encripta;
-import com.restaurante.model.Usuario;
+import com.snf.library.Encripta;
+import com.snf.model.Usuario;
 
 public class teste2 {
 	static EntityManagerFactory emf = Persistence.createEntityManagerFactory("restauranteCDI");

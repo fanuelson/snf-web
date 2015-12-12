@@ -5,10 +5,13 @@
 
 	<persistence-unit name="restauranteCDI">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>com.restaurante.model.Usuario</class>
-
+		
+		<class>com.snf.model.Usuario</class>
+		<class>com.snf.model.Servico</class>
+		<class>com.snf.model.Funcionario</class>
+		
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/restauranteCDI" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/salaoBeleza" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="fanuelson" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
