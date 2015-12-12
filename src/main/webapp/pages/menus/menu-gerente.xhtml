@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+		<c:event listener="#{permissaoController.permissaoGerente()}" type="preRenderView" />
+		
+		<p:menubar styleClass="menu"  >
+			
+			<p:menuitem  value="Página Inicial" url="#{commonsController.paginaInicial}" />
+			<p:submenu  label="Gerenciar" url="#" >
+				<p:menuitem value="Produtos" url="/pages/consulta/produtos.xhtml"/>
+				<p:menuitem value="Construção" url="#"  />
+				<p:menuitem value="Construção" url="#" />
+			</p:submenu>
+			<p:submenu  label="Relatórios" url="#" >
+				<p:menuitem value="Pedidos" url="/pages/consulta/pedidos.xhtml"/>
+				<p:menuitem value="Em Construção" url="#"  />
+				
+			</p:submenu>
+			<p:submenu  label="Estatísticas" url="#" >
+				<p:menuitem value="Pedidos" url="/pages/estatistica/pedido.xhtml"/>
+				<p:menuitem value="Produtos" url="/pages/estatistica/produto.xhtml"  />
+				
+			</p:submenu>
+			
+			<c:facet name="options">
+				<p:outputLabel style="margin-right:15px;font-weight:bold" value="Olá #{commonsController.usuario.nome}" />
+				
+				<p:commandButton value="Sair" process="@this" action="#{commonsController.sair()}" />
+			</c:facet>
+		</p:menubar>
+		
+</ui:composition>

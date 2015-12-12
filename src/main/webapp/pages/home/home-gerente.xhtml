@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
+	<c:metadata>
+		<c:event listener="#{permissaoController.permissaoCaixaEGerente()}" type="preRenderView" />
+	</c:metadata>
+	<ui:define name="corpoLayout">
+
+		<p:growl id="msgGrowl" autoUpdate="true" />
+
+		<ui:include src="/pages/cadastro/mesa.xhtml" />
+
+		<p:dataGrid id="mesas" styleClass="botoes" var="eachMesa" value="#{homeController.mesas}" columns="6" layout="grid"
+			rows="24" paginator="true">
+
+			<c:facet style="padding:0" name="header">
+				<h:panelGrid style="width:100%" columns="3">
+
+					<h:panelGrid style="margin:0;width:100px;text-align:left;padding:0px 0px 0px 0px" columns="2">
+						<h:outputLabel style="font-size:12px" value="Ocupada" />
+						<p:panel style="background-color:#FA5858;width:3px;height:3px" />
+						<h:outputLabel style="font-size:12px" value="Livre" />
+						<p:panel style="background-color:#58FA82;width:3px;height:3px" />
+					</h:panelGrid>
+					<div style="font-size: 16px">Mesas</div>
+
+					<h:panelGrid columns="2" style="float:right;align:right;">
+						<p:commandButton value="Cadastrar compra" process="@this" actionListener="#{aberturaCompraController.abrirCompra()}"
+								onclick="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" update="mesas msgGrowl" oncomplete="PF('editarCompraDialog').show()" />
+						<p:commandButton style="padding:0;font-size:14px;align:right;float:right" value="Cadastrar Mesa" process="@this"
+							onsuccess="PF('statusDialog').hide()" onclick="PF('statusDialog').show();PF('cadastroMesa').show()" />
+					</h:panelGrid>
+
+				</h:panelGrid>
+			</c:facet>
+
+
+
+			<h:form id="panelMesasForm">
+				<p:panel styleClass="botoes" header="Mesa #{eachMesa.numero}"
+					style="font-size:12px;text-align:center;height:140px;#{eachMesa.ocupada ? 'background-color:#FA5858' : 'background-color:#58FA82'}">
+					<h:panelGrid columns="1" style="width:100%;margin:auto">
+
+						<p:graphicImage rendered="#{eachMesa.ocupada}" height="60px" width="60px" library="imagens" name="mesaOcupada.jpg" />
+						<p:graphicImage rendered="#{!eachMesa.ocupada}" height="60px" width="60px" library="imagens" name="mesaLivre.jpg" />
+
+						<p:commandButton id="abrirPedido" rendered="#{!eachMesa.ocupada}" value="Abrir Pedido"
+							onclick="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" process="@this"
+							actionListener="#{aberturaPedidoController.abrirPedido(eachMesa)}" update="mesas" />
+
+						<h:panelGrid style="margin:auto" columns="3">
+
+							<p:commandButton label="Fechar Pedido" rendered="#{eachMesa.ocupada}" process="@this fecharPedidoDialog"
+								actionListener="#{fechaPedidoController.iniciarFechamento(eachMesa)}" onclick="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" update="mesas,valoresCalculados" icon="ui-icon-close"
+								oncomplete="PF('fecharPedidoDialog').show()">
+							</p:commandButton>
+
+							<p:commandButton rendered="#{eachMesa.ocupada}" id="verMesa" icon="ui-icon-search" process="@this mesaPanel"
+								actionListener="#{exibicaoPedidoController.visualizarItensPedido(eachMesa)}" onclick="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" update="itensPainel" />
+
+							<p:commandButton rendered="#{eachMesa.ocupada}" id="editarMesa" icon="ui-icon-plusthick" value="Editar"
+								process="@this editarPedidoTable" action="#{edicaoPedidoController.editar(eachMesa)}"
+								update="editarPedidoTable mesas" oncomplete="PF('statusDialog').hide();PF('editarPedidoDialog').show()"
+								onclick="PF('statusDialog').show()" />
+
+						</h:panelGrid>
+
+
+
+						<ui:include src="/pages/dialog/verPedido.xhtml" />
+
+						<ui:include src="/pages/dialog/editarPedido.xhtml" />
+
+						<ui:include src="/pages/dialog/fecharPedido.xhtml" />
+						
+						<ui:include src="/pages/dialog/editarCompra.xhtml" />
+
+
+					</h:panelGrid>
+
+				</p:panel>
+			</h:form>
+
+		</p:dataGrid>
+
+	</ui:define>
+</ui:composition>

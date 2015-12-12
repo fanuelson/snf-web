@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
+	<ui:define name="corpoLayout">
+
+		<h:form>
+			<p:panel style="margin:auto;width:35%;margin-top:40px">
+				<h:panelGrid id="cadastroMesaPanel" columns="1" style="font-size:16px;width:100%;text-align:center;margin:auto;">
+
+					<h3 style="text-align: left; margin-bottom: 2px">Login</h3>
+					<hr />
+					<p:messages style="font-size:12px;text-align:left" id="messages2" showDetail="false" closable="true" />
+					<h:panelGrid style="margin: auto;width: 55%;" columns="2">
+						<p:outputLabel style="float:left" for="login" value="Login:" />
+						<p:inputText style="float:right;padding:0px;" required="true" id="login" size="15"
+							value="#{loginController.loginVM.usuario.login}" />
+
+						<p:outputLabel style="float:left" for="senha" value="Senha:" />
+						<p:inputText style="float:right;padding:0px;" type="password" required="true" id="senha" size="15"
+							value="#{loginController.loginVM.usuario.senha}" />
+					</h:panelGrid>
+
+					<p:commandButton styleClass="botoes" style="width:200px;height:30px;margin:5px" value="Entrar"
+						action="#{loginController.logar()}" update="cadastroMesaPanel" />
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog style="text-align:center;padding:10px" widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:outputLabel value="Aguarde..." style="font-weight:bold" />
+			<br />
+
+			<p:graphicImage style="margin:10px" library="imagens" name="ajax-loader.GIF" />
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

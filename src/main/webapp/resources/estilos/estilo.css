@@ -1,0 +1,53 @@
+html,body{
+	height:100%;
+	margin:0;	
+}
+
+.wrapper {
+	min-height: 100%;
+	height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
+	height: 100%;
+	margin: 0 auto -120px; /* the bottom margin is the negative value of the footer's height */
+}
+
+.footer, .push {
+	height: 120px; /* .push must be the same height as .footer */
+}
+
+.botoes{
+	font-size:14px !important;
+	
+}
+
+.menu{
+	font-size:14px !important;
+}
+
+.erro{
+	font-size:14px !important;
+	color:red !important;
+	
+}
+
+.rowError{
+	background-color:#F5A9A9 !important;
+}
+
+.ui-outputlabel{
+	border: 0 !important;
+}
+
+.ui-panelgrid {
+		
+	
+	
+}
+
+.ui-panelgrid-cell{
+	border-style:none !important;
+	padding: 0 !important;
+}
+
+.ui-state-error{
+	background:none;
+}
