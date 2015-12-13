@@ -1,11 +1,13 @@
 package com.snf.service;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import com.snf.dao.ServicoDAO;
+import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 
 public class ServicoService implements Serializable {
@@ -29,5 +31,21 @@ public class ServicoService implements Serializable {
 	
 	public Servico getServico(Long id){
 		return servicoDAO.getById(id);
+	}
+	
+	public List<Servico> getServicosByPeriodo(Date dataInicio, Date dataFim){
+		return servicoDAO.getServicosByPeriodo(dataInicio, dataFim);
+	}
+	
+	public List<Servico> getServicosByPeriodoAndFuncionario(Date dataInicio, Date dataFim, Funcionario funcionario){
+		return servicoDAO.getServicosByPeriodoAndFuncionario(dataInicio, dataFim, funcionario);
+	}
+	
+	public List<Servico> getServicosByFuncionario(Funcionario funcionario){
+		return servicoDAO.getServicosByFuncionario(funcionario);
+	}
+	
+	public List<Object[]> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal, Funcionario funcionario){
+		return servicoDAO.servicosByPeriodoAndFuncionario(dataInicial, dataFinal, funcionario);
 	}
 }

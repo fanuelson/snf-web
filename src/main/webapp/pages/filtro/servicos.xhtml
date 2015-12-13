@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	<c:metadata>
+		<c:event listener="#{permissaoController.permissaoGerente()}" type="preRenderView" />
+	</c:metadata>
+
+		<h:form id="filtroPesquisaServico" >
+			<p:panelGrid styleClass="botoes" style="margin:auto;margin-top:10px" >
+				<p:column>
+				<p:outputLabel style="display:inherit" value="Funcionario:" for="funcionario" />
+				<p:selectOneMenu style="width:250px" id="funcionario" value="#{consultaServicoController.consultaServicoVM.funcionario}" 
+				converter="funcionarioConverter">
+					<c:selectItem itemLabel="-Selecione-" noSelectionOption="true" />
+					<c:selectItems value="#{consultaServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario}"
+						itemLabel="#{funcionario.nome}" />
+				</p:selectOneMenu>
+				</p:column>
+				<p:column>
+				<p:outputLabel style="display:inherit" value="Data inicial:" for="dataInicial" />
+				<p:calendar id="dataInicial" value="#{consultaServicoController.consultaServicoVM.dataInicio}"
+					pattern="dd/MM/yyyy" />
+					</p:column>
+					<p:column>
+				<p:outputLabel style="display:inherit" value="Data Final:" for="dataFinal" />
+				<p:calendar  styleClass="botoes" id="dataFinal" value="#{consultaServicoController.consultaServicoVM.dataFim}"
+					pattern="dd/MM/yyyy" />
+					</p:column>
+				<p:column>
+				<p:commandButton style="padding:8px" value="Pesquisar" process="@this filtroPesquisaServico" action="#{consultaServicoController.pesquisar()}"
+				update="consultaServicosForm" />
+				</p:column>
+			</p:panelGrid>
+			
+			<h:panelGrid styleClass="botoes" columns="3" style="margin:auto;margin-top:15px">
+				<p:outputLabel value="Soma total:"  />
+				<h:outputLabel id="calculo" value="#{consultaServicoController.valorTotalPesquisa}" >
+					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+				</h:outputLabel>
+				<p:commandButton style="margin-left:10px" value="Calcular" process="@this" update="calculo" />	
+			</h:panelGrid>
+
+
+		</h:form>
+
+</ui:composition>

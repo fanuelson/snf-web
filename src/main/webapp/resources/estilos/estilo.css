@@ -45,7 +45,7 @@ html,body{
 
 .ui-panelgrid-cell{
 	border-style:none !important;
-	padding: 0 !important;
+	padding: 20 !important;
 }
 
 .ui-state-error{
