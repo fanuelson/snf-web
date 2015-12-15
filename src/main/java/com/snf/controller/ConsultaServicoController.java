@@ -57,13 +57,31 @@ public class ConsultaServicoController implements Serializable {
 		if(periodoPesquisaValido()){
 			pesquisarPeriodoFuncionario();
 			calcularValorTotalPesquisa();
+			limparFiltered();
 		}else
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
-		
+	}
+	
+	public void remover(Servico servico){
+		try{
+			servicoService.remover(servico);
+			servicos.remove(servico);
+			if(servicosFiltered!=null)
+				servicosFiltered.remove(servico);
+			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.remover.registro");
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			MessagesUtils.exibirMensagemErro("mensagem.erro.remover.registro");
+		}
 	}
 	
 	private void pesquisarPeriodoFuncionario(){
 		servicos = servicoService.getServicosByPeriodoAndFuncionario(consultaServicoVM.getDataInicio(), consultaServicoVM.getDataFim(), consultaServicoVM.getFuncionario());
+	}
+	
+	private void limparFiltered(){
+		servicosFiltered = null;
 	}
 	
 	private boolean periodoPesquisaValido(){

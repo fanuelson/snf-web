@@ -21,5 +21,9 @@ public class DataUtil {
 	public static Date somarDias(Date d,int dias){
 		return new DateTime(d).plusDays(dias).toDate();
 	}
+	
+	public static DateTime getDateTimeHoraZerada(){
+		return new DateTime(new DateTime().getYear(),new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(),0,0);
+	}
 
 }

@@ -23,7 +23,7 @@
 						</p:outputPanel>
 					</c:facet>
 
-					<p:column style="width:10%" headerText="Data">
+					<p:column style="width:10%" headerText="Data" sortBy="#{servico.data}" >
 						<h:outputText value="#{servico.data}">
 							<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 						</h:outputText>
@@ -42,7 +42,7 @@
 						<h:outputText value="#{servico.funcionario.nome}" />
 					</p:column>
 
-					<p:column style="width:5% " headerText="Valor">
+					<p:column style="width:5% " headerText="Valor" sortBy="#{servico.valor}" >
 						<h:outputText value="#{servico.valor}">
 							<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 						</h:outputText>
@@ -61,7 +61,7 @@
 
 
 						<p:commandLink style="margin-left:5px" icon="ui-icon-close"
-							action="#{consultaFuncionarioController.remover(funcionario)}" process="@this" update="consultaServicosForm">
+							action="#{consultaServicoController.remover(servico)}" process="@this" update="consultaServicosForm">
 							<p:graphicImage library="imagens" name="deleteIcon.png" />
 							<p:confirm header="Confirmação" message="Tem certeza que deseja excluir este servico?" icon="ui-icon-alert" />
 						</p:commandLink>

@@ -8,13 +8,18 @@
 	
 		<p:growl id="msgs" autoUpdate="true" showDetail="false" />
 		
-		<ui:include src="/pages/filtro/filtroEstatisticaServico.xhtml" />
+		
+			<ui:include src="/pages/filtro/filtroEstatisticaServico.xhtml" />
 
 
-			<p:panelGrid style="margin:auto;margin-top:10px" >
+			
+				<p:chart id="grafico" type="line" model="#{estatisticaServicoController.animatedModel1}" style="margin:auto;margin-top:20px;width:80%" />
+			
+			
 				
-				<p:chart id="grafico" type="line" model="#{estatisticaServicoController.animatedModel1}" style="margin-top:20px;width:100%" />
+			
 
-			</p:panelGrid>
+			
+			
 	</ui:define>
 </ui:composition>

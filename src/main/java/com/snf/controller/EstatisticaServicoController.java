@@ -1,7 +1,6 @@
 package com.snf.controller;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +20,7 @@ import com.snf.VM.EstatisticaServicoVM;
 import com.snf.model.Funcionario;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
-import com.snf.util.DataUtil;
+import com.snf.util.MessagesUtils;
 
 @Named
 @ViewScoped
@@ -29,7 +28,7 @@ public class EstatisticaServicoController implements Serializable {
 
 	private static final long serialVersionUID = 8284251730157488128L;
 	
-	private static final int INDEX_VALOR_CONSULTA = 4;
+	private static final int INDEX_VALOR_CONSULTA = 7;
 	private static final int INDEX_DATA_CONSULTA = 6;
 
 	@Inject
@@ -46,21 +45,35 @@ public class EstatisticaServicoController implements Serializable {
 	private List<Funcionario> funcionarios;
 
 	private List<Object[]> servicos;
-
+	
 	@PostConstruct
 	public void init() {
 		funcionarios = funcionarioService.getAll();
 		servicos = new ArrayList<Object[]>();
-		createAnimatedModels();
+		pesquisar();
 	}
 	
 	public void pesquisar(){
-		Date dataInicial = estatisticaServicoVM.getDataInicial();
-		Date dataFinal = estatisticaServicoVM.getDataFinal();
-		Funcionario funcionario = estatisticaServicoVM.getFuncionario();
-		servicos = servicoService.servicosByPeriodoAndFuncionario(dataInicial, dataFinal, funcionario);
-		createAnimatedModels();
+		if(periodoPesquisaValido()){
+			Date dataInicial = estatisticaServicoVM.getDataInicial();
+			Date dataFinal = estatisticaServicoVM.getDataFinal();
+			Funcionario funcionario = estatisticaServicoVM.getFuncionario();
+			servicos = servicoService.servicosByPeriodoAndFuncionario(dataInicial, dataFinal, funcionario);
+			createAnimatedModels();
+		}else{
+			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
+		}
 		
+	}
+	
+	private boolean periodoPesquisaValido(){
+		 if(estatisticaServicoVM.getDataInicial()!=null && estatisticaServicoVM.getDataFinal()!=null){
+			 if(estatisticaServicoVM.getDataInicial().before(estatisticaServicoVM.getDataFinal()))
+				return true;
+			 else
+				return false; 
+		 }
+		 return true;
 	}
 	
 
@@ -68,11 +81,10 @@ public class EstatisticaServicoController implements Serializable {
 		animatedModel1 = initLinearModel();
 		animatedModel1.setTitle("Soma Total de Servicos por Dia");
 		animatedModel1.setAnimate(true);
-		animatedModel1.setLegendPosition("se");
+		animatedModel1.setLegendPosition("n");
 
 		Axis yAxis = animatedModel1.getAxis(AxisType.Y);
-		yAxis.setMin(0.0);
-		yAxis.setMax(getMaior() + 50);
+		yAxis.setTickFormat("%.2f");
 
 	}
 
@@ -81,8 +93,8 @@ public class EstatisticaServicoController implements Serializable {
 
 		LineChartSeries series1 = new LineChartSeries();
 		series1.setLabel("Servicos");
-
-		if (servicos!=null && servicos.size() <= 0)
+	       
+		if (servicos.size() <= 0)
 			return model;
 
 		for (Object[] ob : servicos) {
@@ -94,9 +106,6 @@ public class EstatisticaServicoController implements Serializable {
 
 		DateAxis axis = new DateAxis("Datas");
 		axis.setTickAngle(-30);
-		Date d = DataUtil.somarDias(new Date(), 1);
-		Timestamp ts = new Timestamp(d.getTime());
-		axis.setMax(ts.toString().substring(0, 10));
 		axis.setTickFormat("%#d/%#m/%y");
 
 		model.getAxes().put(AxisType.X, axis);
@@ -105,19 +114,6 @@ public class EstatisticaServicoController implements Serializable {
 
 		return model;
 
-	}
-
-	private double getMaior() {
-		if (servicos.size() <= 0)
-			return 0;
-		double maior = Double.parseDouble(servicos.get(0)[INDEX_VALOR_CONSULTA].toString());
-		for (Object[] ob : servicos) {
-			if (Double.parseDouble(ob[INDEX_VALOR_CONSULTA].toString()) > maior) {
-				maior = Double.parseDouble(ob[INDEX_VALOR_CONSULTA].toString());
-			}
-		}
-
-		return maior;
 	}
 
 	public LineChartModel getAnimatedModel1() {

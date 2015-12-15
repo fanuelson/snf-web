@@ -2,16 +2,16 @@ package teste;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.Locale;
+
+import org.joda.time.DateTime;
 
 public class Teste3 {
 
 	public static void main(String[] args) throws ParseException {
-	    Locale meuLocal = new Locale( "pt","br");   
-        NumberFormat nfVal = NumberFormat.getCurrencyInstance( meuLocal );   
-       double teste = getDoubleValue(meuLocal, (String) nfVal.format("5.99"));  
-        //teste = Double.parseDouble(nfVal.format(teste).trim());
-        System.out.println(teste);
+		Date d = new DateTime(new DateTime().getYear(),new DateTime().getMonthOfYear(),new DateTime().getDayOfMonth(),0,0).minusDays(8).toDate();
+        System.out.println(d.toString());
 	}
 	
 	public static double getDoubleValue(Locale loc, String value)

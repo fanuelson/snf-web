@@ -61,14 +61,16 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 
 	public List<Object[]> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal, Funcionario funcionario) {
 		List<Object[]> pedidos = null;
-		Long id = 0L;
+		Long idFuncionario = 0L;
 		if(funcionario!=null)
-			id = funcionario.getId();
+			 idFuncionario = funcionario.getId();
+		
 		try {
 			Query query = getManager().createNativeQuery(
-					"SELECT *,SUM(s.valor) as valorTotal2 FROM Servico s WHERE s.data >= :dataInicial AND s.data <= :dataFinal GROUP BY extract(day from s.data) ORDER BY s.data ASC");
+					"SELECT *,SUM(s.valor) as valorTotal2 FROM Servico s WHERE DATE(s.data) >= :dataInicial AND DATE(s.data) <= :dataFinal AND (:idFunc = 0 || s.idFuncionario = :idFunc ) GROUP BY extract(day from s.data) ORDER BY s.data ASC");
 			query.setParameter("dataInicial", dataInicial);
 			query.setParameter("dataFinal", dataFinal);
+			query.setParameter("idFunc", idFuncionario);
 			pedidos = query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
