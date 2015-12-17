@@ -33,10 +33,10 @@
 			
 			<h:panelGrid styleClass="botoes" columns="3" style="margin:auto;margin-top:15px">
 				<p:outputLabel value="Soma total:"  />
-				<h:outputLabel id="calculo" value="234" >
+				<h:outputLabel id="calculo" value="#{estatisticaServicoController.valorTotalPesquisa}" >
 					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 				</h:outputLabel>
-				<p:commandButton style="margin-left:10px" value="Calcular" process="@this" update="calculo" />	
+				<p:commandButton style="margin-left:10px" value="Calcular" action="#{estatisticaServicoController.calcularValorTotalPesquisa()}" update="calculo" />	
 			</h:panelGrid>
 
 		</h:form>

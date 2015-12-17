@@ -46,11 +46,14 @@ public class EstatisticaServicoController implements Serializable {
 
 	private List<Object[]> servicos;
 	
+	private double valorTotalPesquisa = 0;
+	
 	@PostConstruct
 	public void init() {
 		funcionarios = funcionarioService.getAll();
 		servicos = new ArrayList<Object[]>();
 		pesquisar();
+		calcularValorTotalPesquisa();
 	}
 	
 	public void pesquisar(){
@@ -59,11 +62,21 @@ public class EstatisticaServicoController implements Serializable {
 			Date dataFinal = estatisticaServicoVM.getDataFinal();
 			Funcionario funcionario = estatisticaServicoVM.getFuncionario();
 			servicos = servicoService.servicosByPeriodoAndFuncionario(dataInicial, dataFinal, funcionario);
-			createAnimatedModels();
+			if(servicos.isEmpty())
+				MessagesUtils.exibirMensagemErro("mensagem.nenhum.registro.encontrado");
+			else
+				createAnimatedModels();
 		}else{
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
 		}
 		
+	}
+	
+	public void calcularValorTotalPesquisa(){
+		valorTotalPesquisa = 0;
+		for (Object[] servico : servicos) {
+			valorTotalPesquisa+=Double.parseDouble(servico[INDEX_VALOR_CONSULTA].toString());
+		}
 	}
 	
 	private boolean periodoPesquisaValido(){
@@ -138,6 +151,10 @@ public class EstatisticaServicoController implements Serializable {
 
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
+	}
+	
+	public double getValorTotalPesquisa(){
+		return valorTotalPesquisa;
 	}
 	
 }

@@ -36,7 +36,7 @@
 				<h:outputLabel id="calculo" value="#{consultaServicoController.valorTotalPesquisa}" >
 					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 				</h:outputLabel>
-				<p:commandButton style="margin-left:10px" value="Calcular" process="@this" update="calculo" />	
+				<p:commandButton style="margin-left:10px" value="Calcular" action="#{consultaServicoController.calcularValorTotalPesquisa}" update="calculo" />	
 			</h:panelGrid>
 
 
