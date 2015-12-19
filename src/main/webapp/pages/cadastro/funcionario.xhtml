@@ -10,16 +10,16 @@
 
 		<h:form id="cadastroFuncionarioForm">
 		<h:panelGrid style="width:50%;margin:auto"  >
-			<h3>Cadastro Funcionario</h3>
+			<h3>#{msg['label.cadastro.funcionario']}</h3>
 			<hr/>
 			<h:panelGrid columns="2" style="margin:50px" >
-				<p:outputLabel for="nomeFuncionario" value="Nome:" />
+				<p:outputLabel for="nomeFuncionario" value="#{msg['label.campo.nome']}" />
 				<p:inputText size="30" required="true" id="nomeFuncionario" value="#{cadastroFuncionarioController.cadastroFuncionarioVM.funcionario.nome}" />
 			</h:panelGrid>
 			<p:row>
-				<p:commandButton style="float:right;margin-left:20px" value="Salvar" process="cadastroFuncionarioForm" action="#{cadastroFuncionarioController.salvar()}" 
+				<p:commandButton style="float:right;margin-left:20px" value="#{msg['label.salvar']}" process="cadastroFuncionarioForm" action="#{cadastroFuncionarioController.salvar()}" 
 				update="msgs cadastroFuncionarioForm" />
-				<p:commandButton style="float:right" value="Cancelar" process="@this" action="/pages/home/home-gerente.xhtml" />
+				<p:commandButton style="float:right" value="#{msg['label.cancelar']}" process="@this" action="/pages/home/inicio.xhtml" />
 			</p:row>
 		</h:panelGrid>
 		</h:form>
