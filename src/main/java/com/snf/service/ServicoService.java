@@ -33,16 +33,8 @@ public class ServicoService implements Serializable {
 		return servicoDAO.getById(id);
 	}
 	
-	public List<Servico> getServicosByPeriodo(Date dataInicio, Date dataFim){
-		return servicoDAO.getServicosByPeriodo(dataInicio, dataFim);
-	}
-	
 	public List<Servico> getServicosByPeriodoAndFuncionario(Date dataInicio, Date dataFim, Funcionario funcionario){
 		return servicoDAO.getServicosByPeriodoAndFuncionario(dataInicio, dataFim, funcionario);
-	}
-	
-	public List<Servico> getServicosByFuncionario(Funcionario funcionario){
-		return servicoDAO.getServicosByFuncionario(funcionario);
 	}
 	
 	public List<Object[]> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal, Funcionario funcionario){
