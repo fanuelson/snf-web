@@ -8,25 +8,25 @@
 		
 		<p:menubar styleClass="menu"  >
 			
-			<p:menuitem  value="Página Inicial" url="#{commonsController.paginaInicial}" />
-			<p:submenu  label="Funcionarios" url="#" >
-				<p:menuitem value="Cadastrar" url="/pages/cadastro/funcionario.xhtml"/>
-				<p:menuitem value="Consultar" url="/pages/consulta/funcionarios.xhtml"  />
+			<p:menuitem  value="#{msg['label.menu.pagina.inicial']}" url="#{commonsController.paginaInicial}" />
+			<p:submenu  label="#{msg['label.menu.funcionarios']}" url="#" >
+				<p:menuitem value="#{msg['label.cadastrar']}" url="/pages/cadastro/funcionario.xhtml"/>
+				<p:menuitem value="#{msg['label.consultar']}" url="/pages/consulta/funcionarios.xhtml"  />
 			</p:submenu>
-			<p:submenu  label="Servicos" url="#" >
-				<p:menuitem value="Cadastrar" url="/pages/cadastro/servico.xhtml"/>
-				<p:menuitem value="Consultar" url="/pages/consulta/servicos.xhtml"  />
+			<p:submenu  label="#{msg['label.menu.servicos']}" url="#" >
+				<p:menuitem value="#{msg['label.cadastrar']}" url="/pages/cadastro/servico.xhtml"/>
+				<p:menuitem value="#{msg['label.consultar']}" url="/pages/consulta/servicos.xhtml"  />
 				
 			</p:submenu>
-			<p:submenu  label="Estatísticas" url="#" >
-				<p:menuitem value="Servicos" url="/pages/estatistica/estatisticaServico.xhtml"/>
+			<p:submenu  label="#{msg['label.menu.estatisticas']}" url="#" >
+				<p:menuitem value="#{msg['label.menu.servicos']}" url="/pages/estatistica/estatisticaServico.xhtml"/>
 				
 			</p:submenu>
 			
 			<c:facet name="options">
 				<p:outputLabel style="margin-right:15px;font-weight:bold" value="Olá #{commonsController.usuario.nome}" />
 				
-				<p:commandButton value="Sair" process="@this" action="#{commonsController.sair()}" />
+				<p:commandButton value="#{msg['label.sair']}" process="@this" action="#{commonsController.sair()}" />
 			</c:facet>
 		</p:menubar>
 		
