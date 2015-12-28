@@ -10,16 +10,16 @@
 
 		<h:form id="cadastroServicoForm">
 			<h:panelGrid style="width:60%;margin:auto;border:1px solid black;padding:20px">
-				<h3>Cadastro Servico</h3>
+				<h3>#{msg['label.cadastro.servico']}</h3>
 				<hr />
 
-				<p:outputLabel for="nome" value="Nome:" />
+				<p:outputLabel for="nome" value="#{msg['label.campo.nome']}" />
 				<p:inputText size="30" required="true" id="nome" value="#{cadastroServicoController.cadastroServicoVM.servico.nome}" />
 
-				<p:outputLabel value="Descrição:" for="descricao" />
+				<p:outputLabel value="#{msg['label.campo.descricao']}" for="descricao" />
 				<p:inputTextarea id="descricao" value="#{cadastroServicoController.cadastroServicoVM.servico.descricao}" />
 
-				<p:outputLabel value="Funcionario:" for="funcionario" />
+				<p:outputLabel value="#{msg['label.campo.funcionario']}" for="funcionario" />
 				<p:selectOneMenu style="width:300px" id="funcionario" required="true" converter="funcionarioConverter"
 					value="#{cadastroServicoController.cadastroServicoVM.servico.funcionario}">
 					<c:selectItem itemLabel="-Selecione-" itemValue="#{null}" noSelectionOption="true"  />
@@ -27,7 +27,7 @@
 						itemLabel="#{funcionario.nome}" />
 				</p:selectOneMenu>
 
-				<p:outputLabel value="Valor:" for="valor" />
+				<p:outputLabel value="#{msg['label.campo.valor']}" for="valor" />
 				<h:inputText style="font-size:18px;" id="valor" value="#{cadastroServicoController.cadastroServicoVM.servico.valor}"
 					size="10" required="true" type="number" converterMessage="Preço inválido."
 					validatorMessage="Preço deve ser maior ou igual a 0,01">
@@ -35,10 +35,10 @@
 					<c:validateDoubleRange minimum="0.1" />
 				</h:inputText>
 
-				<p:outputLabel value="Nome do(a) Cliente:" for="nomeCliente" />
+				<p:outputLabel value="#{msg['label.campo.nome.cliente']}" for="nomeCliente" />
 				<p:inputText id="nomeCliente" value="#{cadastroServicoController.cadastroServicoVM.servico.nomeCliente}" />
 
-				<p:outputLabel value="Data:" for="data" />
+				<p:outputLabel value="#{msg['label.campo.data']}" for="data" />
 				<p:calendar required="true" id="data" value="#{cadastroServicoController.cadastroServicoVM.data}"
 					pattern="dd/MM/yyyy HH:mm:ss">
 
@@ -47,7 +47,7 @@
 				<p:row>
 					<p:commandButton style="float:right;margin:20px" value="Salvar" process="cadastroServicoForm"
 						action="#{cadastroServicoController.salvar()}" update="msgs cadastroServicoForm" />
-					<p:commandButton style="float:right;margin:20px" value="Cancelar" process="@this" action="/pages/home/home-gerente.xhtml" />
+					<p:commandButton style="float:right;margin:20px" value="#{msg['label.cancelar']}" process="@this" action="/pages/home/inicio.xhtml" />
 				</p:row>
 			</h:panelGrid>
 		</h:form>

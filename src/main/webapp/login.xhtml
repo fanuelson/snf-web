@@ -11,16 +11,16 @@
 					<hr />
 					<p:messages style="font-size:12px;text-align:left" id="messages2" showDetail="false" closable="true" />
 					<h:panelGrid style="margin: auto;width: 55%;" columns="2">
-						<p:outputLabel style="float:left" for="login" value="Login:" />
+						<p:outputLabel style="float:left" for="login" value="#{msg['label.login']}" />
 						<p:inputText style="float:right;padding:0px;" required="true" id="login" size="15"
 							value="#{loginController.loginVM.usuario.login}" />
 
-						<p:outputLabel style="float:left" for="senha" value="Senha:" />
+						<p:outputLabel style="float:left" for="senha" value="#{msg['label.senha']}" />
 						<p:inputText style="float:right;padding:0px;" type="password" required="true" id="senha" size="15"
 							value="#{loginController.loginVM.usuario.senha}" />
 					</h:panelGrid>
 
-					<p:commandButton styleClass="botoes" style="width:200px;height:30px;margin:5px" value="Entrar"
+					<p:commandButton styleClass="botoes" style="width:200px;height:30px;margin:5px" value="#{msg['label.entrar']}"
 						action="#{loginController.logar()}" update="cadastroMesaPanel" />
 				</h:panelGrid>
 			</p:panel>
@@ -30,7 +30,7 @@
 
 		<p:dialog style="text-align:center;padding:10px" widgetVar="statusDialog" modal="true" draggable="false"
 			closable="false" resizable="false" showHeader="false">
-			<p:outputLabel value="Aguarde..." style="font-weight:bold" />
+			<p:outputLabel value="#{msg['label.aguarde']}" style="font-weight:bold" />
 			<br />
 
 			<p:graphicImage style="margin:10px" library="imagens" name="ajax-loader.GIF" />

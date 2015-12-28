@@ -13,26 +13,9 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 
 	private static final long serialVersionUID = 8644808566924847383L;
 
-	public List<Servico> getServicosByPeriodo(Date dataInicio, Date dataFinal) {
-		List<Servico> servicos = null;
-
-		try {
-			Query query = getManager().createQuery(
-					"SELECT s FROM Servico s WHERE (:dataInicio IS NULL OR s.data>= :dataInicio) AND (:dataFinal IS NULL OR s.data<= :dataFinal)");
-			query.setParameter("dataInicio", dataInicio);
-			query.setParameter("dataFinal", dataFinal);
-			servicos = query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return servicos;
-	}
-
 	public List<Servico> getServicosByPeriodoAndFuncionario(Date dataInicio, Date dataFinal, Funcionario funcionario) {
 		
 		List<Servico> servicos = null;
-		if (dataInicio != null)
-			System.out.println(dataInicio);
 
 		try {
 			getManager().clear();
@@ -40,19 +23,6 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 					"SELECT s FROM Servico s WHERE (:dataInicio IS NULL OR  s.data>= :dataInicio) AND (:dataFinal IS NULL OR s.data<= :dataFinal) AND (:func IS NULL OR s.funcionario = :func)");
 			query.setParameter("dataInicio", dataInicio);
 			query.setParameter("dataFinal", dataFinal);
-			query.setParameter("func", funcionario);
-			servicos = query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return servicos;
-	}
-
-	public List<Servico> getServicosByFuncionario(Funcionario funcionario) {
-		List<Servico> servicos = null;
-
-		try {
-			Query query = getManager().createQuery("SELECT s FROM Servico s WHERE s.funcionario = :func");
 			query.setParameter("func", funcionario);
 			servicos = query.getResultList();
 		} catch (Exception e) {

@@ -10,13 +10,13 @@
 	
 	<p:menubar styleClass="menu">
 
-		<p:menuitem value="Página Inicial" url="#{commonsController.paginaInicial}" />
+		<p:menuitem value="#{msg['label.menu.pagina.inicial']}" url="#{commonsController.paginaInicial}" />
 
 		<c:facet name="options">
 			<p:outputLabel style="margin-right:15px;font-weight:bold"
 				value="Olá #{homeCaixaController.usuario.nome}" />
 
-			<p:commandButton value="Sair" process="@this" action="#{commonsController.sair()}" />
+			<p:commandButton value="#{msg['label.sair']}" process="@this" action="#{commonsController.sair()}" />
 		</c:facet>
 	</p:menubar>
 
