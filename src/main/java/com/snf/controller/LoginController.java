@@ -7,7 +7,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceException;
 
 import com.snf.VM.LoginVM;
 import com.snf.library.Encripta;
@@ -45,7 +44,7 @@ public class LoginController implements Serializable {
 		}catch(NoResultException e){
 			MessagesUtils.exibirMensagemErro("mensagem.erro.login");
 			
-		}catch(PersistenceException e){
+		}catch(Exception e){
 			MessagesUtils.exibirMensagemErro("mensagem.erro.salvar.registro");
 		}
 		
