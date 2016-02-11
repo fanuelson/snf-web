@@ -20,6 +20,7 @@ import com.snf.VM.EstatisticaServicoVM;
 import com.snf.model.Funcionario;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
+import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
 
 @Named
@@ -64,8 +65,8 @@ public class EstatisticaServicoController implements Serializable {
 			servicos = servicoService.servicosByPeriodoAndFuncionario(dataInicial, dataFinal, funcionario);
 			if(servicos.isEmpty())
 				MessagesUtils.exibirMensagemErro("mensagem.nenhum.registro.encontrado");
-			else
-				createAnimatedModels();
+			
+			createAnimatedModels();
 		}else{
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
 		}
@@ -107,11 +108,14 @@ public class EstatisticaServicoController implements Serializable {
 		LineChartSeries series1 = new LineChartSeries();
 		series1.setLabel("Servicos");
 	       
-		if (servicos.size() <= 0)
-			return model;
-
-		for (Object[] ob : servicos) {
-			series1.set(ob[INDEX_DATA_CONSULTA].toString().substring(0, 10), Double.parseDouble(ob[INDEX_VALOR_CONSULTA].toString()));
+		if (servicos == null || servicos.size() <= 0) {
+			series1.set(DataUtil.diminuirDias(new Date(), 2).toString().substring(0, 10),	0);
+			series1.set(DataUtil.diminuirDias(new Date(), 0).toString().substring(0, 10),	0);
+		} else {
+			for (Object[] ob : servicos) {
+				series1.set(ob[INDEX_DATA_CONSULTA].toString().substring(0, 10),
+						Double.parseDouble(ob[INDEX_VALOR_CONSULTA].toString()));
+			}
 		}
 
 		model.setZoom(true);
