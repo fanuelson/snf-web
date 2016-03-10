@@ -7,7 +7,7 @@
 
 		<c:event listener="#{permissaoController.permissaoCaixa()}"
 			type="preRenderView" />
-	
+<h:form prependId="false" >
 	<p:menubar styleClass="menu">
 
 		<p:menuitem value="#{msg['label.menu.pagina.inicial']}" url="#{commonsController.paginaInicial}" />
@@ -19,5 +19,5 @@
 			<p:commandButton value="#{msg['label.sair']}" process="@this" action="#{commonsController.sair()}" />
 		</c:facet>
 	</p:menubar>
-
+</h:form>
 </ui:composition>
