@@ -43,6 +43,10 @@ html,body{
 	
 }
 
+.ui-widget-content {
+	background-color: #fff7b7 !important;
+}
+
 .ui-panelgrid-cell{
 	border-style:none !important;
 	padding: 20 !important;

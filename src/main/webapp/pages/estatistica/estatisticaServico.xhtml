@@ -1,6 +1,5 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-	template="/template/layout.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
 	<c:metadata>
 		<c:event listener="#{permissaoController.permissaoGerente()}" type="preRenderView" />
 	</c:metadata>
@@ -8,11 +7,10 @@
 
 		<p:growl id="msgs" autoUpdate="true" showDetail="false" />
 
-		<ui:include src="/pages/filtro/filtroEstatisticaServico.xhtml" />
+		<h:panelGrid style="height:300px !important;margin:auto">
+			<ui:include src="/pages/filtro/filtroEstatisticaServico.xhtml" />
 
-		<p:chart id="grafico" type="line" model="#{estatisticaServicoController.animatedModel1}"
-			style="margin:auto;margin-top:20px;width:80%" />
-
-
+			<p:chart id="grafico" type="line" model="#{estatisticaServicoController.animatedModel1}" style="margin:auto;margin-top:20px;width:80%" />
+		</h:panelGrid>
 	</ui:define>
 </ui:composition>
