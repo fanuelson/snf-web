@@ -23,7 +23,7 @@
 						</p:outputPanel>
 					</c:facet>
 
-					<p:column style="width:8%" headerText="#{msg['label.data']}" sortBy="#{servico.data}">
+					<p:column style="width:10%" headerText="#{msg['label.data']}" sortBy="#{servico.data}">
 						<h:outputText value="#{servico.data}">
 							<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 						</h:outputText>
@@ -54,16 +54,16 @@
 						<h:outputText value="#{servico.nomeCliente}" />
 					</p:column>
 
-					<p:column headerText="#{msg['label.editar.excluir']}" style="width:12%;text-align:center">
+					<p:column headerText="#{msg['label.editar.excluir']}" style="width:10%;text-align:center">
 
-						<p:commandLink style="margin-right:30px" process="@this" update="consultaServicosForm">
-							<p:graphicImage library="imagens" name="editIcon.png" />
+						<p:commandLink style="margin-right:20px" process="@this" update="consultaServicosForm">
+							<p:graphicImage library="imagens" name="editIcon.png" width="20px" />
 						</p:commandLink>
 
 
 						<p:commandLink style="margin-left:5px" icon="ui-icon-close" action="#{consultaServicoController.remover(servico)}"
 							process="@this" update="consultaServicosForm">
-							<p:graphicImage library="imagens" name="deleteIcon.png" />
+							<p:graphicImage library="imagens" name="deleteIcon.png" width="20px" />
 							<p:confirm header="#{msg['label.confirmacao']}" message="#{msg['label.confirmacao.exclusao.registro']}"
 								icon="ui-icon-alert" />
 						</p:commandLink>

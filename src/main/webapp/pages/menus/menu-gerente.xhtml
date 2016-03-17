@@ -2,7 +2,7 @@
 	xmlns:c="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:sec="http://www.springframework.org/security/tags">
 	<c:event listener="#{permissaoController.permissaoGerente()}" type="preRenderView" />
 	<h:form>
-		<p:panelMenu styleClass="menu" style="width:200px;margin:auto" >
+		<p:panelMenu styleClass="menu" style="width:200px;margin:auto;padding-top:10px" >
 			<p:submenu label="Olá #{commonsController.usuario.nome}" expanded="true" >
 				<p:menuitem value="#{msg['label.menu.pagina.inicial']}" url="#{commonsController.paginaInicial}" />
 				<p:menuitem value="#{msg['label.sair']}" action="#{commonsController.sair}" />

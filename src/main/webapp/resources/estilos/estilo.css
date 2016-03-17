@@ -1,6 +1,7 @@
 html,body{
 	height:100%;
 	margin:0;	
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif !important;
 }
 
 .wrapper {
@@ -44,7 +45,15 @@ html,body{
 }
 
 .ui-widget-content {
-	background-color: #fff7b7 !important;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif !important;
+	boder: none !important;
+	background-color: white !important;
+	padding: 0 !important;
+	font-size:12px !important;
+}
+
+.ui-layout-unit-content ui-widget-content {
+	
 }
 
 .ui-panelgrid-cell{
