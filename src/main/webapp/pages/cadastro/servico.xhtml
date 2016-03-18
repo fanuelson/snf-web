@@ -47,7 +47,7 @@
 				<p:row>
 					<p:commandButton style="float:right;margin:20px" value="Salvar" process="cadastroServicoForm"
 						action="#{cadastroServicoController.salvar()}" update="msgs cadastroServicoForm" />
-					<p:commandButton style="float:right;margin:20px" value="#{msg['label.cancelar']}" process="@this" action="/pages/home/inicio.xhtml" />
+					<p:commandButton style="float:right;margin:20px" value="#{msg['label.cancelar']}" process="@this" action="#{commonsController.getPaginaInicial()}" />
 				</p:row>
 			</h:panelGrid>
 		</h:form>

@@ -14,7 +14,8 @@ import com.snf.util.FacesUtils;
 @RequestScoped
 public class CommonsController implements Serializable {
 	
-	private static final String PATH_PAGINA_INICIAL = "pages/home/inicio.xhtml";
+	private static final String PATH_PAGINA_INICIAL_CAIXA = "pages/home/inicio.xhtml";
+	private static final String PATH_PAGINA_INICIAL_GERENTE = "pages/home/inicioGerente.xhtml";
 	
 	private static final long serialVersionUID = 2452147366225351811L;
 
@@ -29,13 +30,13 @@ public class CommonsController implements Serializable {
 	public void redirectHome() throws IOException{
 		switch(getUsuario()!=null ? getUsuario().getTipo() : TipoUsuario.INEXISTENTE){
 		case CAIXA:
-			FacesUtils.redirect(PATH_PAGINA_INICIAL);
+			FacesUtils.redirect(PATH_PAGINA_INICIAL_CAIXA);
 			break;
 		case GERENTE:
-			FacesUtils.redirect(PATH_PAGINA_INICIAL);
+			FacesUtils.redirect(PATH_PAGINA_INICIAL_GERENTE);
 			break;
 		default:
-			FacesUtils.redirect("../../login.xhtml");
+			FacesUtils.redirect("login.xhtml");
 		}
 		
 		return;
@@ -53,8 +54,16 @@ public class CommonsController implements Serializable {
 	}
 	
 	public String getPaginaInicial(){
-		if(getUsuario()!=null)
-			return "/pages/home/inicio.xhtml";
+		if(getUsuario()!=null){
+			switch(getUsuario()!=null ? getUsuario().getTipo() : TipoUsuario.INEXISTENTE){
+			case CAIXA:
+				return "/"+PATH_PAGINA_INICIAL_CAIXA;
+			case GERENTE:
+				return "/"+PATH_PAGINA_INICIAL_GERENTE;
+			default:
+				return "../../login.xhtml";
+			}
+		}
 		else
 			return "/login.xhtml";
 	}
