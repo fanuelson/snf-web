@@ -31,6 +31,22 @@ public abstract class GenericDAO<T , ID> implements Serializable {
     	return entity;
     	
     }
+	
+	public boolean delete(T entity) {
+		boolean sucesso = false;
+    	try{
+    		if (!getManager().contains(entity)) {
+    			entity = getManager().merge(entity);
+    		}
+    		getManager().remove(entity);
+    		sucesso = true;
+    	}catch(Exception e){
+    		e.printStackTrace();
+    		manager.getTransaction().rollback();
+    		throw e;
+    	}
+    	return sucesso;
+    }
  
     public void delete(Long id) {
     	try{
