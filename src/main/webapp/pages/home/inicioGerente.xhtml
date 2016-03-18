@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
+	<c:metadata>
+		<c:event listener="#{permissaoController.permissaoGerente()}" type="preRenderView" />
+	</c:metadata>
+
+	<ui:define name="corpoLayout">
+
+		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
+	
+		<h3 style="padding: 20px 0 0 50px;">#{msg['mensgem.bem.vindo']}</h3>
+		<h:form prependId="false" id="formAbrirCaixa" > 
+			<h:panelGrid style="margin:auto" rendered="#{not homeController.aberturaCaixaVM.existeCaixaAberto}" >
+				<h3>ABRIR CAIXA</h3>
+				<hr/>
+			
+				<p:outputLabel for="valorInicial" value="Valor Inicial:" />
+				<p:inputText required="true" id="valorInicial" value="#{homeController.aberturaCaixaVM.caixa.valorInicial}" >
+					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+					<c:validateDoubleRange minimum="0.1" />
+				</p:inputText>
+				
+				<p:commandButton value="Abrir Caixa" process="valorInicial @this" action="#{homeController.salvarCaixa()}" update="formAbrirCaixa" />
+
+			</h:panelGrid>
+			
+			<h:panelGrid style="margin:auto" rendered="#{homeController.aberturaCaixaVM.existeCaixaAberto}" >
+				<h3>CAIXA ABERTO</h3>
+				<hr/>
+			
+				<p:outputLabel for="valorInicialCaixa" value="Valor Inicial:" />
+				<p:inputText disabled="true" required="true" id="valorInicialCaixa" value="#{homeController.aberturaCaixaVM.caixa.valorInicial}" >
+					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+					<c:validateDoubleRange minimum="0.1" />
+				</p:inputText>
+				
+				<p:outputLabel for="valorAtual" value="Valor Atual:" />
+				<p:inputText disabled="true" required="true" id="valorAtual" value="#{homeController.aberturaCaixaVM.caixa.valorAtual}" >
+					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+					<c:validateDoubleRange minimum="0.1" />
+				</p:inputText>
+				
+				<p:commandButton value="Fechar Caixa" action="#{homeController.fecharCaixa()}" update="formAbrirCaixa" />
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
