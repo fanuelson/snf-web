@@ -9,6 +9,7 @@
 		<class>com.snf.model.Usuario</class>
 		<class>com.snf.model.Servico</class>
 		<class>com.snf.model.Funcionario</class>
+		<class>com.snf.model.Caixa</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/salaoBeleza" />

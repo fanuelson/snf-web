@@ -1,6 +1,8 @@
 html,body{
 	height:100%;
 	margin:0;	
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif !important;
+  	font-size: 0.9em !important;
 }
 
 .wrapper {
@@ -15,16 +17,16 @@ html,body{
 }
 
 .botoes{
-	font-size:14px !important;
+	font-size:13px !important;
 	
 }
 
 .menu{
-	font-size:14px !important;
+	font-size:13px !important;
 }
 
 .erro{
-	font-size:14px !important;
+	font-size:13px !important;
 	color:red !important;
 	
 }

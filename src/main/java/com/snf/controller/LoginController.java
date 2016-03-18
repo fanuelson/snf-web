@@ -12,7 +12,6 @@ import com.snf.VM.LoginVM;
 import com.snf.library.Encripta;
 import com.snf.model.Usuario;
 import com.snf.service.UsuarioService;
-import com.snf.util.FacesUtils;
 import com.snf.util.MessagesUtils;
 
 @Named
@@ -39,7 +38,7 @@ public class LoginController implements Serializable {
 					encripta.encripta(loginVM.getUsuario().getSenha()));
 
 			commonsController.setUsuarioLogado(usuario);
-			FacesUtils.redirect("pages/home/inicio.xhtml");
+			commonsController.redirectHome();
 			
 		}catch(NoResultException e){
 			MessagesUtils.exibirMensagemErro("mensagem.erro.login");
