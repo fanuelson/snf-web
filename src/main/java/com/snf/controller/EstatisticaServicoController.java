@@ -29,8 +29,8 @@ public class EstatisticaServicoController implements Serializable {
 
 	private static final long serialVersionUID = 8284251730157488128L;
 	
-	private static final int INDEX_VALOR_CONSULTA = 7;
-	private static final int INDEX_DATA_CONSULTA = 6;
+	private static final int INDEX_VALOR_CONSULTA = 5;
+	private static final int INDEX_DATA_CONSULTA = 1;
 
 	@Inject
 	private ServicoService servicoService;
