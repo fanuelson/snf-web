@@ -10,6 +10,7 @@ import com.snf.dao.ServicoDAO;
 import com.snf.model.Caixa;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
+import com.snf.vo.ServicoDataValorVO;
 
 public class ServicoService implements Serializable {
 
@@ -44,7 +45,7 @@ public class ServicoService implements Serializable {
 		return servicoDAO.getServicosByPeriodoAndFuncionario(dataInicio, dataFim, funcionario);
 	}
 	
-	public List<Object[]> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal, Funcionario funcionario){
+	public List<ServicoDataValorVO> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal, Funcionario funcionario){
 		return servicoDAO.servicosByPeriodoAndFuncionario(dataInicial, dataFinal, funcionario);
 	}
 }

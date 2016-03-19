@@ -1,7 +1,6 @@
 package com.snf.controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,126 +10,132 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
+import org.primefaces.model.chart.LinearAxis;
 
 import com.snf.VM.EstatisticaServicoVM;
+import com.snf.builder.LinearChartModelBuilder;
+import com.snf.enums.PosicaoLegenda;
 import com.snf.model.Funcionario;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
+import com.snf.util.CollectionsUtils;
 import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
+import com.snf.vo.ServicoDataValorVO;
 
 @Named
 @ViewScoped
 public class EstatisticaServicoController implements Serializable {
 
 	private static final long serialVersionUID = 8284251730157488128L;
-	
-	private static final int INDEX_VALOR_CONSULTA = 5;
-	private static final int INDEX_DATA_CONSULTA = 1;
 
 	@Inject
 	private ServicoService servicoService;
-	
+
 	@Inject
 	private FuncionarioService funcionarioService;
 
 	private LineChartModel animatedModel1;
-	
+
 	@Inject
 	private EstatisticaServicoVM estatisticaServicoVM;
-	
+
 	private List<Funcionario> funcionarios;
 
-	private List<Object[]> servicos;
-	
+	private List<ServicoDataValorVO> servicos;
+
 	private double valorTotalPesquisa = 0;
-	
+
 	@PostConstruct
 	public void init() {
 		funcionarios = funcionarioService.getAll();
-		servicos = new ArrayList<Object[]>();
 		pesquisar();
 		calcularValorTotalPesquisa();
 	}
-	
-	public void pesquisar(){
-		if(periodoPesquisaValido()){
-			Date dataInicial = estatisticaServicoVM.getDataInicial();
-			Date dataFinal = estatisticaServicoVM.getDataFinal();
-			Funcionario funcionario = estatisticaServicoVM.getFuncionario();
-			servicos = servicoService.servicosByPeriodoAndFuncionario(dataInicial, dataFinal, funcionario);
-			if(servicos.isEmpty())
+
+	public void pesquisar() {
+		if (periodoPesquisaValido()) {
+			Date dataInicialPesquisada = estatisticaServicoVM.getDataInicial();
+			Date dataFinalPesquisada = estatisticaServicoVM.getDataFinal();
+			Funcionario funcionarioPesquisado = estatisticaServicoVM.getFuncionario();
+			servicos = servicoService.servicosByPeriodoAndFuncionario(dataInicialPesquisada, dataFinalPesquisada,
+					funcionarioPesquisado);
+			if (CollectionsUtils.isNullOrEmpty(servicos))
 				MessagesUtils.exibirMensagemErro("mensagem.nenhum.registro.encontrado");
-			
+
 			createAnimatedModels();
-		}else{
+		} else {
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
 		}
-		
+
 	}
-	
-	public void calcularValorTotalPesquisa(){
+
+	public void calcularValorTotalPesquisa() {
 		valorTotalPesquisa = 0;
-		for (Object[] servico : servicos) {
-			valorTotalPesquisa+=Double.parseDouble(servico[INDEX_VALOR_CONSULTA].toString());
+		for (ServicoDataValorVO servicoVO : servicos) {
+			valorTotalPesquisa += servicoVO.getValor();
 		}
 	}
-	
-	private boolean periodoPesquisaValido(){
-		 if(estatisticaServicoVM.getDataInicial()!=null && estatisticaServicoVM.getDataFinal()!=null){
-			 if(estatisticaServicoVM.getDataInicial().before(estatisticaServicoVM.getDataFinal()))
+
+	private boolean periodoPesquisaValido() {
+
+		if (estatisticaServicoVM.getDataInicial() != null && estatisticaServicoVM.getDataFinal() != null) {
+			if (estatisticaServicoVM.getDataInicial().before(estatisticaServicoVM.getDataFinal()))
 				return true;
-			 else
-				return false; 
-		 }
-		 return true;
+			else
+				return false;
+		}
+		return true;
 	}
-	
 
 	private void createAnimatedModels() {
 		animatedModel1 = initLinearModel();
-		animatedModel1.setTitle("Soma Total de Servicos por Dia");
-		animatedModel1.setAnimate(true);
-		animatedModel1.setLegendPosition("n");
-
-		Axis yAxis = animatedModel1.getAxis(AxisType.Y);
-		yAxis.setTickFormat("%.2f");
-
 	}
 
 	private LineChartModel initLinearModel() {
-		LineChartModel model = new LineChartModel();
 
+		LineChartSeries series1 = criarSerie();
+		DateAxis xAxis = criarEixoX();
+		Axis yAxis = criarEixoY();
+
+		LineChartModel linearChartModel = new LinearChartModelBuilder().comTitulo("Soma Total de Servicos por Dia")
+				.comLegendaNaPosicao(PosicaoLegenda.NORTE).animado().comZoom().comEixoX(xAxis).comEixoY(yAxis)
+				.adicionarSerie(series1).contruir();
+
+		return linearChartModel;
+
+	}
+
+	private LineChartSeries criarSerie() {
 		LineChartSeries series1 = new LineChartSeries();
 		series1.setLabel("Servicos");
-	       
+
 		if (servicos == null || servicos.size() <= 0) {
-			series1.set(DataUtil.diminuirDias(new Date(), 2).toString().substring(0, 10),	0);
-			series1.set(DataUtil.diminuirDias(new Date(), 0).toString().substring(0, 10),	0);
+			series1.set(DataUtil.getDataFormatada(DataUtil.diminuirDias(new Date(), 2), "dd/MM/yyyy"), 0);
+			series1.set(DataUtil.diminuirDias(new Date(), 0).toString().substring(0, 10), 0);
 		} else {
-			for (Object[] ob : servicos) {
-				series1.set(ob[INDEX_DATA_CONSULTA].toString().substring(0, 10),
-						Double.parseDouble(ob[INDEX_VALOR_CONSULTA].toString()));
+			for (ServicoDataValorVO servicoVO : servicos) {
+				series1.set(DataUtil.getDataFormatada(servicoVO.getData(), "yyyy-MM-dd"), servicoVO.getValor());
 			}
 		}
+		return series1;
+	}
 
-		model.setZoom(true);
-		model.getAxis(AxisType.Y).setLabel("Valores");
+	private DateAxis criarEixoX() {
+		DateAxis xAxis = new DateAxis("Datas");
+		xAxis.setTickAngle(-30);
+		xAxis.setTickFormat("%#d/%b/%y");
+		return xAxis;
+	}
 
-		DateAxis axis = new DateAxis("Datas");
-		axis.setTickAngle(-30);
-		axis.setTickFormat("%#d/%#m/%y");
-
-		model.getAxes().put(AxisType.X, axis);
-
-		model.addSeries(series1);
-
-		return model;
-
+	private Axis criarEixoY() {
+		Axis yAxis = new LinearAxis();
+		yAxis.setTickFormat("%.2f");
+		yAxis.setLabel("Valores");
+		return yAxis;
 	}
 
 	public LineChartModel getAnimatedModel1() {
@@ -156,9 +161,9 @@ public class EstatisticaServicoController implements Serializable {
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
 	}
-	
-	public double getValorTotalPesquisa(){
+
+	public double getValorTotalPesquisa() {
 		return valorTotalPesquisa;
 	}
-	
+
 }
