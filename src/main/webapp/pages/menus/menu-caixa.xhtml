@@ -16,7 +16,7 @@
 			<p:outputLabel style="margin-right:15px;font-weight:bold"
 				value="Olá #{homeCaixaController.usuario.nome}" />
 
-			<p:commandButton value="#{msg['label.sair']}" process="@this" action="#{commonsController.sair()}" />
+			<p:button value="#{msg['label.sair']}" href="#{request.contextPath}/j_spring_security_logout" />
 		</c:facet>
 	</p:menubar>
 

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import com.snf.builder.JPQLBuilder;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.vo.ServicoDataValorVO;
@@ -21,11 +22,17 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 
 		try {
 			getManager().clear();
-			Query query = getManager().createQuery(
-					"SELECT s FROM Servico s WHERE (:dataInicio IS NULL OR  s.data>= :dataInicio) AND (:dataFinal IS NULL OR s.data<= :dataFinal) AND (:func IS NULL OR s.funcionario = :func)");
-			query.setParameter("dataInicio", dataInicio);
-			query.setParameter("dataFinal", dataFinal);
-			query.setParameter("func", funcionario);
+			JPQLBuilder queryBuilder = new JPQLBuilder()
+					.select("s")
+					.from(Servico.class, "s")
+					.where("(:dataInicio IS NULL OR  s.data>= :dataInicio)", dataInicio)
+					.and("(:dataFinal IS NULL OR s.data<= :dataFinal)", dataFinal)
+					.and("(:func IS NULL OR s.funcionario = :func)", funcionario);
+			
+			Query query = getManager().createQuery(queryBuilder.contruir());
+			colocarParametros(query, queryBuilder);
+			System.out.println(queryBuilder.contruir());
+			
 			servicos = query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

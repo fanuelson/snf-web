@@ -45,6 +45,11 @@ html,body{
 	
 }
 
+.ui-widget {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif !important;
+	font-size: 0.9em ;
+}
+
 .ui-panelgrid-cell{
 	border-style:none !important;
 	padding: 20 !important;

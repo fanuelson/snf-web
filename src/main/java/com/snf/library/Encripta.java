@@ -2,9 +2,12 @@ package com.snf.library;
 
 import java.security.NoSuchAlgorithmException;
 
+import org.springframework.stereotype.Component;
+
 import jonelo.jacksum.JacksumAPI;
 import jonelo.jacksum.algorithm.AbstractChecksum;
 
+@Component
 public class Encripta {
 	
 	public String encripta(String senha, String crypt) {

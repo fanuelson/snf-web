@@ -29,13 +29,13 @@
 	
 						<p:commandLink style="margin-right:30px" process="@this" update="consultaFuncionarioForm" oncomplete="PF('cadastroProduto').show()"
 							onsuccess="PF('cadastroProduto').hide()">
-							<p:graphicImage library="imagens" name="editIcon.png" />
+							<p:graphicImage width="20px" library="imagens" name="editIcon.png" />
 						</p:commandLink>
 							
 	
 						<p:commandLink style="margin-left:5px" icon="ui-icon-close"
 							action="#{consultaFuncionarioController.remover(funcionario)}" process="@this" update="consultaFuncionarioForm">
-							<p:graphicImage library="imagens" name="deleteIcon.png" />
+							<p:graphicImage width="20px" library="imagens" name="deleteIcon.png" />
 							<p:confirm header="Confirmação" message="#{msg['label.confirmacao.exclusao.registro']}" icon="ui-icon-alert" />
 						</p:commandLink>
 	

@@ -17,7 +17,7 @@
 						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.funcionario.nome}" />
 				</h:panelGrid>
 				<p:row>
-					<p:commandButton style="float:right;margin-left:20px" value="#{msg['label.salvar']}" process="cadastroFuncionarioForm"
+					<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" style="float:right;margin-left:20px" value="#{msg['label.salvar']}" process="cadastroFuncionarioForm"
 						action="#{cadastroFuncionarioController.salvar()}" update="msgs cadastroFuncionarioForm" />
 					<p:commandButton style="float:right" value="#{msg['label.cancelar']}" process="@this" action="#{commonsController.getPaginaInicial()}" />
 				</p:row>

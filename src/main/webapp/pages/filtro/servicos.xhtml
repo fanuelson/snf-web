@@ -25,17 +25,17 @@
 					pattern="dd/MM/yyyy" />
 			</p:column>
 			<p:column>
-				<p:commandButton style="padding:8px" value="#{msg['label.pesquisar']}" process="@this filtroPesquisaServico"
-					action="#{consultaServicoController.pesquisar()}" update="consultaServicosForm" />
+				<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" style="padding:8px" value="#{msg['label.pesquisar']}" process="@this filtroPesquisaServico"
+					action="#{consultaServicoController.pesquisar()}" update="consultaServicosForm panelCalculo" />
 			</p:column>
 		</p:panelGrid>
 
-		<h:panelGrid styleClass="botoes" columns="3" style="margin:auto;margin-top:15px">
+		<h:panelGrid id="panelCalculo" styleClass="botoes" columns="3" style="margin:auto;margin-top:15px">
 			<p:outputLabel value="#{label.campo.soma.total}" />
 			<h:outputLabel id="calculo" value="#{consultaServicoController.valorTotalPesquisa}">
 				<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 			</h:outputLabel>
-			<p:commandButton style="margin-left:10px" value="#{msg['label.calcular']}"
+			<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" style="margin-left:10px" value="#{msg['label.calcular']}"
 				action="#{consultaServicoController.calcularValorTotalPesquisa}" update="calculo" />
 		</h:panelGrid>
 

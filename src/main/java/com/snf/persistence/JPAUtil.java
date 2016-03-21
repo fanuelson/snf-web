@@ -14,7 +14,7 @@ public class JPAUtil {
 private EntityManagerFactory factory;
 	
 	public JPAUtil() {
-		factory = Persistence.createEntityManagerFactory("restauranteCDI");
+		factory = Persistence.createEntityManagerFactory("salaoBeleza");
 	}
 	
 	@Produces @RequestScoped

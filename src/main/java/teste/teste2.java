@@ -18,7 +18,7 @@ public class teste2 {
 		
 		//Usuario u = getUsuarioByLoginSenha("a", e.encripta("a"));
 		
-		System.out.println( e.encripta("a"));
+		System.out.println( e.encripta("b"));
 	}
 	
 	public static Usuario getUsuarioByLoginSenha(String login,String senha){

@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import com.snf.model.Funcionario;
 import com.snf.service.FuncionarioService;
+import com.snf.util.CollectionsUtils;
 import com.snf.util.MessagesUtils;
 
 @Named
@@ -34,7 +35,8 @@ public class ConsultaFuncionarioController implements Serializable {
 		try{
 			funcionarioService.remover(funcionario);
 			funcionarios.remove(funcionario);
-			filteredFuncionarios.remove(funcionario);
+			if(!CollectionsUtils.isNullOrEmpty(filteredFuncionarios))
+				filteredFuncionarios.remove(funcionario);
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.remover.registro");
 		}catch(Exception e){
 			e.printStackTrace();

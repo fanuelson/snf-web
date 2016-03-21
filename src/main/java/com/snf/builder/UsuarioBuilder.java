@@ -24,7 +24,6 @@ public class UsuarioBuilder {
 		usuario.setSenha(senha);
 		return this;
 	}
-	
 	public UsuarioBuilder doTipo(TipoUsuario tipo) {
 		usuario.setTipo(tipo);
 		return this;

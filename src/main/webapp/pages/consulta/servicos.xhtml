@@ -12,10 +12,11 @@
 
 		<h:form id="consultaServicosForm">
 			<h:panelGrid style="padding:30px">
-				<p:dataTable styleClass="botoes" style="width:90%;font-size:12px;margin:auto" var="servico"
+				<p:dataTable styleClass="botoes" style="width:95%;font-size:12px;margin:auto" var="servico"
 					value="#{consultaServicoController.servicos}" emptyMessage="Nenhum serviço cadastrado"
 					filteredValue="#{consultaServicoController.servicosFiltered}" widgetVar="servicosTable" id="servicosTable"
-					paginator="true" rows="10" rowExpandMode="false">
+					paginator="true" rows="10" rowExpandMode="false" 
+					rowsPerPageTemplate="5,10,15,20,30" >
 					<c:facet name="header">
 						<p:outputPanel style="width:100%">
 							<h:outputLabel style="margin-left:50px" value="#{msg['label.procurar']}" />
@@ -23,7 +24,7 @@
 						</p:outputPanel>
 					</c:facet>
 
-					<p:column style="width:10%" headerText="#{msg['label.data']}" sortBy="#{servico.data}">
+					<p:column style="width:8%" headerText="#{msg['label.data']}" sortBy="#{servico.data}">
 						<h:outputText value="#{servico.data}">
 							<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 						</h:outputText>
@@ -38,7 +39,7 @@
 						<h:outputText value="#{servico.descricao}" />
 					</p:column>
 
-					<p:column style="width:10% " headerText="#{msg['label.funcionario']}" filterMatchMode="contains"
+					<p:column style="width:12% " headerText="#{msg['label.funcionario']}" filterMatchMode="contains"
 						filterBy="#{servico.funcionario.nome}">
 						<h:outputText value="#{servico.funcionario.nome}" />
 					</p:column>
@@ -54,16 +55,16 @@
 						<h:outputText value="#{servico.nomeCliente}" />
 					</p:column>
 
-					<p:column headerText="#{msg['label.editar.excluir']}" style="width:15%;text-align:center">
+					<p:column headerText="#{msg['label.editar.excluir']}" style="width:11%;text-align:center">
 
-						<p:commandLink style="margin-right:30px" process="@this" update="consultaServicosForm">
-							<p:graphicImage library="imagens" name="editIcon.png" />
+						<p:commandLink style="margin-right:20px" process="@this" update="consultaServicosForm">
+							<p:graphicImage width="25px" library="imagens" name="editIcon.png" />
 						</p:commandLink>
 
 
 						<p:commandLink style="margin-left:5px" icon="ui-icon-close" action="#{consultaServicoController.remover(servico)}"
 							process="@this" update="consultaServicosForm">
-							<p:graphicImage library="imagens" name="deleteIcon.png" />
+							<p:graphicImage width="25px" library="imagens" name="deleteIcon.png" />
 							<p:confirm header="#{msg['label.confirmacao']}" message="#{msg['label.confirmacao.exclusao.registro']}"
 								icon="ui-icon-alert" />
 						</p:commandLink>

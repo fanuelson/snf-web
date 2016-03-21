@@ -18,8 +18,7 @@ public class MessagesUtils {
 
 	    private static ResourceBundle getResourceBundle() {
 	        if (resourceBundle == null) {
-	            Locale locale = FacesUtils.getContext().getViewRoot().getLocale();
-	            resourceBundle = ResourceBundle.getBundle(MESSAGES_FILENAME, locale);
+	            resourceBundle = ResourceBundle.getBundle(MESSAGES_FILENAME, new Locale("pt-br"));
 	        }
 
 	        return resourceBundle;

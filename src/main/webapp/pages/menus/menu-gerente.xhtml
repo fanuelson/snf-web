@@ -8,7 +8,7 @@
 		
 		<p:menubar styleClass="menu"  >
 			
-			<p:menuitem  value="#{msg['label.menu.pagina.inicial']}" outcome="#{commonsController.getPaginaInicial()}" />
+			<p:menuitem  value="#{msg['label.menu.pagina.inicial']}" url="#{commonsController.getPaginaInicial()}" />
 			<p:submenu  label="#{msg['label.menu.funcionarios']}" url="#" >
 				<p:menuitem value="#{msg['label.cadastrar']}" url="/pages/cadastro/funcionario.xhtml"/>
 				<p:menuitem value="#{msg['label.consultar']}" url="/pages/consulta/funcionarios.xhtml"  />
@@ -26,7 +26,7 @@
 			<c:facet name="options">
 				<p:outputLabel style="margin-right:15px;font-weight:bold" value="Olá #{commonsController.usuario.nome}" />
 				
-				<p:commandButton value="#{msg['label.sair']}" process="@this" action="#{commonsController.sair}" />
+				<p:button value="#{msg['label.sair']}" href="#{request.contextPath}/j_spring_security_logout" />
 			</c:facet>
 		</p:menubar>
 		

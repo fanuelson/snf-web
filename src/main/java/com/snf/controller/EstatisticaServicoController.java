@@ -48,24 +48,30 @@ public class EstatisticaServicoController implements Serializable {
 	private List<ServicoDataValorVO> servicos;
 
 	private double valorTotalPesquisa = 0;
+	
+	private double valorMaxEixoY = 0;
 
 	@PostConstruct
 	public void init() {
 		funcionarios = funcionarioService.getAll();
 		pesquisar();
 		calcularValorTotalPesquisa();
+		calcularValorMaxEixoY();
 	}
 
 	public void pesquisar() {
+		Date dataInicialPesquisada = estatisticaServicoVM.getDataInicial();
+		Date dataFinalPesquisada = estatisticaServicoVM.getDataFinal();
+		estatisticaServicoVM.setDataInicial(DataUtil.getDataHoraZerada(dataInicialPesquisada));
+		estatisticaServicoVM.setDataFinal(DataUtil.getDataHoraZerada(dataFinalPesquisada));
 		if (periodoPesquisaValido()) {
-			Date dataInicialPesquisada = estatisticaServicoVM.getDataInicial();
-			Date dataFinalPesquisada = estatisticaServicoVM.getDataFinal();
 			Funcionario funcionarioPesquisado = estatisticaServicoVM.getFuncionario();
 			servicos = servicoService.servicosByPeriodoAndFuncionario(dataInicialPesquisada, dataFinalPesquisada,
 					funcionarioPesquisado);
 			if (CollectionsUtils.isNullOrEmpty(servicos))
 				MessagesUtils.exibirMensagemErro("mensagem.nenhum.registro.encontrado");
-
+			calcularValorTotalPesquisa();
+			calcularValorMaxEixoY();
 			createAnimatedModels();
 		} else {
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
@@ -79,6 +85,17 @@ public class EstatisticaServicoController implements Serializable {
 			valorTotalPesquisa += servicoVO.getValor();
 		}
 	}
+	
+	public void calcularValorMaxEixoY() {
+		Double maiorValor = 0.0;
+		for (ServicoDataValorVO servicoVO : servicos) {
+			if(servicoVO.getValor() > maiorValor) {
+				maiorValor = servicoVO.getValor();
+			}
+		}
+		valorMaxEixoY = maiorValor + 100;
+	}
+	
 
 	private boolean periodoPesquisaValido() {
 
@@ -114,8 +131,8 @@ public class EstatisticaServicoController implements Serializable {
 		series1.setLabel("Servicos");
 
 		if (servicos == null || servicos.size() <= 0) {
-			series1.set(DataUtil.getDataFormatada(DataUtil.diminuirDias(new Date(), 2), "dd/MM/yyyy"), 0);
-			series1.set(DataUtil.diminuirDias(new Date(), 0).toString().substring(0, 10), 0);
+			series1.set(DataUtil.getDataFormatada(DataUtil.diminuirDias(new Date(), 2), "yyyy-MM-dd"), 0);
+			series1.set(DataUtil.getDataFormatada(new Date(), "yyyy-MM-dd"), 0);
 		} else {
 			for (ServicoDataValorVO servicoVO : servicos) {
 				series1.set(DataUtil.getDataFormatada(servicoVO.getData(), "yyyy-MM-dd"), servicoVO.getValor());
@@ -127,7 +144,7 @@ public class EstatisticaServicoController implements Serializable {
 	private DateAxis criarEixoX() {
 		DateAxis xAxis = new DateAxis("Datas");
 		xAxis.setTickAngle(-30);
-		xAxis.setTickFormat("%#d/%b/%y");
+		xAxis.setTickFormat("%#d/%m/%y");
 		return xAxis;
 	}
 
@@ -135,6 +152,8 @@ public class EstatisticaServicoController implements Serializable {
 		Axis yAxis = new LinearAxis();
 		yAxis.setTickFormat("%.2f");
 		yAxis.setLabel("Valores");
+		yAxis.setMax(valorMaxEixoY);
+		yAxis.setMin(0);
 		return yAxis;
 	}
 

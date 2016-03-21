@@ -14,7 +14,7 @@ import com.snf.util.MessagesUtils;
 
 @Named
 @ViewScoped
-public class HomeController implements Serializable {
+public class HomeGerenteController implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 

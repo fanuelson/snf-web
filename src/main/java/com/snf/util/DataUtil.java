@@ -30,9 +30,20 @@ public class DataUtil {
 		DateTime dt = new DateTime(new Date()).withTimeAtStartOfDay();
 		return dt.toDate();
 	}
+	public static Date getDataHoraZerada(Date data) {
+		DateTime dt = new DateTime(data).withTimeAtStartOfDay();
+		return dt.toDate();
+	}
 	
 	public static Date getDataAtualHoraFinalDia() {
 		DateTime dt = new DateTime(new Date()).withTimeAtStartOfDay()
+				.plusDays(1)
+				.minusSeconds(1);
+		return dt.toDate();
+	}
+	
+	public static Date getDataHoraFinalDia(Date data) {
+		DateTime dt = new DateTime(data).withTimeAtStartOfDay()
 				.plusDays(1)
 				.minusSeconds(1);
 		return dt.toDate();

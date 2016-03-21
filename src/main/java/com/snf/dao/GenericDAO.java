@@ -3,9 +3,14 @@ package com.snf.dao;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import com.snf.builder.JPQLBuilder;
 
 @SuppressWarnings("unchecked")
 public abstract class GenericDAO<T , ID> implements Serializable {
@@ -13,6 +18,7 @@ public abstract class GenericDAO<T , ID> implements Serializable {
 	private static final long serialVersionUID = 3836419209780168990L;
 	
 	@Inject
+	@PersistenceContext
 	private EntityManager manager;
 	
     public T getById(ID id) {
@@ -58,6 +64,12 @@ public abstract class GenericDAO<T , ID> implements Serializable {
     		manager.getTransaction().rollback();
     		throw e;
     	}
+    }
+    
+    public void colocarParametros(Query query, JPQLBuilder builder) {
+    	for (Map.Entry<String, Object> parametros : builder.getParametros().entrySet()) {
+			query.setParameter(parametros.getKey(), parametros.getValue());
+		}
     }
  
     public List<T> getAll() {
