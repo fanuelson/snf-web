@@ -30,6 +30,8 @@ import com.snf.vo.ServicoDataValorVO;
 @ViewScoped
 public class EstatisticaServicoController implements Serializable {
 
+	private static final String formato_data_americano = "yyyy-MM-dd";
+
 	private static final long serialVersionUID = 8284251730157488128L;
 
 	@Inject
@@ -114,24 +116,21 @@ public class EstatisticaServicoController implements Serializable {
 		DateAxis xAxis = criarEixoX();
 		Axis yAxis = criarEixoY();
 
-		LineChartModel linearChartModel = new LinearChartModelBuilder().comTitulo("Soma Total de Servicos por Dia")
+		return new LinearChartModelBuilder().comTitulo("Soma Total de Servicos por Dia")
 				.comLegendaNaPosicao(PosicaoLegenda.NORTE).animado().comZoom().comEixoX(xAxis).comEixoY(yAxis)
 				.adicionarSerie(series1).contruir();
-
-		return linearChartModel;
-
 	}
 
 	private LineChartSeries criarSerie() {
 		LineChartSeries series1 = new LineChartSeries();
 		series1.setLabel("Servicos");
 
-		if (servicos == null || servicos.size() <= 0) {
-			series1.set(DataUtil.getDataFormatada(DataUtil.diminuirDias(new Date(), 2), "yyyy-MM-dd"), 0);
-			series1.set(DataUtil.getDataFormatada(new Date(), "yyyy-MM-dd"), 0);
+		if (CollectionsUtils.isNullOrEmpty(servicos)) {
+			series1.set(DataUtil.getDataFormatada(DataUtil.diminuirDias(new Date(), 2), formato_data_americano), 0);
+			series1.set(DataUtil.getDataFormatada(new Date(), formato_data_americano), 0);
 		} else {
 			for (ServicoDataValorVO servicoVO : servicos) {
-				series1.set(DataUtil.getDataFormatada(servicoVO.getData(), "yyyy-MM-dd"), servicoVO.getValor());
+				series1.set(DataUtil.getDataFormatada(servicoVO.getData(), formato_data_americano), servicoVO.getValor());
 			}
 		}
 		return series1;
