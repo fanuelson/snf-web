@@ -3,8 +3,6 @@ package com.snf.service;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import com.snf.dao.UsuarioDAO;
 import com.snf.model.Usuario;
 
@@ -12,7 +10,6 @@ public class UsuarioService implements Serializable {
 
 	private static final long serialVersionUID = -6071998648651080305L;
 	
-	@Inject
 	UsuarioDAO usuarioDAO;
 	
 	public void salvar(Usuario usuario){

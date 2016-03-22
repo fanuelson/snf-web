@@ -1,9 +1,6 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
 	template="/template/layout.xhtml">
-	<c:metadata>
-		<c:event listener="#{permissaoController.permissaoGerente()}" type="preRenderView" />
-	</c:metadata>
 	<ui:define name="corpoLayout">
 
 		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
@@ -29,13 +26,13 @@
 	
 						<p:commandLink style="margin-right:20px" process="@this" update="consultaFuncionarioForm" oncomplete="PF('cadastroProduto').show()"
 							onsuccess="PF('cadastroProduto').hide()">
-							<p:graphicImage library="imagens" name="editIcon.png" width="25px" />
+							<p:graphicImage width="20px" library="imagens" name="editIcon.png" />
 						</p:commandLink>
 							
 	
 						<p:commandLink style="margin-left:5px" icon="ui-icon-close"
 							action="#{consultaFuncionarioController.remover(funcionario)}" process="@this" update="consultaFuncionarioForm">
-							<p:graphicImage library="imagens" name="deleteIcon.png" width="25px" />
+							<p:graphicImage width="20px" library="imagens" name="deleteIcon.png" />
 							<p:confirm header="Confirmação" message="#{msg['label.confirmacao.exclusao.registro']}" icon="ui-icon-alert" />
 						</p:commandLink>
 	

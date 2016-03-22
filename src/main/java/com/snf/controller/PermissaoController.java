@@ -7,8 +7,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.snf.enums.TipoUsuario;
-
 @Named
 @SessionScoped
 public class PermissaoController implements Serializable {
@@ -19,20 +17,20 @@ public class PermissaoController implements Serializable {
 	private CommonsController commonsController;
 	
 	public void permissao() throws IOException{
-		if(!commonsController.loginEfetuado())
-			commonsController.redirectHome();
+//		if(!commonsController.loginEfetuado())
+//			commonsController.redirectHome();
 	}
 	
 	public void permissaoCaixa() throws IOException{
-		if(commonsController.getUsuario()==null || !commonsController.getUsuario().getTipo().equals(TipoUsuario.CAIXA))
-			redirecionarPaginaLogin();
-		return;
+//		if(commonsController.getUsuario()==null || !commonsController.getUsuario().getTipo().equals(TipoUsuario.CAIXA))
+//			redirecionarPaginaLogin();
+//		return;
 	}
 	
 	public void permissaoGerente() throws IOException{
-		if(commonsController.getUsuario()==null || !commonsController.getUsuario().getTipo().equals(TipoUsuario.GERENTE))
-			redirecionarPaginaLogin();
-		return;
+//		if(commonsController.getUsuario()==null || !commonsController.getUsuario().getTipo().equals(TipoUsuario.GERENTE))
+//			redirecionarPaginaLogin();
+//		return;
 	}
 	
 	public void permissaoCaixaEGerente() throws IOException{
@@ -42,7 +40,7 @@ public class PermissaoController implements Serializable {
 	}
 	
 	private void redirecionarPaginaLogin() throws IOException{
-		commonsController.redirectHome();
+		//commonsController.redirectHome();
 		return;
 	}
 }

@@ -7,8 +7,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.snf.dao.ServicoDAO;
+import com.snf.model.Caixa;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
+import com.snf.vo.ServicoDataValorVO;
 
 public class ServicoService implements Serializable {
 
@@ -17,7 +19,13 @@ public class ServicoService implements Serializable {
 	@Inject
 	private ServicoDAO servicoDAO;
 	
+	@Inject
+	private CaixaService caixaService;
+	
 	public void salvar(Servico servico){
+		Caixa caixa = caixaService.getCaixaAberto();
+		caixa.adicionarValor(servico.getValor());
+		caixaService.salvar(caixa);
 		servicoDAO.save(servico);
 	}
 	
@@ -37,7 +45,7 @@ public class ServicoService implements Serializable {
 		return servicoDAO.getServicosByPeriodoAndFuncionario(dataInicio, dataFim, funcionario);
 	}
 	
-	public List<Object[]> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal, Funcionario funcionario){
+	public List<ServicoDataValorVO> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal, Funcionario funcionario){
 		return servicoDAO.servicosByPeriodoAndFuncionario(dataInicial, dataFinal, funcionario);
 	}
 }

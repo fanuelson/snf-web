@@ -1,15 +1,12 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
 	template="/template/layout.xhtml">
-	<c:metadata>
-		<c:event listener="#{permissaoController.permissaoCaixaEGerente()}" type="preRenderView" />
-	</c:metadata>
 	<ui:define name="corpoLayout">
 
 		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
 
 		<h:form id="cadastroServicoForm">
-			<h:panelGrid style="width:60%;margin:auto;padding:20px">
+<h:panelGrid style="width:60%;margin:auto;border:1px solid black;padding:20px;background-color: whitesmoke;">
 				<h3>#{msg['label.cadastro.servico']}</h3>
 				<hr />
 
@@ -17,7 +14,7 @@
 				<p:inputText size="30" required="true" id="nome" value="#{cadastroServicoController.cadastroServicoVM.servico.nome}" />
 
 				<p:outputLabel value="#{msg['label.campo.descricao']}" for="descricao" />
-				<p:inputTextarea id="descricao" value="#{cadastroServicoController.cadastroServicoVM.servico.descricao}" />
+				<p:inputTextarea rows="7" cols="70"  id="descricao" value="#{cadastroServicoController.cadastroServicoVM.servico.descricao}" />
 
 				<p:outputLabel value="#{msg['label.campo.funcionario']}" for="funcionario" />
 				<p:selectOneMenu style="width:300px" id="funcionario" required="true" converter="funcionarioConverter"
@@ -28,12 +25,12 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel value="#{msg['label.campo.valor']}" for="valor" />
-				<h:inputText style="font-size:18px;" id="valor" value="#{cadastroServicoController.cadastroServicoVM.servico.valor}"
+				<p:inputText id="valor" value="#{cadastroServicoController.cadastroServicoVM.servico.valor}"
 					size="10" required="true" type="number" converterMessage="Preço inválido."
 					validatorMessage="Preço deve ser maior ou igual a 0,01">
 					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 					<c:validateDoubleRange minimum="0.1" />
-				</h:inputText>
+				</p:inputText>
 
 				<p:outputLabel value="#{msg['label.campo.nome.cliente']}" for="nomeCliente" />
 				<p:inputText id="nomeCliente" value="#{cadastroServicoController.cadastroServicoVM.servico.nomeCliente}" />
@@ -45,9 +42,9 @@
 				</p:calendar>
 
 				<p:row>
-					<p:commandButton style="float:right;margin:20px" value="Salvar" process="cadastroServicoForm"
+					<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" style="float:right;margin:20px" value="Salvar" process="cadastroServicoForm"
 						action="#{cadastroServicoController.salvar()}" update="msgs cadastroServicoForm" />
-					<p:commandButton style="float:right;margin:20px" value="#{msg['label.cancelar']}" process="@this" action="/pages/home/inicio.xhtml" />
+					<p:commandButton style="float:right;margin:20px" value="#{msg['label.cancelar']}" process="@this" action="#{commonsController.getPaginaInicial()}" />
 				</p:row>
 			</h:panelGrid>
 		</h:form>
