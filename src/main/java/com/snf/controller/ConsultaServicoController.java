@@ -92,10 +92,7 @@ public class ConsultaServicoController implements Serializable {
 	
 	private boolean periodoPesquisaValido(){
 		 if(consultaServicoVM.getDataInicio()!=null && consultaServicoVM.getDataFim()!=null){
-			 if(consultaServicoVM.getDataInicio().before(consultaServicoVM.getDataFim()))
-				return true;
-			 else
-				return false; 
+			 return consultaServicoVM.getDataInicio().before(consultaServicoVM.getDataFim());
 		 }
 		 return true;
 	}
