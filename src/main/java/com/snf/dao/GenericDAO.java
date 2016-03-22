@@ -73,13 +73,12 @@ public abstract class GenericDAO<T , ID> implements Serializable {
     }
  
     public List<T> getAll() {
-        return manager.createQuery(("FROM " + getTypeClass().getName())).getResultList();
+        return manager.createQuery("FROM " + getTypeClass().getName()).getResultList();
     }
  
     private Class<?> getTypeClass() {
-        Class<?> clazz = (Class<?>) ((ParameterizedType) this.getClass()
+        return (Class<?>) ((ParameterizedType) this.getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
-        return clazz;
     }
 
 	public EntityManager getManager() {
