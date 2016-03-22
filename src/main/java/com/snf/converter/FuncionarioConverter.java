@@ -24,8 +24,7 @@ public class FuncionarioConverter implements Converter{
         }else{
         	try{
         		Long id = Long.parseLong(value);
-                Funcionario unidade = funcionarioService.getById(id);
-                return unidade;
+                return funcionarioService.getById(id);
         	}catch(Exception e){
         		return null;
         	}
