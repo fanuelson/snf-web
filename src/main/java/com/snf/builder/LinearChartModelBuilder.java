@@ -17,11 +17,11 @@ public class LinearChartModelBuilder {
 
 	public LinearChartModelBuilder() {
 		this.animatedModel = new LineChartModel();
-		this.series = new ArrayList<LineChartSeries>();
+		this.series = new ArrayList<>();
 	}
 
 	public LinearChartModelBuilder comTitulo(String titulo) {
-		this.animatedModel.setTitle("Soma Total de Servicos por Dia");
+		this.animatedModel.setTitle(titulo);
 		return this;
 	}
 
