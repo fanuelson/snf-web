@@ -38,7 +38,7 @@ public class HomeGerenteController implements Serializable {
 	public void salvarCaixa() {
 		try{
 			Caixa caixa = aberturaCaixaVM.getCaixa();
-			caixa = caixaService.abrirCaixa(aberturaCaixaVM.getCaixa());
+			caixa = caixaService.abrirCaixa(caixa);
 			aberturaCaixaVM.setCaixa(caixa);
 			aberturaCaixaVM.setExisteCaixaAberto(true);
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
