@@ -26,7 +26,7 @@ public class JPQLBuilder implements Serializable {
 
 	public JPQLBuilder() {
 		queryString = new StringBuilder();
-		parametros = new HashMap<String, Object>();
+		parametros = new HashMap<>();
 
 	}
 
