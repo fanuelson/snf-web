@@ -8,8 +8,8 @@
 		<ui:include src="/pages/filtro/servicos.xhtml" />
 
 		<h:form id="consultaServicosForm">
-			<h:panelGrid style="padding:30px">
-				<p:dataTable styleClass="botoes" style="width:95%;font-size:12px;margin:auto" var="servico"
+			<h:panelGrid style="padding:10px">
+				<p:dataTable styleClass="botoes" style="width:100%;font-size:12px;margin:auto" var="servico"
 					value="#{consultaServicoController.servicos}" emptyMessage="Nenhum serviço cadastrado"
 					filteredValue="#{consultaServicoController.servicosFiltered}" widgetVar="servicosTable" id="servicosTable"
 					paginator="true" rows="10" rowExpandMode="false" 
@@ -52,16 +52,16 @@
 						<h:outputText value="#{servico.nomeCliente}" />
 					</p:column>
 
-					<p:column headerText="#{msg['label.editar.excluir']}" style="width:11%;text-align:center">
+					<p:column headerText="#{msg['label.editar.excluir']}" style="width:12%;text-align:center">
 
 						<p:commandLink style="margin-right:20px" process="@this" update="consultaServicosForm">
-							<p:graphicImage width="25px" library="imagens" name="editIcon.png" />
+							<p:graphicImage width="20px" library="imagens" name="editIcon.png" />
 						</p:commandLink>
 
 
 						<p:commandLink style="margin-left:5px" icon="ui-icon-close" action="#{consultaServicoController.remover(servico)}"
 							process="@this" update="consultaServicosForm">
-							<p:graphicImage width="25px" library="imagens" name="deleteIcon.png" />
+							<p:graphicImage width="20px" library="imagens" name="deleteIcon.png" />
 							<p:confirm header="#{msg['label.confirmacao']}" message="#{msg['label.confirmacao.exclusao.registro']}"
 								icon="ui-icon-alert" />
 						</p:commandLink>

@@ -1,30 +1,29 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:c="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:sec="http://www.springframework.org/security/tags">
-		
-		<p:menubar styleClass="menu"  >
-			
-			<p:menuitem  value="#{msg['label.menu.pagina.inicial']}" url="#{commonsController.getPaginaInicial()}" />
-			<p:submenu  label="#{msg['label.menu.funcionarios']}" url="#" >
-				<p:menuitem value="#{msg['label.cadastrar']}" url="/pages/cadastro/funcionario.xhtml"/>
-				<p:menuitem value="#{msg['label.consultar']}" url="/pages/consulta/funcionarios.xhtml"  />
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:sec="http://www.springframework.org/security/tags">
+
+	<h:form>
+		<p:panelMenu styleClass="menu">
+			<p:submenu label="Home" url="#">
+				<p:menuitem value="#{msg['label.menu.pagina.inicial']}" url="#{commonsController.getPaginaInicial()}" />
+				<p:menuitem value="#{msg['label.sair']}" url="#{request.contextPath}/j_spring_security_logout" />
+			</p:submenu>
+			<p:submenu label="#{msg['label.menu.funcionarios']}" url="#">
+				<p:menuitem value="#{msg['label.cadastrar']}" url="/pages/cadastro/funcionario.xhtml" />
+				<p:menuitem value="#{msg['label.consultar']}" url="/pages/consulta/funcionarios.xhtml" />
 			</p:submenu>
 			<p:submenu label="#{msg['label.menu.servicos']}" url="#" expanded="true">
 				<p:menuitem value="#{msg['label.cadastrar']}" url="/pages/cadastro/servico.xhtml" />
 				<p:menuitem value="#{msg['label.consultar']}" url="/pages/consulta/servicos.xhtml" />
 
 			</p:submenu>
-			<p:submenu label="#{msg['label.menu.estatisticas']}" url="#" expanded="true" >
+			<p:submenu label="#{msg['label.menu.estatisticas']}" url="#" expanded="true">
 				<p:menuitem value="#{msg['label.menu.servicos']}" url="/pages/estatistica/estatisticaServico.xhtml" />
 			</p:submenu>
-		<c:facet name="options">
+			<c:facet name="options">
 				<p:outputLabel style="margin-right:15px;font-weight:bold" value="Olá #{commonsController.usuario.nome}" />
-				
-				<p:button value="#{msg['label.sair']}" href="#{request.contextPath}/j_spring_security_logout" />
+
 			</c:facet>
-		</p:menubar>
-		
+		</p:panelMenu>
+	</h:form>
+
 </ui:composition>

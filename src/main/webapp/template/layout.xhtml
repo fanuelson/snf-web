@@ -16,23 +16,19 @@
 </h:head>
 <h:body style="background-image:url('#{request.contextPath}/resources/imagens/imgFundo.jpg');">
 
-	<p:layout style="min-width:95%;max-width:95%;margin:auto" >
-		<p:layoutUnit position="north" style="margin:0">
+	<p:layout style="min-width:95%;max-width:95%;margin:auto">
+		<p:layoutUnit position="north" style="margin:0;padding:0px !important;border:0px">
 			<ui:include src="topo.xhtml" />
 		</p:layoutUnit>
 
-		<p:layoutUnit position="west" size="220">
+		<p:layoutUnit position="west" size="200">
 			<ui:include src="#{commonsController.menu}" />
 		</p:layoutUnit>
 
 		<p:layoutUnit position="center">
 			<ui:insert name="corpoLayout" />
 		</p:layoutUnit>
-		
-		<p:layoutUnit position="south">
-		
-		<ui:include src="rodape.xhtml" />
-		</p:layoutUnit>
+
 	</p:layout>
 
 	<p:dialog style="text-align:center;padding:10px" widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false"
@@ -41,7 +37,7 @@
 		<br />
 		<p:graphicImage style="margin:10px" library="imagens" name="ajax-loader.GIF" />
 	</p:dialog>
-	
+
 </h:body>
 
 </html>

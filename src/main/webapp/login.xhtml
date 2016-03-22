@@ -1,9 +1,29 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-	template="/template/layout.xhtml">
-	<ui:define name="corpoLayout">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	</f:facet>
+	<title>#{msg['label.nome.sistema']}</title>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	</f:facet>
+	<h:outputStylesheet library="estilos" name="estilo.css" />
+	<h:outputScript library="js" name="global.js" />
+</h:head>
+<h:body style="background-image:url('#{request.contextPath}/resources/imagens/imgFundo.jpg');">
 
-		<form action="#{request.contextPath}/j_spring_security_check" method="post">
+	<p:layout fullPage="true" style="min-width:95%;max-width:95%;margin:auto" >
+		<p:layoutUnit position="north" style="margin:0">
+			<ui:include src="/template/topo.xhtml" />
+		</p:layoutUnit>
+
+
+		<p:layoutUnit position="center" style="height:300px !important" >
+			<form action="#{request.contextPath}/j_spring_security_check" method="post">
 			<p:panel style="margin:auto;width:35%;margin-top:20px">
 				<h:panelGrid id="cadastroMesaPanel" columns="1" style="font-size:16px;width:100%;text-align:center;margin:auto;">
 				<h:form prependId="false" >
@@ -24,8 +44,21 @@
 				</h:panelGrid>
 			</p:panel>
 		</form>
-
+		</p:layoutUnit>
 		
+		<p:layoutUnit position="south">
+		
+			<ui:include src="/template/rodape.xhtml" />
+		</p:layoutUnit>
+	</p:layout>
 
-	</ui:define>
-</ui:composition>
+	<p:dialog style="text-align:center;padding:10px" widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false"
+		showHeader="false">
+		<p:outputLabel value="Aguarde..." style="font-weight:bold" />
+		<br />
+		<p:graphicImage style="margin:10px" library="imagens" name="ajax-loader.GIF" />
+	</p:dialog>
+	
+</h:body>
+
+</html>
