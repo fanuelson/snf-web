@@ -6,10 +6,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.snf.VM.CadastroFuncionarioVM;
 import com.snf.model.Funcionario;
 import com.snf.service.FuncionarioService;
 import com.snf.util.MessagesUtils;
+import com.snf.vm.CadastroFuncionarioVM;
 
 @Named
 @ViewScoped

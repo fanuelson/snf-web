@@ -7,10 +7,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.snf.VM.AberturaCaixaVM;
 import com.snf.model.Caixa;
 import com.snf.service.CaixaService;
 import com.snf.util.MessagesUtils;
+import com.snf.vm.AberturaCaixaVM;
 
 @Named
 @ViewScoped

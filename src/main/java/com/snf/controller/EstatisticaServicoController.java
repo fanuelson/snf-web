@@ -15,7 +15,6 @@ import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.LinearAxis;
 
-import com.snf.VM.EstatisticaServicoVM;
 import com.snf.builder.LinearChartModelBuilder;
 import com.snf.enums.PosicaoLegenda;
 import com.snf.model.Funcionario;
@@ -24,6 +23,7 @@ import com.snf.service.ServicoService;
 import com.snf.util.CollectionsUtils;
 import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
+import com.snf.vm.EstatisticaServicoVM;
 import com.snf.vo.ServicoDataValorVO;
 
 @Named

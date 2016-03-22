@@ -1,4 +1,4 @@
-package com.snf.VM;
+package com.snf.vm;
 
 import java.io.Serializable;
 

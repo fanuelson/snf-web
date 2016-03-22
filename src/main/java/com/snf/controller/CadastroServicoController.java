@@ -9,13 +9,13 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.snf.VM.CadastroServicoVM;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
 import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
+import com.snf.vm.CadastroServicoVM;
 
 @Named
 @ViewScoped
