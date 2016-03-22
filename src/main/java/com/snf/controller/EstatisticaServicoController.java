@@ -98,12 +98,8 @@ public class EstatisticaServicoController implements Serializable {
 	
 
 	private boolean periodoPesquisaValido() {
-
 		if (estatisticaServicoVM.getDataInicial() != null && estatisticaServicoVM.getDataFinal() != null) {
-			if (estatisticaServicoVM.getDataInicial().before(estatisticaServicoVM.getDataFinal()))
-				return true;
-			else
-				return false;
+			return estatisticaServicoVM.getDataInicial().before(estatisticaServicoVM.getDataFinal());
 		}
 		return true;
 	}
