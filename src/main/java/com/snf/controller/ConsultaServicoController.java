@@ -1,6 +1,7 @@
 package com.snf.controller;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +14,7 @@ import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
+import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
 
 @Named
@@ -54,6 +56,10 @@ public class ConsultaServicoController implements Serializable {
 	}
 	
 	public void pesquisar(){
+		Date dataInicialPesquisada = consultaServicoVM.getDataInicio();
+		Date dataFinalPesquisada = consultaServicoVM.getDataFim();
+		consultaServicoVM.setDataInicio(DataUtil.getDataHoraZerada(dataInicialPesquisada));
+		consultaServicoVM.setDataFim(DataUtil.getDataHoraFinalDia(dataFinalPesquisada));
 		if(periodoPesquisaValido()){
 			pesquisarPeriodoFuncionario();
 			calcularValorTotalPesquisa();
