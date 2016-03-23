@@ -10,23 +10,19 @@ import com.snf.util.DataUtil;
 
 public class EstatisticaServicoVM implements Serializable {
 
-	//private static final int UM_DIA = 1;
-
 	private static final int QT_DIAS_SEMANA = 7;
 
 	private static final long serialVersionUID = -836588887077362085L;
 
 	private Funcionario funcionario;
-	
+
 	private Date dataInicial;
-	
+
 	private Date dataFinal;
-	
+
 	@PostConstruct
-	public void init(){
-		//dataFinal = DataUtil.getDateTimeHoraZerada().plusDays(UM_DIA).toDate();
+	public void init() {
 		dataFinal = DataUtil.getDataAtualHoraFinalDia();
-		//dataInicial = DataUtil.getDateTimeHoraZerada().minusDays(QT_DIAS_SEMANA).toDate();
 		dataInicial = DataUtil.diminuirDias(new Date(), QT_DIAS_SEMANA);
 		System.out.println(dataInicial.toString());
 	}
@@ -54,5 +50,5 @@ public class EstatisticaServicoVM implements Serializable {
 	public void setDataFinal(Date dataFinal) {
 		this.dataFinal = dataFinal;
 	}
-	
+
 }
