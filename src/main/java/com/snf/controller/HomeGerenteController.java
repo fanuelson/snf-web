@@ -59,7 +59,7 @@ public class HomeGerenteController implements Serializable {
 			aberturaCaixaVM.setCaixa(new Caixa());
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
 		} catch (Exception e){
-			e.printStackTrace();
+			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro("mensagem.erro.salvar.registro");
 		}
 	}

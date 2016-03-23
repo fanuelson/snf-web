@@ -35,7 +35,7 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 			
 			servicos = query.getResultList();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 		return servicos;
 	}
@@ -52,7 +52,7 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 			query.setParameter("Func", funcionario);
 			servicosVO = query.getResultList();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 
 		return servicosVO;
