@@ -1,27 +1,23 @@
 package com.snf.library;
 
-import java.security.NoSuchAlgorithmException;
-
+import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Encripta {
 	
-	public String encripta(String senha, String crypt) {
-//		try {
-//			AbstractChecksum checksum = null;
-//			checksum = JacksumAPI.getChecksumInstance(crypt);
-//			checksum.update(senha.getBytes());
-//			return checksum.getFormattedValue();
-			return senha;
-//		} catch (NoSuchAlgorithmException ns) {
-//			ns.printStackTrace();
-//			return null;
-//		}
-	}
+	private static final String ALGORITHM_ENCRYPTOR = "SHA-1";
 
 	public String encripta(String senha) {
-		return encripta(senha, "whirlpool-1");
+		try {
+		ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
+		passwordEncryptor.setAlgorithm(ALGORITHM_ENCRYPTOR);
+		passwordEncryptor.setPlainDigest(true);
+		return passwordEncryptor.encryptPassword(senha);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }
