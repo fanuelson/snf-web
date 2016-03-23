@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,6 +23,8 @@ import com.snf.util.MessagesUtils;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
+	
+	final static Logger log = Logger.getLogger(CustomAuthenticationProvider.class);
 	
 	@Autowired
 	private Encripta enc;
@@ -46,12 +49,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 				grantedAuths.addAll(usuario.getAuthorities());
 				auth = getAuth(usuario);
 			}else{
+				log.error(new BadCredentialsException("SENHA ERRADA").toString());
 				throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.login"));
 			}
 			
 		}catch(NoResultException e){
+			log.error(e.toString());
 			throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.nenhum.registro.encontrado"));
 		}catch(PersistenceException persistenceException){
+			log.error(persistenceException.toString());
 			throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.conexao.login"));
 		}
 		
