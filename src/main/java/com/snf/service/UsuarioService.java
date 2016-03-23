@@ -12,9 +12,9 @@ public class UsuarioService implements Serializable {
 
 	private static final long serialVersionUID = -6071998648651080305L;
 
-	final static Logger log = Logger.getLogger(UsuarioService.class);
+	static final Logger log = Logger.getLogger(UsuarioService.class);
 
-	UsuarioDAO usuarioDAO;
+	private UsuarioDAO usuarioDAO;
 
 	public void salvar(Usuario usuario) {
 		usuarioDAO.save(usuario);

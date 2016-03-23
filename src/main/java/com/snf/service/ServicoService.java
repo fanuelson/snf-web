@@ -18,7 +18,7 @@ public class ServicoService implements Serializable {
 
 	private static final long serialVersionUID = -3854194992056453807L;
 
-	final static Logger log = Logger.getLogger(ServicoService.class);
+	static final Logger log = Logger.getLogger(ServicoService.class);
 
 	@Inject
 	private ServicoDAO servicoDAO;

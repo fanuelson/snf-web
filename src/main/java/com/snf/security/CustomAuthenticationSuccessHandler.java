@@ -17,7 +17,7 @@ import com.snf.model.Usuario;
 @Component
 public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-	final static Logger log = Logger.getLogger(CustomAuthenticationSuccessHandler.class);
+	static final Logger log = Logger.getLogger(CustomAuthenticationSuccessHandler.class);
 
 	private static final String PATH_PAGINA_INICIAL_CAIXA = "/pages/home/inicio.xhtml";
 	private static final String PATH_PAGINA_INICIAL_GERENTE = "/pages/home/inicioGerente.xhtml";

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Encripta {
 
-	final static Logger log = Logger.getLogger(Encripta.class);
+	static final Logger log = Logger.getLogger(Encripta.class);
 
 	private static final String ALGORITHM_ENCRYPTOR = "SHA-1";
 

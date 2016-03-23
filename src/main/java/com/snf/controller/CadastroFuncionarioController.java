@@ -19,7 +19,7 @@ public class CadastroFuncionarioController implements Serializable {
 
 	private static final long serialVersionUID = -3202126812210206703L;
 	
-	final static Logger log = Logger.getLogger(CadastroFuncionarioController.class);
+	static final Logger log = Logger.getLogger(CadastroFuncionarioController.class);
 
 	@Inject
 	private FuncionarioService funcionarioService;

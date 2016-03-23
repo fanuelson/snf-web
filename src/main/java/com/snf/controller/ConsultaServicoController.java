@@ -25,7 +25,7 @@ public class ConsultaServicoController implements Serializable {
 
 	private static final long serialVersionUID = -8784362664957105320L;
 	
-	final static Logger log = Logger.getLogger(ConsultaServicoController.class);
+	static final Logger log = Logger.getLogger(ConsultaServicoController.class);
 
 	@Inject
 	private ServicoService servicoService;

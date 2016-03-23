@@ -24,7 +24,7 @@ import com.snf.util.MessagesUtils;
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
-	final static Logger log = Logger.getLogger(CustomAuthenticationProvider.class);
+	static final Logger log = Logger.getLogger(CustomAuthenticationProvider.class);
 	
 	@Autowired
 	private Encripta enc;

@@ -14,7 +14,7 @@ import com.snf.service.FuncionarioService;
 @FacesConverter(forClass = Funcionario.class, value = "funcionarioConverter")
 public class FuncionarioConverter implements Converter {
 
-	final static Logger log = Logger.getLogger(FuncionarioConverter.class);
+	static final Logger log = Logger.getLogger(FuncionarioConverter.class);
 
 	@Inject
 	private FuncionarioService funcionarioService;

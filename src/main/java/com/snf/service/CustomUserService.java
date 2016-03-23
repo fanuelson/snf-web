@@ -13,7 +13,7 @@ import com.snf.dao.UsuarioDAO;
 @Service
 public class CustomUserService implements UserDetailsService {
 	
-	final static Logger log = Logger.getLogger(CustomUserService.class);
+	static final Logger log = Logger.getLogger(CustomUserService.class);
 
 	@Autowired
 	UsuarioDAO usuarioDAO;

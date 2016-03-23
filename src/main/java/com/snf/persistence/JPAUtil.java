@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 @ApplicationScoped
 public class JPAUtil {
 	
-	final static Logger log = Logger.getLogger(JPAUtil.class);
+	static final Logger log = Logger.getLogger(JPAUtil.class);
 
 	private EntityManagerFactory factory;
 

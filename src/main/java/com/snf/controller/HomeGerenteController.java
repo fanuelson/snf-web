@@ -20,7 +20,7 @@ public class HomeGerenteController implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	final static Logger log = Logger.getLogger(HomeGerenteController.class);
+	static final Logger log = Logger.getLogger(HomeGerenteController.class);
 
 	@Inject
 	private CaixaService caixaService;

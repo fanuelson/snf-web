@@ -15,7 +15,7 @@ public class CaixaService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	final static Logger log = Logger.getLogger(CaixaService.class);
+	static final Logger log = Logger.getLogger(CaixaService.class);
 	
 	@Inject
 	private CaixaDAO caixaDAO;

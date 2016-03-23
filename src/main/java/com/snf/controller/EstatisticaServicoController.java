@@ -33,7 +33,7 @@ public class EstatisticaServicoController implements Serializable {
 
 	private static final long serialVersionUID = 8284251730157488128L;
 	
-	final static Logger log = Logger.getLogger(EstatisticaServicoController.class);
+	static final Logger log = Logger.getLogger(EstatisticaServicoController.class);
 	
 	private static final String formato_data_americano = "yyyy-MM-dd";
 

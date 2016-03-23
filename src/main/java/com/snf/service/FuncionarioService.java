@@ -14,7 +14,7 @@ public class FuncionarioService implements Serializable {
 
 	private static final long serialVersionUID = 2470118587391107194L;
 
-	final static Logger log = Logger.getLogger(FuncionarioService.class);
+	static final Logger log = Logger.getLogger(FuncionarioService.class);
 
 	@Inject
 	private FuncionarioDAO funcionarioDAO;
