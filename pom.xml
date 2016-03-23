@@ -233,12 +233,6 @@
 			<version>1.7</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.0.2</version>
-			<scope>compile</scope>
-		</dependency>
 
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
