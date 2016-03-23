@@ -40,18 +40,14 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 	}
 	
 	public String getHomePage(Usuario usuario) throws IOException{
-		String pathHome = "";
 		switch(usuario!=null ? usuario.getTipo() : TipoUsuario.INEXISTENTE){
 		case CAIXA:
-			pathHome = PATH_PAGINA_INICIAL_CAIXA;
-			break;
+			return PATH_PAGINA_INICIAL_CAIXA;
 		case GERENTE:
-			pathHome = PATH_PAGINA_INICIAL_GERENTE;
-			break;
+			return PATH_PAGINA_INICIAL_GERENTE;
 		default:
-			pathHome = PATH_PAGINA_LOGIN;
+			return PATH_PAGINA_LOGIN;
 		}
-		return pathHome;
 	}
 
 }
