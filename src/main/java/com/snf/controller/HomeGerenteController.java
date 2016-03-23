@@ -7,6 +7,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.log4j.Logger;
+
 import com.snf.model.Caixa;
 import com.snf.service.CaixaService;
 import com.snf.util.MessagesUtils;
@@ -17,6 +19,8 @@ import com.snf.vm.AberturaCaixaVM;
 public class HomeGerenteController implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
+	final static Logger log = Logger.getLogger(HomeGerenteController.class);
 
 	@Inject
 	private CaixaService caixaService;
@@ -43,7 +47,7 @@ public class HomeGerenteController implements Serializable {
 			aberturaCaixaVM.setExisteCaixaAberto(true);
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
 		} catch (Exception e){
-			e.printStackTrace();
+			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro("mensagem.erro.salvar.registro");
 		}
 	}

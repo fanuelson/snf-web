@@ -10,12 +10,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
+
 import com.snf.builder.JPQLBuilder;
 
 @SuppressWarnings("unchecked")
 public abstract class GenericDAO<T , ID> implements Serializable {
 
 	private static final long serialVersionUID = 3836419209780168990L;
+	
+	final static Logger log = Logger.getLogger(GenericDAO.class);
 	
 	@Inject
 	@PersistenceContext
@@ -32,6 +36,7 @@ public abstract class GenericDAO<T , ID> implements Serializable {
             manager.getTransaction().commit();
     	}catch(Exception e){
     		manager.getTransaction().rollback();
+    		log.error(e.toString());
     		throw e;    		
     	}
     	return entity;
@@ -47,8 +52,8 @@ public abstract class GenericDAO<T , ID> implements Serializable {
     		getManager().remove(entity);
     		sucesso = true;
     	}catch(Exception e){
-    		e.printStackTrace();
     		manager.getTransaction().rollback();
+    		log.error(e.toString());
     		throw e;
     	}
     	return sucesso;
@@ -60,8 +65,8 @@ public abstract class GenericDAO<T , ID> implements Serializable {
     		manager.remove(manager.find(getTypeClass(), id));
             manager.getTransaction().commit();
     	}catch(Exception e){
-    		e.printStackTrace();
     		manager.getTransaction().rollback();
+    		log.error(e.toString());
     		throw e;
     	}
     }

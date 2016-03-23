@@ -6,12 +6,16 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.log4j.Logger;
+
 import com.snf.dao.CaixaDAO;
 import com.snf.model.Caixa;
 
 public class CaixaService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	final static Logger log = Logger.getLogger(CaixaService.class);
 	
 	@Inject
 	private CaixaDAO caixaDAO;

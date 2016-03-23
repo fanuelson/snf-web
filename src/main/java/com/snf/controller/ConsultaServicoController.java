@@ -9,6 +9,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.log4j.Logger;
+
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.service.FuncionarioService;
@@ -22,6 +24,8 @@ import com.snf.vm.ConsultaServicoVM;
 public class ConsultaServicoController implements Serializable {
 
 	private static final long serialVersionUID = -8784362664957105320L;
+	
+	final static Logger log = Logger.getLogger(ConsultaServicoController.class);
 
 	@Inject
 	private ServicoService servicoService;
@@ -77,7 +81,7 @@ public class ConsultaServicoController implements Serializable {
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.remover.registro");
 			
 		}catch(Exception e){
-			e.printStackTrace();
+			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro("mensagem.erro.remover.registro");
 		}
 	}

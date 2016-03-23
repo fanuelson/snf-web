@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 public class JPQLBuilder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	final static Logger log = Logger.getLogger(JPQLBuilder.class);
 
 	private static String SELECT = " SELECT ";
 	private static String FROM = " FROM ";

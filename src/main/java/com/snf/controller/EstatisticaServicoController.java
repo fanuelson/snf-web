@@ -9,6 +9,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.log4j.Logger;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
@@ -30,9 +31,11 @@ import com.snf.vo.ServicoDataValorVO;
 @ViewScoped
 public class EstatisticaServicoController implements Serializable {
 
-	private static final String formato_data_americano = "yyyy-MM-dd";
-
 	private static final long serialVersionUID = 8284251730157488128L;
+	
+	final static Logger log = Logger.getLogger(EstatisticaServicoController.class);
+	
+	private static final String formato_data_americano = "yyyy-MM-dd";
 
 	@Inject
 	private ServicoService servicoService;

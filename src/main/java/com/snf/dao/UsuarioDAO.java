@@ -21,6 +21,7 @@ public class UsuarioDAO extends GenericDAO<Usuario, Long> {
 			q.setParameter("sen", senha);
 			return (Usuario) q.getSingleResult();
 		} catch (Exception e) {
+			log.error(e.toString());
 			throw e;
 		}
 	}
@@ -38,8 +39,10 @@ public class UsuarioDAO extends GenericDAO<Usuario, Long> {
 			
 			return (Usuario) q.getSingleResult();
 		} catch (NoResultException e) {
+			log.error(e.toString());
 			throw e;
 		} catch (PersistenceException persistenceException) {
+			log.error(persistenceException.toString());
 			throw persistenceException;
 		}
 	}

@@ -8,6 +8,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.log4j.Logger;
+
 import com.snf.model.Funcionario;
 import com.snf.service.FuncionarioService;
 import com.snf.util.CollectionsUtils;
@@ -18,6 +20,8 @@ import com.snf.util.MessagesUtils;
 public class ConsultaFuncionarioController implements Serializable {
 
 	private static final long serialVersionUID = -1288711489651556752L;
+	
+	static final Logger log = Logger.getLogger(ConsultaFuncionarioController.class);
 	
 	@Inject
 	private FuncionarioService funcionarioService;
@@ -39,7 +43,7 @@ public class ConsultaFuncionarioController implements Serializable {
 				filteredFuncionarios.remove(funcionario);
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.remover.registro");
 		}catch(Exception e){
-			e.printStackTrace();
+			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro("mensagem.erro.remover.registro");
 		}
 	}

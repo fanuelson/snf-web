@@ -1,5 +1,6 @@
 package com.snf.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,6 +12,8 @@ import com.snf.dao.UsuarioDAO;
 
 @Service
 public class CustomUserService implements UserDetailsService {
+	
+	final static Logger log = Logger.getLogger(CustomUserService.class);
 
 	@Autowired
 	UsuarioDAO usuarioDAO;
