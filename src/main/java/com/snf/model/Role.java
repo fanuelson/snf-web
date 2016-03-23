@@ -28,13 +28,6 @@ public class Role implements GrantedAuthority {
 	@JoinColumn(name = "idTipoUsuario", nullable = true)
 	private TipoUsuario tipoUsuario;
 
-	public Role() {
-	}
-
-	public Role(TipoUsuario permissao) {
-		this.tipoUsuario = permissao;
-	}
-
 	@Override
 	public String getAuthority() {
 		return this.tipoUsuario.getTipo().name();
