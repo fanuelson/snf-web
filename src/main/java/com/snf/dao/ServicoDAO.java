@@ -31,7 +31,6 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 			
 			Query query = getManager().createQuery(queryBuilder.contruir());
 			colocarParametros(query, queryBuilder);
-			System.out.println(queryBuilder.contruir());
 			
 			servicos = query.getResultList();
 		} catch (Exception e) {
