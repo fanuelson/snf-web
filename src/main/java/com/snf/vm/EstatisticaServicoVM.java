@@ -24,7 +24,6 @@ public class EstatisticaServicoVM implements Serializable {
 	public void init() {
 		dataFinal = DataUtil.getDataAtualHoraFinalDia();
 		dataInicial = DataUtil.diminuirDias(new Date(), QT_DIAS_SEMANA);
-		System.out.println(dataInicial.toString());
 	}
 
 	public Funcionario getFuncionario() {
