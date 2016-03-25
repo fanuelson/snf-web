@@ -4,12 +4,11 @@
 	<ui:define name="corpoLayout">
 
 		<form action="#{request.contextPath}/j_spring_security_check" method="post">
-			<p:panel style="margin:auto;width:35%;margin-top:20px">
+			<p:panel style="margin:auto;width:20%;margin-top:20px;box-shadow: 10px 10px 5px #888888;">
 				<h:panelGrid id="cadastroMesaPanel" columns="1" style="font-size:16px;width:100%;text-align:center;margin:auto;">
 				<h:form prependId="false" >
 					<h3 style="text-align: left; margin-bottom: 2px">Login</h3>
 					<hr />
-					<p:outputLabel value="#{SPRING_SECURITY_LAST_EXCEPTION.message}" rendered="#{param.erro}" styleClass="erro" />
 					<h:panelGrid style="margin: auto;width: 55%;" columns="2">
 						<p:outputLabel style="float:left" for="j_username" value="#{msg['label.login']}" />
 						<p:inputText style="float:right;padding:0px;" required="true" id="j_username" size="15"/>
@@ -18,10 +17,13 @@
 						<p:inputText style="float:right;padding:0px;" type="password" required="true" id="j_password" size="15"/>
 					</h:panelGrid>
 
-					<h:commandButton styleClass="botoes" style="width:200px;height:30px;margin:5px" value="#{msg['label.entrar']}"
-						type="submit"  />
+					<p:commandButton icon="ui-icon-locked"  ajax="false" styleClass="botoes" style="width:150px;height:30px;margin:5px" 
+					value="#{msg['label.entrar']}" type="submit"  />
 				</h:form>
 				</h:panelGrid>
+				<div style="text-align:center" >
+					<p:outputLabel value="#{SPRING_SECURITY_LAST_EXCEPTION.message}" style="text-align:center" rendered="#{param.erro}" styleClass="erro" />
+				</div>
 			</p:panel>
 		</form>
 
