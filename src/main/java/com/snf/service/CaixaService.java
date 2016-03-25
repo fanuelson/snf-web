@@ -40,6 +40,10 @@ public class CaixaService implements Serializable {
 		return null;
 	}
 	
+	public boolean existeCaixaAberto() {
+		return getCaixaAberto()!=null;
+	}
+	
 	public void fecharCaixa(Caixa caixa) {
 		caixa.fechar();
 		caixaDAO.save(caixa);

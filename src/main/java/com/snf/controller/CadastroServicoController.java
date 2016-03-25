@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
+import com.snf.service.CaixaService;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
 import com.snf.util.DataUtil;
@@ -36,11 +37,15 @@ public class CadastroServicoController implements Serializable {
 	@Inject
 	private CadastroServicoVM cadastroServicoVM;
 	
+	@Inject
+	private CaixaService caixaService;
+	
 	private List<Funcionario> funcionarios;
 	
 	@PostConstruct
 	public void init(){
 		funcionarios = funcionarioService.getAll();
+		cadastroServicoVM.setNaoExisteCaixaAberto(!caixaService.existeCaixaAberto());
 	}
 	
 	public void salvar(){

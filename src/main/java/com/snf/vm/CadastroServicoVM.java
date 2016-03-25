@@ -17,6 +17,8 @@ public class CadastroServicoVM implements Serializable {
 	
 	private Date data;
 	
+	private boolean naoExisteCaixaAberto;
+	
 	@PostConstruct
 	public void init(){
 		data = new Date();
@@ -36,6 +38,14 @@ public class CadastroServicoVM implements Serializable {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public boolean isNaoExisteCaixaAberto() {
+		return naoExisteCaixaAberto;
+	}
+
+	public void setNaoExisteCaixaAberto(boolean naoExisteCaixaAberto) {
+		this.naoExisteCaixaAberto = naoExisteCaixaAberto;
 	}
 	
 }

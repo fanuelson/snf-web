@@ -1,51 +1,52 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-	template="/template/layout.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
 	<ui:define name="corpoLayout">
 
 		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
 
 		<h:form id="cadastroServicoForm">
 			<p:panel header="#{msg['label.cadastro.servico']}" style="width:50%;margin:20px auto 20px auto">
-			<h:panelGrid style="width:100%;margin:auto;padding:20px;">
-				
-				<p:outputLabel for="nome" value="#{msg['label.campo.nome']}" />
-				<p:inputText size="30" required="true" id="nome" value="#{cadastroServicoController.cadastroServicoVM.servico.nome}" />
+				<p:outputLabel style="margin:10px" value="É necessário abrir o caixa para cadastro de Serviço." styleClass="erro"
+				rendered="#{cadastroServicoController.cadastroServicoVM.naoExisteCaixaAberto}"  />
+				<h:panelGrid style="width:100%;margin:auto;padding:20px;">
 
-				<p:outputLabel value="#{msg['label.campo.descricao']}" for="descricao" />
-				<p:inputTextarea rows="7" cols="70"  id="descricao" value="#{cadastroServicoController.cadastroServicoVM.servico.descricao}" />
+					<p:outputLabel for="nome" value="#{msg['label.campo.nome']}" />
+					<p:inputText size="30" required="true" id="nome" value="#{cadastroServicoController.cadastroServicoVM.servico.nome}" />
 
-				<p:outputLabel value="#{msg['label.campo.funcionario']}" for="funcionario" />
-				<p:selectOneMenu style="width:300px" id="funcionario" required="true" converter="funcionarioConverter"
-					value="#{cadastroServicoController.cadastroServicoVM.servico.funcionario}">
-					<c:selectItem itemLabel="-Selecione-" itemValue="#{null}" noSelectionOption="true"  />
-					<c:selectItems value="#{cadastroServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario}"
-						itemLabel="#{funcionario.nome}" />
-				</p:selectOneMenu>
+					<p:outputLabel value="#{msg['label.campo.descricao']}" for="descricao" />
+					<p:inputTextarea rows="7" cols="70" id="descricao" value="#{cadastroServicoController.cadastroServicoVM.servico.descricao}" />
 
-				<p:outputLabel value="#{msg['label.campo.valor']}" for="valor" />
-				<p:inputText id="valor" value="#{cadastroServicoController.cadastroServicoVM.servico.valor}"
-					size="10" required="true" type="number" converterMessage="Preço inválido."
-					validatorMessage="Preço deve ser maior ou igual a 0,01">
-					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-					<c:validateDoubleRange minimum="0.1" />
-				</p:inputText>
+					<p:outputLabel value="#{msg['label.campo.funcionario']}" for="funcionario" />
+					<p:selectOneMenu style="width:300px" id="funcionario" required="true" converter="funcionarioConverter"
+						value="#{cadastroServicoController.cadastroServicoVM.servico.funcionario}">
+						<c:selectItem itemLabel="-Selecione-" itemValue="#{null}" noSelectionOption="true" />
+						<c:selectItems value="#{cadastroServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario}"
+							itemLabel="#{funcionario.nome}" />
+					</p:selectOneMenu>
 
-				<p:outputLabel value="#{msg['label.campo.nome.cliente']}" for="nomeCliente" />
-				<p:inputText id="nomeCliente" value="#{cadastroServicoController.cadastroServicoVM.servico.nomeCliente}" />
+					<p:outputLabel value="#{msg['label.campo.valor']}" for="valor" />
+					<p:inputText id="valor" value="#{cadastroServicoController.cadastroServicoVM.servico.valor}" size="10" required="true" type="number"
+						converterMessage="Preço inválido." validatorMessage="Preço deve ser maior ou igual a 0,01">
+						<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+						<c:validateDoubleRange minimum="0.1" />
+					</p:inputText>
 
-				<p:outputLabel value="#{msg['label.campo.data']}" for="data" />
-				<p:calendar required="true" id="data" value="#{cadastroServicoController.cadastroServicoVM.data}"
-					pattern="dd/MM/yyyy HH:mm:ss">
+					<p:outputLabel value="#{msg['label.campo.nome.cliente']}" for="nomeCliente" />
+					<p:inputText id="nomeCliente" value="#{cadastroServicoController.cadastroServicoVM.servico.nomeCliente}" />
 
-				</p:calendar>
+					<p:outputLabel value="#{msg['label.campo.data']}" for="data" />
+					<p:calendar required="true" id="data" value="#{cadastroServicoController.cadastroServicoVM.data}" pattern="dd/MM/yyyy HH:mm:ss">
 
-				<p:row>
-					<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" style="float:right;margin:20px" value="Salvar" process="cadastroServicoForm"
-						action="#{cadastroServicoController.salvar()}" update="msgs cadastroServicoForm" />
-					<p:commandButton style="float:right;margin:20px" value="#{msg['label.cancelar']}" process="@this" action="#{commonsController.getPaginaInicial()}" />
-				</p:row>
-			</h:panelGrid>
+					</p:calendar>
+
+					<p:row>
+						<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" style="float:right;margin:20px"
+							value="Salvar" process="cadastroServicoForm" disabled="#{cadastroServicoController.cadastroServicoVM.naoExisteCaixaAberto}"
+							action="#{cadastroServicoController.salvar()}" update="msgs cadastroServicoForm" />
+						<p:commandButton style="float:right;margin:20px" value="#{msg['label.cancelar']}" process="@this"
+							action="#{commonsController.getPaginaInicial()}" />
+					</p:row>
+				</h:panelGrid>
 			</p:panel>
 		</h:form>
 
