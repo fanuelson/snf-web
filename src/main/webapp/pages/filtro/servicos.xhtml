@@ -2,6 +2,7 @@
 	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="filtroPesquisaServico">
+		<p:panel header="#{msg['label.filtro.pesquisa']}" style="margin:10px auto 10px auto;width:80%">
 		<p:panelGrid styleClass="botoes" style="margin:auto;margin-top:10px">
 			<p:column>
 				<p:outputLabel style="display:inherit" value="#{msg['label.campo.funcionario']}" for="funcionario" />
@@ -22,7 +23,8 @@
 					pattern="dd/MM/yyyy" />
 			</p:column>
 			<p:column>
-				<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" style="padding:8px" value="#{msg['label.pesquisar']}" process="@this filtroPesquisaServico"
+				<p:commandButton icon="ui-icon-search" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" 
+				style="padding:8px" value="#{msg['label.pesquisar']}" process="@this filtroPesquisaServico"
 					action="#{consultaServicoController.pesquisar()}" update="consultaServicosForm panelCalculo" />
 			</p:column>
 		</p:panelGrid>
@@ -32,11 +34,12 @@
 			<h:outputLabel id="calculo" value="#{consultaServicoController.valorTotalPesquisa}">
 				<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 			</h:outputLabel>
-			<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" style="margin-left:10px" value="#{msg['label.calcular']}"
+			<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" 
+				style="margin-left:10px" value="#{msg['label.calcular']}" icon="ui-icon-calculator"
 				action="#{consultaServicoController.calcularValorTotalPesquisa}" update="calculo" />
 		</h:panelGrid>
 
-
+		</p:panel>
 	</h:form>
 
 </ui:composition>

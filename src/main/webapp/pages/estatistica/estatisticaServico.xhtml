@@ -4,12 +4,13 @@
 	<ui:define name="corpoLayout">
 
 		<p:growl id="msgs" autoUpdate="true" showDetail="false" />
-
+		<p:panel header="#{msg['label.estatistica.servicos']}" style="width:80%;margin:10px auto 10px auto" >
 		<ui:include src="/pages/filtro/filtroEstatisticaServico.xhtml" />
-
+	<hr width="50%" />
+	<br/>
 		<p:chart id="grafico" type="line" model="#{estatisticaServicoController.animatedModel1}"
 			style="margin:auto;margin-top:20px;width:80%" />
-
+		</p:panel>
 
 	</ui:define>
 </ui:composition>

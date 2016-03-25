@@ -26,14 +26,14 @@
 	
 						<p:commandLink style="margin-right:30px" process="@this" update="consultaFuncionarioForm" oncomplete="PF('cadastroProduto').show()"
 							onsuccess="PF('cadastroProduto').hide()">
-							<p:graphicImage width="20px" library="imagens" name="editIcon.png" />
+							<p:graphicImage width="25px" library="imagens" name="editIcon.png" />
 						</p:commandLink>
 							
 	
 						<p:commandLink style="margin-left:5px" icon="ui-icon-close"
 							action="#{consultaFuncionarioController.remover(funcionario)}" process="@this" update="consultaFuncionarioForm">
-							<p:graphicImage width="20px" library="imagens" name="deleteIcon.png" />
-							<p:confirm header="Confirmação" message="#{msg['label.confirmacao.exclusao.registro']}" icon="ui-icon-alert" />
+							<p:graphicImage width="25px" library="imagens" name="deleteIcon.png" />
+							<p:confirm />
 						</p:commandLink>
 	
 					</p:column>
@@ -42,12 +42,9 @@
 			
 			</h:panelGrid>
 			
-			<p:confirmDialog styleClass="botoes" global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="#{msg['label.sim']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" process="@this" />
-
-				<p:commandButton style="align:right;float:right" value="#{msg['label.nao']}" process="@this" styleClass="ui-confirmdialog-no"
-					icon="ui-icon-close" />
-			</p:confirmDialog>
+			<ui:include src="/pages/dialogs/confirmaExclusaoDialog.xhtml">
+				<ui:param name="mensagem" value="#{msg['label.confirmacao.exclusao.registro']}" />
+			</ui:include>
 
 		</h:form>
 

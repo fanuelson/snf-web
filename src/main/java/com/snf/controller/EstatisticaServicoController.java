@@ -68,7 +68,7 @@ public class EstatisticaServicoController implements Serializable {
 		Date dataInicialPesquisada = estatisticaServicoVM.getDataInicial();
 		Date dataFinalPesquisada = estatisticaServicoVM.getDataFinal();
 		estatisticaServicoVM.setDataInicial(DataUtil.getDataHoraZerada(dataInicialPesquisada));
-		estatisticaServicoVM.setDataFinal(DataUtil.getDataHoraZerada(dataFinalPesquisada));
+		estatisticaServicoVM.setDataFinal(DataUtil.getDataHoraFinalDia(dataFinalPesquisada));
 		if (periodoPesquisaValido()) {
 			Funcionario funcionarioPesquisado = estatisticaServicoVM.getFuncionario();
 			servicos = servicoService.servicosByPeriodoAndFuncionario(dataInicialPesquisada, dataFinalPesquisada,
@@ -77,10 +77,11 @@ public class EstatisticaServicoController implements Serializable {
 				MessagesUtils.exibirMensagemErro("mensagem.nenhum.registro.encontrado");
 			calcularValorTotalPesquisa();
 			calcularValorMaxEixoY();
-			createAnimatedModels();
 		} else {
+			servicos=null;
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
 		}
+		createAnimatedModels();
 
 	}
 

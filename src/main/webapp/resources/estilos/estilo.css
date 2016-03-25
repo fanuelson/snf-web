@@ -12,6 +12,51 @@ html,body{
 	margin: 0 auto -120px; /* the bottom margin is the negative value of the footer's height */
 }
 
+.btn-danger {
+	border: 1px solid #D91616;
+    color: #FFF;
+    font-size: 12px;
+    box-shadow: 0 1px 0 rgba(255, 83, 83, 0) inset, 0 1px 2px rgba(0,0,0,0.2) !important;
+    background: #FF2727;
+    background: -moz-linear-gradient(top, #27abff 0%, #059eff 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FF2727), color-stop(100%,#FF0505));
+    background: -webkit-linear-gradient(top, #FF2727 0%,rgba(255, 63, 5, 0.82) 100%);
+    background: -o-linear-gradient(top, #27abff 0%,#059eff 100%);
+    background: -ms-linear-gradient(top, #27abff 0%,#059eff 100%);
+}
+
+.ui-dialog-content > .ui-icon {
+    display: none !important;
+}
+
+.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {
+	background: none;
+}
+
+.ui-panel > .ui-panel-titlebar {
+	font-size: 1.2em;
+}
+
+.ui-menubar > .ui-menu-list > .ui-menuitem > .ui-menuitem-link span.ui-icon-triangle-1-s {
+	display: none;
+}
+	
+
+.ui-confirm-dialog > .ui-dialog-content {
+	display: none !important;
+}
+
+.perigo {
+	border: 1px solid #D91616 !important;
+    color: #FFF !important;
+    font-size: 12px;
+    box-shadow: 0 1px 0 #FF5353 inset, 0 1px 2px rgba(0,0,0,0.2) !important;
+    background: #FF2727 !important;
+    background: -moz-linear-gradient(top, #27abff 0%, #059eff 100%) !important;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FF2727), color-stop(100%,#FF0505)) !important;
+    background: -webkit-linear-gradient(top, #FF2727 0%,#FF0505 100%) !important;
+}
+
 .footer, .push {
 	height: 120px; /* .push must be the same height as .footer */
 }

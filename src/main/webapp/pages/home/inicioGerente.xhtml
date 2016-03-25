@@ -7,39 +7,38 @@
 	
 		<h3 style="padding: 20px 0 0 50px;">#{msg['mensgem.bem.vindo']}</h3>
 		<h:form prependId="false" id="formAbrirCaixa" > 
-			<h:panelGrid style="margin:auto" rendered="#{not homeGerenteController.aberturaCaixaVM.existeCaixaAberto}" >
-				<h3>ABRIR CAIXA</h3>
-				<hr/>
+			<p:panel header="#{msg['label.ABRIR.CAIXA']}" style="margin:auto;width:15%;" 
+			rendered="#{not homeGerenteController.aberturaCaixaVM.existeCaixaAberto}" >
+				<h:panelGrid style="margin:5px 0 5px 0;"  >
+					<p:outputLabel for="valorInicial" value="#{msg['label.valor.inicial']}" />
+					<p:inputText required="true" id="valorInicial" value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}" >
+						<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+						<c:validateDoubleRange minimum="0.1" />
+					</p:inputText>
+				</h:panelGrid>
+				<p:commandButton value="#{msg['label.abrir.caixa']}" process="valorInicial @this" action="#{homeGerenteController.salvarCaixa()}" update="formAbrirCaixa" />
+			</p:panel>
 			
-				<p:outputLabel for="valorInicial" value="Valor Inicial:" />
-				<p:inputText required="true" id="valorInicial" value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}" >
+			<p:panel style="margin:auto;width:15%" header="#{msg['label.CAIXA.ABERTO']}"
+			rendered="#{homeGerenteController.aberturaCaixaVM.existeCaixaAberto}" >
+				<h:panelGrid>
+				<p:outputLabel for="valorInicialCaixa" value="#{msg['label.valor.inicial']}" />
+				<p:inputText style="opacity:0.8" disabled="true" required="true" id="valorInicialCaixa" 
+				value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}" >
 					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 					<c:validateDoubleRange minimum="0.1" />
 				</p:inputText>
 				
-				<p:commandButton value="Abrir Caixa" process="valorInicial @this" action="#{homeGerenteController.salvarCaixa()}" update="formAbrirCaixa" />
-
-			</h:panelGrid>
-			
-			<h:panelGrid style="margin:auto" rendered="#{homeGerenteController.aberturaCaixaVM.existeCaixaAberto}" >
-				<h3>CAIXA ABERTO</h3>
-				<hr/>
-			
-				<p:outputLabel for="valorInicialCaixa" value="Valor Inicial:" />
-				<p:inputText disabled="true" required="true" id="valorInicialCaixa" value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}" >
+				<p:outputLabel for="valorAtual" value="#{msg['label.valor.atual']}" />
+				<p:inputText style="opacity:0.8" disabled="true" required="true" id="valorAtual"
+				 value="#{homeGerenteController.aberturaCaixaVM.caixa.valorAtual}" >
 					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 					<c:validateDoubleRange minimum="0.1" />
 				</p:inputText>
 				
-				<p:outputLabel for="valorAtual" value="Valor Atual:" />
-				<p:inputText disabled="true" required="true" id="valorAtual" value="#{homeGerenteController.aberturaCaixaVM.caixa.valorAtual}" >
-					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-					<c:validateDoubleRange minimum="0.1" />
-				</p:inputText>
-				
-				<p:commandButton value="Fechar Caixa" action="#{homeGerenteController.fecharCaixa()}" update="formAbrirCaixa" />
-
-			</h:panelGrid>
+				<p:commandButton value="#{msg['label.fechar.caixa']}" action="#{homeGerenteController.fecharCaixa()}" update="formAbrirCaixa" />
+				</h:panelGrid>
+			</p:panel>
 		</h:form>
 	</ui:define>
 </ui:composition>

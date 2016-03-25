@@ -29,7 +29,6 @@ public class FuncionarioConverter implements Converter {
 				Long id = Long.parseLong(value);
 				return funcionarioService.getById(id);
 			} catch (Exception e) {
-				log.error(e.toString());
 				return null;
 			}
 

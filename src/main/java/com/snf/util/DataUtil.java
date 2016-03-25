@@ -12,16 +12,22 @@ public class DataUtil {
 	}
 
 	public static Timestamp dateToTimeStamp(Date d) {
+		if(dataIsNull(d))
+			return null;
 		Calendar c = Calendar.getInstance();
 		c.setTime(d);
 		return new Timestamp(c.getTimeInMillis());
 	}
 
 	public static Date diminuirDias(Date d, int dias) {
+		if(dataIsNull(d))
+			return null;
 		return new DateTime(d).minusDays(dias).toDate();
 	}
 
 	public static Date somarDias(Date d, int dias) {
+		if(dataIsNull(d))
+			return null;
 		return new DateTime(d).plusDays(dias).toDate();
 	}
 
@@ -36,6 +42,8 @@ public class DataUtil {
 	}
 
 	public static Date getDataHoraZerada(Date data) {
+		if(dataIsNull(data))
+			return null;
 		DateTime dt = new DateTime(data).withTimeAtStartOfDay();
 		return dt.toDate();
 	}
@@ -46,12 +54,20 @@ public class DataUtil {
 	}
 
 	public static Date getDataHoraFinalDia(Date data) {
+		if(dataIsNull(data))
+			return null;
 		DateTime dt = new DateTime(data).withTimeAtStartOfDay().plusDays(1).minusSeconds(1);
 		return dt.toDate();
 	}
 
 	public static String getDataFormatada(Date data, String formato) {
+		if(dataIsNull(data))
+			return null;
 		return new DateTime(data).toString(formato);
+	}
+	
+	private static boolean dataIsNull(Date data) {
+		return data==null;
 	}
 
 }

@@ -27,7 +27,7 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 					.from(Servico.class, "s")
 					.where("(:dataInicio IS NULL OR  s.data>= :dataInicio)", dataInicio)
 					.and("(:dataFinal IS NULL OR s.data<= :dataFinal)", dataFinal)
-					.and("(:func IS NULL OR s.funcionario = :func)", funcionario);
+					.and("(:func = null OR s.funcionario = :func)", funcionario);
 			
 			Query query = getManager().createQuery(queryBuilder.contruir());
 			colocarParametros(query, queryBuilder);
@@ -44,11 +44,19 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 		
 		try {
 			getManager().clear();
-			TypedQuery<ServicoDataValorVO> query = getManager().createQuery(
-					"SELECT new com.snf.vo.ServicoDataValorVO(s.data,SUM(s.valor)) FROM Servico s WHERE DATE(s.data) >= :dataInicial AND DATE(s.data) <= :dataFinal AND (s.funcionario = :Func OR null = :Func ) GROUP BY extract(day from s.data) ORDER BY s.data ASC",ServicoDataValorVO.class);
-			query.setParameter("dataInicial", dataInicial);
-			query.setParameter("dataFinal", dataFinal);
-			query.setParameter("Func", funcionario);
+			JPQLBuilder queryBuilder = new JPQLBuilder()
+					.select("new com.snf.vo.ServicoDataValorVO(s.data,SUM(s.valor))")
+					.from(Servico.class, "s")
+					.where("(:dataInicial=null OR DATE(s.data) >= :dataInicial)", dataInicial)
+					.and("(:dataFinal=null OR DATE(s.data) <= :dataFinal)", dataFinal)
+					.and("(s.funcionario = :Func OR null = :Func )", funcionario)
+					.groupBy("extract(day from s.data)")
+					.orderBy("s.data")
+					.asc();
+			
+			TypedQuery<ServicoDataValorVO> query = getManager().createQuery(queryBuilder.contruir(),ServicoDataValorVO.class);
+			
+			colocarParametros(query, queryBuilder);
 			servicosVO = query.getResultList();
 		} catch (Exception e) {
 			log.error(e.toString());

@@ -6,10 +6,9 @@
 		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
 
 		<h:form id="cadastroServicoForm">
-			<h:panelGrid style="width:60%;margin:auto;border:1px solid black;padding:20px;background-color: whitesmoke;">
-				<h3>#{msg['label.cadastro.servico']}</h3>
-				<hr />
-
+			<p:panel header="#{msg['label.cadastro.servico']}" style="width:50%;margin:20px auto 20px auto">
+			<h:panelGrid style="width:100%;margin:auto;padding:20px;">
+				
 				<p:outputLabel for="nome" value="#{msg['label.campo.nome']}" />
 				<p:inputText size="30" required="true" id="nome" value="#{cadastroServicoController.cadastroServicoVM.servico.nome}" />
 
@@ -47,6 +46,7 @@
 					<p:commandButton style="float:right;margin:20px" value="#{msg['label.cancelar']}" process="@this" action="#{commonsController.getPaginaInicial()}" />
 				</p:row>
 			</h:panelGrid>
+			</p:panel>
 		</h:form>
 
 	</ui:define>

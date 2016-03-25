@@ -3,14 +3,9 @@ package com.snf.vm;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
-
 import com.snf.model.Funcionario;
-import com.snf.util.DataUtil;
 
 public class EstatisticaServicoVM implements Serializable {
-
-	private static final int QT_DIAS_SEMANA = 7;
 
 	private static final long serialVersionUID = -836588887077362085L;
 
@@ -19,12 +14,6 @@ public class EstatisticaServicoVM implements Serializable {
 	private Date dataInicial;
 
 	private Date dataFinal;
-
-	@PostConstruct
-	public void init() {
-		dataFinal = DataUtil.getDataAtualHoraFinalDia();
-		dataInicial = DataUtil.diminuirDias(new Date(), QT_DIAS_SEMANA);
-	}
 
 	public Funcionario getFuncionario() {
 		return funcionario;

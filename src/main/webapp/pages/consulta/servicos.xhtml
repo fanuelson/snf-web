@@ -1,6 +1,5 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-	template="/template/layout.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
 	<ui:define name="corpoLayout">
 
 		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
@@ -11,9 +10,8 @@
 			<h:panelGrid style="padding:30px">
 				<p:dataTable styleClass="botoes" style="width:95%;font-size:12px;margin:auto" var="servico"
 					value="#{consultaServicoController.servicos}" emptyMessage="Nenhum serviço cadastrado"
-					filteredValue="#{consultaServicoController.servicosFiltered}" widgetVar="servicosTable" id="servicosTable"
-					paginator="true" rows="10" rowExpandMode="false" 
-					rowsPerPageTemplate="5,10,15,20,30" >
+					filteredValue="#{consultaServicoController.servicosFiltered}" widgetVar="servicosTable" id="servicosTable" paginator="true" rows="10"
+					rowExpandMode="false" rowsPerPageTemplate="5,10,15,20,30">
 					<c:facet name="header">
 						<p:outputPanel style="width:100%">
 							<h:outputLabel style="margin-left:50px" value="#{msg['label.procurar']}" />
@@ -31,13 +29,11 @@
 						<h:outputText value="#{servico.nome}" />
 					</p:column>
 
-					<p:column style="width:25% " filterMatchMode="contains" filterBy="#{servico.descricao}"
-						headerText="#{msg['label.descricao']}">
+					<p:column style="width:25% " filterMatchMode="contains" filterBy="#{servico.descricao}" headerText="#{msg['label.descricao']}">
 						<h:outputText value="#{servico.descricao}" />
 					</p:column>
 
-					<p:column style="width:12% " headerText="#{msg['label.funcionario']}" filterMatchMode="contains"
-						filterBy="#{servico.funcionario.nome}">
+					<p:column style="width:12% " headerText="#{msg['label.funcionario']}" filterMatchMode="contains" filterBy="#{servico.funcionario.nome}">
 						<h:outputText value="#{servico.funcionario.nome}" />
 					</p:column>
 
@@ -47,8 +43,7 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column style="width:15% " headerText="#{msg['label.nome.cliente']}" filterMatchMode="contains"
-						filterBy="#{servico.nomeCliente}">
+					<p:column style="width:15% " headerText="#{msg['label.nome.cliente']}" filterMatchMode="contains" filterBy="#{servico.nomeCliente}">
 						<h:outputText value="#{servico.nomeCliente}" />
 					</p:column>
 
@@ -59,11 +54,10 @@
 						</p:commandLink>
 
 
-						<p:commandLink style="margin-left:5px" icon="ui-icon-close" action="#{consultaServicoController.remover(servico)}"
-							process="@this" update="consultaServicosForm">
+						<p:commandLink style="margin-left:5px" icon="ui-icon-close" action="#{consultaServicoController.remover(servico)}" process="@this"
+							update="consultaServicosForm">
 							<p:graphicImage width="25px" library="imagens" name="deleteIcon.png" />
-							<p:confirm header="#{msg['label.confirmacao']}" message="#{msg['label.confirmacao.exclusao.registro']}"
-								icon="ui-icon-alert" />
+							<p:confirm />
 						</p:commandLink>
 
 					</p:column>
@@ -72,12 +66,10 @@
 
 			</h:panelGrid>
 
-			<p:confirmDialog styleClass="botoes" global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="#{msg['label.sim']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" process="@this" />
+			<ui:include src="/pages/dialogs/confirmaExclusaoDialog.xhtml">
+				<ui:param name="mensagem" value="#{msg['label.confirmacao.exclusao.registro']}" />
+			</ui:include>
 
-				<p:commandButton style="align:right;float:right" value="#{msg['label.nao']}" process="@this"
-					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-			</p:confirmDialog>
 
 		</h:form>
 

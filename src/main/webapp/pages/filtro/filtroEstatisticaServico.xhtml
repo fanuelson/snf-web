@@ -14,16 +14,17 @@
 			</p:column>
 			<p:column>
 				<p:outputLabel style="display:inherit" value="#{msg['label.campo.data.inicial']}" for="dataInicial" />
-				<p:calendar required="true" id="dataInicial"
+				<p:calendar id="dataInicial"
 					value="#{estatisticaServicoController.estatisticaServicoVM.dataInicial}" pattern="dd/MM/yyyy" />
 			</p:column>
 			<p:column>
 				<p:outputLabel style="display:inherit" value="#{msg['label.campo.data.final']}" for="dataFinal" />
-				<p:calendar required="true" styleClass="botoes" id="dataFinal"
+				<p:calendar styleClass="botoes" id="dataFinal"
 					value="#{estatisticaServicoController.estatisticaServicoVM.dataFinal}" pattern="dd/MM/yyyy" />
 			</p:column>
 			<p:column>
-				<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" style="padding:8px" value="#{msg['label.pesquisar']}" process="@this filtroPesquisaServico"
+				<p:commandButton icon="ui-icon-search" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" 
+				style="padding:8px" value="#{msg['label.pesquisar']}" process="@this filtroPesquisaServico"
 					action="#{estatisticaServicoController.pesquisar()}" update="grafico painelCalculo" />
 			</p:column>
 		</p:panelGrid>
@@ -33,7 +34,7 @@
 			<h:outputLabel id="calculo" value="#{estatisticaServicoController.valorTotalPesquisa}">
 				<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 			</h:outputLabel>
-			<p:commandButton style="margin-left:10px" value="#{msg['label.calcular']}"
+			<p:commandButton icon="ui-icon-calculator" style="margin-left:10px" value="#{msg['label.calcular']}"
 				action="#{estatisticaServicoController.calcularValorTotalPesquisa()}" update="calculo" />
 		</h:panelGrid>
 
