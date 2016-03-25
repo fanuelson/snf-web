@@ -43,6 +43,17 @@ public class Usuario implements UserDetails {
 	@Column(name = "tipo")
 	private TipoUsuario tipo;
 
+	@Column(name = "tentativas")
+	private Integer tentativas;
+
+	public void incrementarTentativas() {
+		this.tentativas += 1;
+	}
+	
+	public void zerarTentativas() {
+		this.tentativas = 0;
+	}
+
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
@@ -89,6 +100,14 @@ public class Usuario implements UserDetails {
 
 	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
+	}
+
+	public Integer getTentativas() {
+		return tentativas;
+	}
+
+	public void setTentativas(Integer tentativas) {
+		this.tentativas = tentativas;
 	}
 
 	@Override
