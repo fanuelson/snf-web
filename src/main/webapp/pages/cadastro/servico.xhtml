@@ -20,7 +20,7 @@
 					<p:outputLabel value="#{msg['label.campo.funcionario']}" for="funcionario" />
 					<p:selectOneMenu style="width:300px" id="funcionario" required="true" converter="funcionarioConverter"
 						value="#{cadastroServicoController.cadastroServicoVM.servico.funcionario}" filter="true" filterMatchMode="contains" >
-						<c:selectItem itemLabel="-Selecione-" itemValue="#{null}" noSelectionOption="true" />
+						<c:selectItem itemLabel="#{msg['label.selecione']}" itemValue="#{null}" noSelectionOption="true" />
 						<c:selectItems value="#{cadastroServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario}"
 							itemLabel="#{funcionario.nome}" />
 					</p:selectOneMenu>

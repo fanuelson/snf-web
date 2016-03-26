@@ -5,9 +5,9 @@
 		<p:panelGrid styleClass="botoes" style="margin:auto;margin-top:10px">
 			<p:column>
 				<p:outputLabel style="display:inherit" value="#{msg['label.campo.funcionario']}" for="funcionario" />
-				<p:selectOneMenu style="width:250px" id="funcionario"
+				<p:selectOneMenu style="width:250px" id="funcionario" filter="true" filterMatchMode="contains"
 					value="#{estatisticaServicoController.estatisticaServicoVM.funcionario}" converter="funcionarioConverter">
-					<c:selectItem itemLabel="-Selecione-" noSelectionOption="true" />
+					<c:selectItem itemLabel="#{msg['label.todos']}" noSelectionOption="true" />
 					<c:selectItems value="#{estatisticaServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario}"
 						itemLabel="#{funcionario.nome}" />
 				</p:selectOneMenu>

@@ -4,31 +4,32 @@
 	<ui:define name="corpoLayout">
 
 		<form action="#{request.contextPath}/j_spring_security_check" method="post">
-			<p:panel style="margin:auto;width:20%;margin-top:20px;box-shadow: 10px 10px 5px #888888;">
-				<h:panelGrid id="cadastroMesaPanel" columns="1" style="font-size:16px;width:100%;text-align:center;margin:auto;">
-				<h:form prependId="false" >
-					<h3 style="text-align: left; margin-bottom: 2px">Login</h3>
-					<hr />
-					<h:panelGrid style="margin: auto;width: 55%;" columns="2">
-						<p:outputLabel style="float:left" for="j_username" value="#{msg['label.login']}" />
-						<p:inputText style="float:right;padding:0px;" required="true" id="j_username" size="15"/>
+			<p:panel style="margin:auto;width:300px;margin-top:20px;box-shadow: 10px 10px 5px #888888;">
+				<h:panelGrid id="cadastroMesaPanel" columns="1" style="font-size:14px;text-align:center;margin:auto;">
+					<h:form prependId="false">
+						<h3 style="text-align: left; margin-bottom: 2px">Login</h3>
+						<hr />
+						<h:panelGrid style="margin: auto;" columns="2">
+							<p:outputLabel style="float:left" for="j_username" value="#{msg['label.login']}" />
+							<p:inputText style="float:right;padding:0px;" required="true" id="j_username" size="15" />
 
-						<p:outputLabel style="float:left" for="j_password" value="#{msg['label.senha']}" />
-						<p:inputText style="float:right;padding:0px;" type="password" required="true" id="j_password" size="15"/>
-					</h:panelGrid>
+							<p:outputLabel style="float:left" for="j_password" value="#{msg['label.senha']}" />
+							<p:inputText style="float:right;padding:0px;" type="password" required="true" id="j_password" size="15" />
+						</h:panelGrid>
 
-					<p:commandButton icon="ui-icon-locked"  ajax="false" class="btn btn-danger" 
-					style="width:150px;height:30px;margin:5px" onclick="PF('statusDialog').show()"
-					value="#{msg['label.entrar']}" type="submit"  />
-				</h:form>
+						<p:commandButton icon="ui-icon-locked" ajax="false" class="btn btn-danger"
+							style="width:150px;height:30px;margin:5px" onclick="PF('statusDialog').show()" value="#{msg['label.entrar']}"
+							type="submit" />
+					</h:form>
 				</h:panelGrid>
-				<div style="text-align:center" >
-					<p:outputLabel value="#{SPRING_SECURITY_LAST_EXCEPTION.message}" style="text-align:center" rendered="#{param.erro}" styleClass="erro" />
+				<div style="text-align: center">
+					<p:outputLabel value="#{SPRING_SECURITY_LAST_EXCEPTION.message}" style="text-align:center" rendered="#{param.erro}"
+						styleClass="erro" />
 				</div>
 			</p:panel>
 		</form>
 
-		
+
 
 	</ui:define>
 </ui:composition>
