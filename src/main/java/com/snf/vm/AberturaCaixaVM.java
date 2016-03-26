@@ -1,6 +1,7 @@
 package com.snf.vm;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -12,6 +13,8 @@ public class AberturaCaixaVM implements Serializable {
 	
 	@Inject
 	private Caixa caixa;
+	
+	private List<Caixa> caixas;
 	
 	private boolean existeCaixaAberto;
 	
@@ -29,6 +32,14 @@ public class AberturaCaixaVM implements Serializable {
 
 	public void setExisteCaixaAberto(boolean existeCaixaAberto) {
 		this.existeCaixaAberto = existeCaixaAberto;
+	}
+
+	public List<Caixa> getCaixas() {
+		return caixas;
+	}
+
+	public void setCaixas(List<Caixa> caixas) {
+		this.caixas = caixas;
 	}
 	
 }

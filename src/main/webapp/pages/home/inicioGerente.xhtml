@@ -1,43 +1,125 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
 
 	<ui:define name="corpoLayout">
 
 		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
-	
+
 		<h3 style="padding: 20px 0 0 50px;">#{msg['mensgem.bem.vindo']}</h3>
-		<h:form prependId="false" id="formAbrirCaixa" > 
-			<p:panel header="#{msg['label.ABRIR.CAIXA']}" style="margin:auto;width:15%;" 
-			rendered="#{not homeGerenteController.aberturaCaixaVM.existeCaixaAberto}" >
-				<h:panelGrid style="margin:5px 0 5px 0;"  >
-					<p:outputLabel for="valorInicial" value="#{msg['label.valor.inicial']}" />
-					<p:inputText required="true" id="valorInicial" value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}" >
-						<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-						<c:validateDoubleRange minimum="0.1" />
-					</p:inputText>
-				</h:panelGrid>
-				<p:commandButton value="#{msg['label.abrir.caixa']}" process="valorInicial @this" action="#{homeGerenteController.salvarCaixa()}" update="formAbrirCaixa" />
-			</p:panel>
-			
-			<p:panel style="margin:auto;width:15%" header="#{msg['label.CAIXA.ABERTO']}"
-			rendered="#{homeGerenteController.aberturaCaixaVM.existeCaixaAberto}" >
-				<h:panelGrid>
-				<p:outputLabel for="valorInicialCaixa" value="#{msg['label.valor.inicial']}" />
-				<p:inputText style="opacity:0.8" disabled="true" required="true" id="valorInicialCaixa" 
-				value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}" >
-					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-					<c:validateDoubleRange minimum="0.1" />
-				</p:inputText>
-				
-				<p:outputLabel for="valorAtual" value="#{msg['label.valor.atual']}" />
-				<p:inputText style="opacity:0.8" disabled="true" required="true" id="valorAtual"
-				 value="#{homeGerenteController.aberturaCaixaVM.caixa.valorAtual}" >
-					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-					<c:validateDoubleRange minimum="0.1" />
-				</p:inputText>
-				
-				<p:commandButton value="#{msg['label.fechar.caixa']}" action="#{homeGerenteController.fecharCaixa()}" update="formAbrirCaixa" />
-				</h:panelGrid>
+		<h:form prependId="false" id="formAbrirCaixa">
+			<p:panel header="#{msg['label.caixas']}" style="width:98%;margin:10px auto 20px auto">
+				<div class="ui-grid ui-grid-responsive">
+					<div class="ui-grid-col-8">
+						<h3 style="padding: 20px 0 0 50px;">#{msg['label.historico.caixas']}</h3>
+						<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="caixa"
+							value="#{homeGerenteController.aberturaCaixaVM.caixas}" emptyMessage="Nenhum caixa cadastrado"
+							widgetVar="servicosTable" id="caixaTable" paginator="true" rows="10" rowExpandMode="false"
+							rowsPerPageTemplate="5,10,15,20,30">
+							<p:column width="32%" headerText="Data Abertura">
+								<h:outputText value="#{caixa.dataAberturaFormatada}">
+									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
+								</h:outputText>
+							</p:column>
+							<p:column width="32%" headerText="Data Fechamento">
+								<h:outputText value="#{caixa.dataFechamentoFormatado}">
+									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
+								</h:outputText>
+							</p:column>
+							<p:column width="12%" headerText="Valor Inicial" sortBy="#{caixa.valorInicial}" > 
+								<h:outputText value="#{caixa.valorInicial}">
+									<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+								</h:outputText>
+							</p:column>
+							<p:column width="12%" headerText="Valor Final">
+								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual}">
+									<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+								</h:outputText>
+							</p:column>
+							<p:column width="12%" headerText="Receita">
+								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual - caixa.valorInicial}">
+									<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+								</h:outputText>
+							</p:column>
+
+						</p:dataTable>
+
+					</div>
+					<div class="ui-grid-col-4">
+						<p:panel header="#{msg['label.ABRIR.CAIXA']}" style="margin:auto;width:55%"
+							rendered="#{not homeGerenteController.aberturaCaixaVM.existeCaixaAberto}">
+
+							<h:panelGrid style="margin:5px 0 5px 0;">
+
+								<p:outputLabel for="valorInicial" value="#{msg['label.valor.inicial']}" />
+								<h:inputText required="true" id="valorInicial" type="number"
+									value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}">
+									<c:convertNumber locale="pt_br" minFractionDigits="2" maxFractionDigits="2" />
+									<c:validateDoubleRange minimum="0.1" />
+								</h:inputText>
+
+							</h:panelGrid>
+
+							<p:commandButton value="#{msg['label.abrir.caixa']}" process="valorInicial @this"
+								onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"
+								action="#{homeGerenteController.salvarCaixa()}" update="formAbrirCaixa" icon="ui-icon-unlocked" />
+
+						</p:panel>
+
+						<p:panel style="margin:10px auto 20px auto;width:90%" styleClass="ui-grid ui-grid-responsive"
+							header="#{msg['label.CAIXA.ABERTO']}" rendered="#{homeGerenteController.aberturaCaixaVM.existeCaixaAberto}">
+
+							<div class="ui-grid-row">
+
+								<div class="ui-grid-col-5">
+									<p:graphicImage library="imagens" name="caixa-reg.jpg" height="100px" width="100px" />
+									<p:commandButton value="#{msg['label.fechar.caixa']}" action="#{homeGerenteController.fecharCaixa()}"
+										update="formAbrirCaixa" icon="ui-icon-locked" onstart="PF('statusDialog').show()"
+										oncomplete="PF('statusDialog').hide()" />
+								</div>
+
+								<h:panelGrid style="margin-left:10px" columns="2">
+									<p:outputLabel for="dataInicialCaixa" value="#{msg['label.data.abertura']}" />
+									<p:outputLabel />
+									<p:inputText style="opacity:0.8" disabled="true" id="dataInicialCaixa"
+										value="#{homeGerenteController.aberturaCaixaVM.caixa.dataAberturaFormatada}">
+									</p:inputText>
+									<p:outputLabel />
+
+									<p:outputLabel for="valorInicialCaixa" value="#{msg['label.valor.inicial']}" />
+									<p:outputLabel />
+									<p:inputText style="opacity:0.8" disabled="true" id="valorInicialCaixa"
+										value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}">
+										<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+										<c:validateDoubleRange minimum="0.1" />
+									</p:inputText>
+									<p:outputLabel />
+
+									<p:outputLabel for="valorAtual" value="#{msg['label.valor.atual']}" />
+									<p:outputLabel />
+									<p:inputText style="opacity:0.8" disabled="true" id="valorAtual"
+										value="#{homeGerenteController.aberturaCaixaVM.caixa.valorAtual}">
+										<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+										<c:validateDoubleRange minimum="0.1" />
+									</p:inputText>
+									<p:outputLabel />
+
+									<p:outputLabel for="receitaCorrente" value="#{msg['label.receita.corrente']}" />
+									<p:outputLabel />
+									<p:inputText style="opacity:0.8" disabled="true" id="receitaCorrente"
+										value="#{homeGerenteController.aberturaCaixaVM.caixa.valorAtual - homeGerenteController.aberturaCaixaVM.caixa.valorInicial}">
+										<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+										<c:validateDoubleRange minimum="0.1" />
+									</p:inputText>
+									<p:graphicImage library="imagens" name="money.png" width="20px" />
+
+								</h:panelGrid>
+
+							</div>
+
+						</p:panel>
+					</div>
+				</div>
 			</p:panel>
 		</h:form>
 	</ui:define>

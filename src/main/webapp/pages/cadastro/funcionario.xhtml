@@ -14,9 +14,9 @@
 				</h:panelGrid>
 				<p:row>
 				<div style="text-align: right;" >
-					<p:commandButton style="margin-left:5px;float:right" icon="ui-icon-circle-check" iconPos="r" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" value="#{msg['label.salvar']}"
+					<p:commandButton style="margin-left:5px;float:right" icon="ui-icon-disk" iconPos="r" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" value="#{msg['label.salvar']}"
 						process="cadastroFuncionarioForm" action="#{cadastroFuncionarioController.salvar()}" update="msgs cadastroFuncionarioForm" />
-					<p:commandButton icon="ui-icon-circle-arrow-w" value="#{msg['label.cancelar']}" process="@this" action="#{commonsController.getPaginaInicial()}" />
+					<p:commandButton icon="ui-icon-arrowreturnthick-1-w" value="#{msg['label.cancelar']}" process="@this" action="#{commonsController.getPaginaInicial()}" />
 				</div>
 				</p:row>
 			</p:panel>

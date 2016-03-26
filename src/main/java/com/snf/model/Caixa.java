@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.snf.util.DataUtil;
+
 @Entity
 public class Caixa implements Serializable {
 
@@ -33,6 +35,17 @@ public class Caixa implements Serializable {
 	public void abrir(Double valorInicial) {
 		this.valorInicial = valorInicial;
 		dataAbertura = new Date();
+	}
+	
+	public String getDataAberturaFormatada() {
+		return DataUtil.getDataFormatada(dataAbertura, "dd/MM/yyyy HH:mm");
+	}
+	
+	public String getDataFechamentoFormatado() {
+		if(dataFechamento!=null)
+			return DataUtil.getDataFormatada(dataFechamento, "dd/MM/yyyy HH:mm");
+		else
+			return "";
 	}
 	
 	public void fechar() {
