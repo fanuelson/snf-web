@@ -8,16 +8,16 @@ import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 
-import com.snf.model.Funcionario;
-import com.snf.service.FuncionarioService;
+import com.snf.model.TipoUsuario;
+import com.snf.service.TipoUsuarioService;
 
-@FacesConverter(forClass = Funcionario.class, value = "funcionarioConverter")
-public class FuncionarioConverter implements Converter {
+@FacesConverter(forClass = TipoUsuario.class, value = "tipoUsuarioConverter")
+public class TipoUsuarioConverter implements Converter {
 
-	static final Logger log = Logger.getLogger(FuncionarioConverter.class);
+	static final Logger log = Logger.getLogger(TipoUsuarioConverter.class);
 
 	@Inject
-	private FuncionarioService funcionarioService;
+	private TipoUsuarioService tipoUsuarioService;
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -27,7 +27,7 @@ public class FuncionarioConverter implements Converter {
 		} else {
 			try {
 				Long id = Long.parseLong(value);
-				return funcionarioService.getById(id);
+				return tipoUsuarioService.getById(id);
 			} catch (Exception e) {
 				return null;
 			}
@@ -38,9 +38,9 @@ public class FuncionarioConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		Funcionario unidade = (Funcionario) value;
+		TipoUsuario unidade = (TipoUsuario) value;
 		if (unidade != null) {
-			return String.valueOf(unidade.getIdUsuario());
+			return String.valueOf(unidade.getId());
 		} else {
 			return null;
 		}

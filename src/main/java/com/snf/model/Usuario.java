@@ -1,8 +1,11 @@
 package com.snf.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Named;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +13,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +23,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.snf.enums.TipoUsuario;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Named("user")
 public class Usuario implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -36,15 +43,15 @@ public class Usuario implements UserDetails {
 	@Column(name = "senha")
 	private String senha;
 
-	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
-	private List<Role> roles;
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Role> roles = new ArrayList<>();
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo")
 	private TipoUsuario tipo;
 
 	@Column(name = "tentativas")
-	private Integer tentativas;
+	private Integer tentativas = 0;
 
 	public void incrementarTentativas() {
 		this.tentativas += 1;

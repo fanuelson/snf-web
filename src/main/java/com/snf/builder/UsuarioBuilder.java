@@ -7,8 +7,8 @@ public class UsuarioBuilder {
 
 	private Usuario usuario;
 	
-	public UsuarioBuilder() {
-		usuario = new Usuario();
+	public UsuarioBuilder(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 	public UsuarioBuilder comNome(String nome) {

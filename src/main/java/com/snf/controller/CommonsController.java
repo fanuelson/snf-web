@@ -18,12 +18,10 @@ import com.snf.model.Usuario;
 public class CommonsController implements Serializable {
 
 	private static final long serialVersionUID = 2452147366225351811L;
-	
+
 	static final Logger log = Logger.getLogger(CommonsController.class);
 
-	private static final String PATH_MENU_PUBLICO = "";
-	private static final String PATH_MENU_GERENTE = "/pages/menus/menu-gerente.xhtml";
-	private static final String PATH_MENU_CAIXA = "/pages/menus/menu-caixa.xhtml";
+	private static final String PATH_MENU = "/pages/menus/menu.xhtml";
 
 	private static final String PATH_PAGINA_INICIAL_CAIXA = "/pages/home/inicio.xhtml";
 	private static final String PATH_PAGINA_INICIAL_GERENTE = "/pages/home/inicioGerente.xhtml";
@@ -39,14 +37,7 @@ public class CommonsController implements Serializable {
 	}
 
 	public String getMenu() {
-		switch (getUsuario() != null ? getUsuario().getTipo() : TipoUsuario.INEXISTENTE) {
-		case CAIXA:
-			return PATH_MENU_CAIXA;
-		case GERENTE:
-			return PATH_MENU_GERENTE;
-		default:
-			return PATH_MENU_PUBLICO;
-		}
+		return PATH_MENU;
 	}
 
 	public String getPaginaInicial() {

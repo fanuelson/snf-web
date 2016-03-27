@@ -1,23 +1,50 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
 	<ui:define name="corpoLayout">
 
 		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
 
 		<h:form id="cadastroFuncionarioForm">
 			<p:panel header="#{msg['label.cadastro.funcionario']}" style="width:50%;margin:auto;margin:20px auto 30px auto">
-
+				<p:messages severity="error" />
 				<h:panelGrid columns="2" style="margin:50px">
 					<p:outputLabel for="nomeFuncionario" value="#{msg['label.campo.nome']}" />
 					<p:inputText size="30" required="true" id="nomeFuncionario"
 						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.funcionario.nome}" />
+
+					<p:outputLabel for="loginFuncionario" value="Login:" />
+					<p:inputText size="20" required="true" id="loginFuncionario"
+						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.funcionario.login}" />
+
+					<p:outputLabel for="senhaFuncionario" value="Senha:" />
+					<p:inputText size="20" required="true" id="senhaFuncionario" type="password"
+						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.senha}" />
+
+					<p:outputLabel for="senhaNovamenteFuncionario" value="Senha novamente:" />
+					<p:inputText size="20" required="true" id="senhaNovamenteFuncionario" type="password"
+						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.senhaNovamente}" />
+
+					<p:outputLabel value="Tipo:" for="tipoUsuario" />
+					<p:selectOneMenu style="width:100px" effect="fold" id="tipoUsuario"
+						converter="tipoUsuarioConverter"
+						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.role.tipoUsuario}" filter="true"
+						filterMatchMode="contains">
+						<c:selectItem itemLabel="#{msg['label.selecione']}" itemValue="#{null}" noSelectionOption="true" />
+						<c:selectItems value="#{cadastroFuncionarioController.tiposUsuario}" var="tipoUsuario"
+							itemValue="#{tipoUsuario}" itemLabel="#{tipoUsuario.permissao}" />
+					</p:selectOneMenu>
+
 				</h:panelGrid>
 				<p:row>
-				<div style="text-align: right;" >
-					<p:commandButton style="margin-left:5px;float:right" icon="ui-icon-disk" iconPos="r" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" value="#{msg['label.salvar']}"
-						process="cadastroFuncionarioForm" action="#{cadastroFuncionarioController.salvar()}" update="msgs cadastroFuncionarioForm" />
-					<p:commandButton icon="ui-icon-arrowreturnthick-1-w" value="#{msg['label.cancelar']}" process="@this" action="#{commonsController.getPaginaInicial()}" />
-				</div>
+					<div style="text-align: right;">
+						<p:commandButton style="margin-left:5px;float:right" icon="ui-icon-disk" iconPos="r"
+							onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" value="#{msg['label.salvar']}"
+							process="cadastroFuncionarioForm" action="#{cadastroFuncionarioController.salvar()}"
+							update="msgs cadastroFuncionarioForm" />
+						<p:commandButton icon="ui-icon-arrowreturnthick-1-w" value="#{msg['label.cancelar']}" process="@this"
+							action="#{commonsController.getPaginaInicial()}" />
+					</div>
 				</p:row>
 			</p:panel>
 		</h:form>

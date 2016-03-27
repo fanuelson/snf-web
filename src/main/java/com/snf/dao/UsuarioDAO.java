@@ -27,16 +27,15 @@ public class UsuarioDAO extends GenericDAO<Usuario, Long> {
 	}
 	public Usuario getUsuarioByLogin(String login){
 		try {
+			getManager().getEntityManagerFactory().getCache().evictAll();
 			JPQLBuilder stringBuilder = new JPQLBuilder()
 					.select("u")
 					.from(Usuario.class, "u")
 					.innerJoinFetch("u.roles", "r")
 					.innerJoinFetch("r.tipoUsuario", "tp")
 					.where("u.login = :log", login);
-			
-			Query q = getManager().createQuery(stringBuilder.contruir());
+			Query q = getManager().createQuery(stringBuilder.contruir()).setHint("org.hibernate.cacheMode", "IGNORE");
 			colocarParametros(q, stringBuilder);
-			
 			return (Usuario) q.getSingleResult();
 		} catch (NoResultException e) {
 			log.error(e.toString());

@@ -28,7 +28,7 @@ public class FuncionarioService implements Serializable {
 	}
 
 	public void remover(Funcionario funcionario) {
-		funcionarioDAO.delete(funcionario.getId());
+		funcionarioDAO.delete(funcionario.getIdUsuario());
 	}
 
 	public Funcionario getFuncionario(Long id) {
