@@ -14,14 +14,6 @@
           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 	<context:annotation-config />
-
-	<!-- 	JPA CONFIG -->
-	
-	<beans:bean id="entityManagerFactory" 
-	class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<beans:property name="persistenceUnitName" value="salaoBeleza" />
-	</beans:bean>
-	<beans:bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 	
 	<!-- 	SECURITY CONFIG -->
 	
@@ -57,7 +49,7 @@
 	<beans:bean id="encripta" class="com.snf.library.Encripta" />
 	<beans:bean id="commons" class="com.snf.controller.CommonsController" />
 	<beans:bean id="customUserService" class="com.snf.service.CustomUserService" />
-	<beans:bean id="usuarioDao" class="com.snf.dao.UsuarioDAO" />
+	<beans:bean id="usuarioDao" class="com.snf.dao.CustomUserDAO" />
 	<beans:bean id="defaultRedirect" class="org.springframework.security.web.DefaultRedirectStrategy" />
 	<beans:bean id="customAuthenticationSuccessHandler" class="com.snf.security.CustomAuthenticationSuccessHandler" >
 		<beans:property name="defaultTargetUrl" value="/pages/home/inicioGerente.xhtml" />

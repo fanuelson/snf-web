@@ -48,7 +48,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 				Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
 				grantedAuths.addAll(usuario.getAuthorities());
 				auth = getAuth(usuario);
+				usuario.zerarTentativas();
+				customUserService.atualizar(usuario);
 			}else{
+				usuario.incrementarTentativas();
+				customUserService.atualizar(usuario);
 				log.error(new BadCredentialsException("SENHA ERRADA").toString());
 				throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.login"));
 			}

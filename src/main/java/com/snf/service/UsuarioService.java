@@ -31,8 +31,4 @@ public class UsuarioService implements Serializable {
 	public void remover(Usuario usuario) {
 		usuarioDAO.delete(usuario.getIdUsuario());
 	}
-
-	public Usuario getUsuarioByLoginSenha(String login, String senha) {
-		return usuarioDAO.getUsuarioByLoginSenha(login, senha);
-	}
 }
