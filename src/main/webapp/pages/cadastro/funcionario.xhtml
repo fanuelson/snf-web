@@ -13,21 +13,21 @@
 					<p:inputText size="30" required="true" id="nomeFuncionario"
 						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.funcionario.nome}" />
 
-					<p:outputLabel for="loginFuncionario" value="Login:" />
+					<p:outputLabel for="loginFuncionario" value="#{msg['label.login']}" />
 					<p:inputText size="20" required="true" id="loginFuncionario"
 						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.funcionario.login}" />
 
-					<p:outputLabel for="senhaFuncionario" value="Senha:" />
+					<p:outputLabel for="senhaFuncionario" value="#{msg['label.senha']}" />
 					<p:inputText size="20" required="true" id="senhaFuncionario" type="password"
 						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.senha}" />
 
-					<p:outputLabel for="senhaNovamenteFuncionario" value="Senha novamente:" />
+					<p:outputLabel for="senhaNovamenteFuncionario" value="#{msg['label.senha.novamente']}" />
 					<p:inputText size="20" required="true" id="senhaNovamenteFuncionario" type="password"
 						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.senhaNovamente}" />
 
-					<p:outputLabel value="Tipo:" for="tipoUsuario" />
+					<p:outputLabel value="#{msg['label.tipo']}" for="tipoUsuario" />
 					<p:selectOneMenu style="width:100px" effect="fold" id="tipoUsuario"
-						converter="tipoUsuarioConverter"
+						converter="tipoUsuarioConverter" required="true"
 						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.role.tipoUsuario}" filter="true"
 						filterMatchMode="contains">
 						<c:selectItem itemLabel="#{msg['label.selecione']}" itemValue="#{null}" noSelectionOption="true" />
