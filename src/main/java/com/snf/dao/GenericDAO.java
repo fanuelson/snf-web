@@ -7,10 +7,10 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.snf.builder.JPQLBuilder;
 
@@ -22,7 +22,7 @@ public abstract class GenericDAO<T , ID> implements Serializable {
 	static final Logger log = Logger.getLogger(GenericDAO.class);
 	
 	@Inject
-	@Autowired
+	@PersistenceContext
 	private EntityManager manager;
 	
     public T getById(ID id) {
