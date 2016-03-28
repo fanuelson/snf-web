@@ -23,8 +23,9 @@ public class CustomUserDAO implements Serializable {
 	private static EntityManager springManager;
 	
 	public CustomUserDAO() {
-		if(springManager==null)
+		if(springManager==null) {
 			springManager = new JPAUtil().createEntityManager();
+		}
 	}
 	
 	public Usuario getUsuarioByLogin(String login){
@@ -50,9 +51,15 @@ public class CustomUserDAO implements Serializable {
 	}
 
 	private void sincronizarBanco() {
-		Query querySync = springManager.createQuery("SELECT u FROM Usuario u");
-		Usuario user = (Usuario) querySync.getResultList().get(0);
-		atualizarUsuario(user);
+		try{
+			
+			Query querySync = springManager.createQuery("SELECT u FROM Usuario u");
+			Usuario user = (Usuario) querySync.getResultList().get(0);
+			atualizarUsuario(user);
+		}catch(Exception e) {
+			return;
+		}
+
 	}
 	
 	public Usuario atualizarUsuario(Usuario usuario) {

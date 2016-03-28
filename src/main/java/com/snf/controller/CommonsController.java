@@ -2,7 +2,7 @@ package com.snf.controller;
 
 import java.io.Serializable;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
@@ -14,7 +14,7 @@ import com.snf.model.Usuario;
 
 @Named
 @Component
-@RequestScoped
+@ApplicationScoped
 public class CommonsController implements Serializable {
 
 	private static final long serialVersionUID = 2452147366225351811L;
