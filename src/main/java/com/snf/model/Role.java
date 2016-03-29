@@ -18,7 +18,7 @@ public class Role implements GrantedAuthority {
 	@Id
 	@GeneratedValue
 	@Column(name = "idRole")
-	private Long id;
+	private Long idRole;
 
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinColumn(name = "idUsuario", nullable = true)
@@ -34,11 +34,11 @@ public class Role implements GrantedAuthority {
 	}
 
 	public Long getId() {
-		return id;
+		return idRole;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.idRole = id;
 	}
 
 	public Usuario getUsuario() {
@@ -61,7 +61,7 @@ public class Role implements GrantedAuthority {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idRole == null) ? 0 : idRole.hashCode());
 		return result;
 	}
 
@@ -74,10 +74,10 @@ public class Role implements GrantedAuthority {
 		if (getClass() != obj.getClass())
 			return false;
 		Role other = (Role) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (idRole == null) {
+			if (other.idRole != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idRole.equals(other.idRole))
 			return false;
 		return true;
 	}

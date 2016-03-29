@@ -24,7 +24,6 @@ public class FuncionarioDAO extends GenericDAO<Funcionario, Long> {
 			funcionarios = query.getResultList();	
 		} catch (Exception e){
 			log.error(e.toString());
-			e.printStackTrace();
 		}
 		return funcionarios;
 	}

@@ -67,7 +67,7 @@ public class ConsultaFuncionarioController implements Serializable {
 		try {
 			Funcionario func = edicaoUsuarioVM.getFunc();
 			preencherTipoUsuario(func);
-			func = funcionarioService.salvar(func);
+			edicaoUsuarioVM.setFunc(funcionarioService.salvar(func));
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
 		} catch (Exception e) {
 			log.error(e.toString());

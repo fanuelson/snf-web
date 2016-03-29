@@ -19,18 +19,18 @@ public class TipoUsuario implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="idTipoUsuario")
-	private Long id;
+	private Long idTipoUsuario;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="nome")
 	private Permissao permissao;
 
 	public Long getId() {
-		return id;
+		return idTipoUsuario;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.idTipoUsuario = id;
 	}
 
 	public Permissao getPermissao() {
@@ -45,7 +45,7 @@ public class TipoUsuario implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idTipoUsuario == null) ? 0 : idTipoUsuario.hashCode());
 		return result;
 	}
 
@@ -58,10 +58,10 @@ public class TipoUsuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		TipoUsuario other = (TipoUsuario) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (idTipoUsuario == null) {
+			if (other.idTipoUsuario != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idTipoUsuario.equals(other.idTipoUsuario))
 			return false;
 		return true;
 	}
