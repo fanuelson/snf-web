@@ -8,7 +8,6 @@ import javax.inject.Named;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -22,8 +21,7 @@ public class Funcionario extends Usuario implements Serializable {
 	@Column(name = "nome")
 	private String nome;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "funcionario", cascade = { CascadeType.PERSIST,
-			CascadeType.MERGE }, orphanRemoval = false)
+	@OneToMany(mappedBy = "funcionario", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = false)
 	private List<Servico> servicos = new ArrayList<>();
 
 	public String getNome() {

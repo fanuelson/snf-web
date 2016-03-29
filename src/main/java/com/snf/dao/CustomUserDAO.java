@@ -30,16 +30,14 @@ public class CustomUserDAO implements Serializable {
 	
 	public Usuario getUsuarioByLogin(String login){
 		try {
-			sincronizarBanco();
-			
 			JPQLBuilder stringBuilder = new JPQLBuilder()
 					.select("u")
 					.from(Usuario.class, "u")
 					.innerJoinFetch("u.roles", "r")
-					.innerJoinFetch("r.tipoUsuario", "tp")
 					.where("u.login = :log", login);
-			Query q = springManager.createQuery(stringBuilder.contruir()).setHint("org.hibernate.cacheMode", "IGNORE");
+			Query q = springManager.createQuery(stringBuilder.contruir());
 			colocarParametros(q, stringBuilder);
+			
 			return (Usuario) q.getSingleResult();
 		} catch (NoResultException e) {
 			log.error(e.toString());
@@ -50,18 +48,6 @@ public class CustomUserDAO implements Serializable {
 		}
 	}
 
-	private void sincronizarBanco() {
-		try{
-			
-			Query querySync = springManager.createQuery("SELECT u FROM Usuario u");
-			Usuario user = (Usuario) querySync.getResultList().get(0);
-			atualizarUsuario(user);
-		}catch(Exception e) {
-			return;
-		}
-
-	}
-	
 	public Usuario atualizarUsuario(Usuario usuario) {
     	try{
     		springManager.getTransaction().begin();

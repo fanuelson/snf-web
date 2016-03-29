@@ -29,6 +29,11 @@ public class UsuarioBuilder {
 		return this;
 	}
 	
+	public UsuarioBuilder comNumeroTentativas(Integer numero) {
+		usuario.setTentativas(numero);
+		return this;
+	}
+	
 	public Usuario contruir() {
 		return this.usuario;
 	}

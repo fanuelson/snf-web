@@ -19,12 +19,16 @@ public class FuncionarioService implements Serializable {
 	@Inject
 	private FuncionarioDAO funcionarioDAO;
 
-	public void salvar(Funcionario funcionario) {
-		funcionarioDAO.save(funcionario);
+	public Funcionario salvar(Funcionario funcionario) {
+		return funcionarioDAO.save(funcionario);
 	}
 
 	public List<Funcionario> getAll() {
 		return funcionarioDAO.getAll();
+	}
+	
+	public List<Funcionario> getAllFetchRoles() {
+		return funcionarioDAO.getAllFetchRoles();
 	}
 
 	public void remover(Funcionario funcionario) {
