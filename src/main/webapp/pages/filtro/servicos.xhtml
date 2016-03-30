@@ -3,41 +3,41 @@
 
 	<h:form id="filtroPesquisaServico">
 		<p:panel header="#{msg['label.filtro.pesquisa']}" style="margin:10px auto 10px auto;width:80%">
-		<p:panelGrid styleClass="botoes" style="margin:auto;margin-top:10px">
-			<p:column rendered="#{not consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}" >
-				<p:outputLabel style="display:inherit" value="#{msg['label.campo.funcionario']}" for="funcionario" />
-				<p:selectOneMenu style="width:250px" id="funcionario"
-					value="#{consultaServicoController.consultaServicoVM.funcionario}" converter="funcionarioConverter">
-					<c:selectItem itemLabel="-Selecione-" noSelectionOption="true" />
-					<c:selectItems value="#{consultaServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario}"
-						itemLabel="#{funcionario.nome}" />
-				</p:selectOneMenu>
-			</p:column>
-			<p:column>
-				<p:outputLabel style="display:inherit" value="#{msg['label.campo.data.inicial']}" for="dataInicial" />
-				<p:calendar id="dataInicial" value="#{consultaServicoController.consultaServicoVM.dataInicio}" pattern="dd/MM/yyyy" />
-			</p:column>
-			<p:column>
-				<p:outputLabel style="display:inherit" value="#{msg['label.campo.data.final']}" for="dataFinal" />
-				<p:calendar styleClass="botoes" id="dataFinal" value="#{consultaServicoController.consultaServicoVM.dataFim}"
-					pattern="dd/MM/yyyy" />
-			</p:column>
-			<p:column>
-				<p:commandButton icon="ui-icon-search" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" 
-				style="padding:8px" value="#{msg['label.pesquisar']}" process="@this filtroPesquisaServico"
-					action="#{consultaServicoController.pesquisar()}" update="consultaServicosForm panelCalculo" />
-			</p:column>
-		</p:panelGrid>
+			<p:panelGrid styleClass="botoes" style="margin:auto;margin-top:10px">
+				<p:column rendered="#{not consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}">
+					<p:outputLabel style="display:inherit" value="#{msg['label.campo.funcionario']}" for="funcionario" />
+					<p:selectOneMenu style="width:250px" id="funcionario"
+						value="#{consultaServicoController.consultaServicoVM.funcionario}" converter="funcionarioConverter">
+						<c:selectItem itemLabel="-Selecione-" noSelectionOption="true" />
+						<c:selectItems value="#{consultaServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario}"
+							itemLabel="#{funcionario.nome}" />
+					</p:selectOneMenu>
+				</p:column>
+				<p:column>
+					<p:outputLabel style="display:inherit" value="#{msg['label.campo.data.inicial']}" for="dataInicial" />
+					<p:calendar id="dataInicial" value="#{consultaServicoController.consultaServicoVM.dataInicio}" pattern="dd/MM/yyyy" />
+				</p:column>
+				<p:column>
+					<p:outputLabel style="display:inherit" value="#{msg['label.campo.data.final']}" for="dataFinal" />
+					<p:calendar styleClass="botoes" id="dataFinal" value="#{consultaServicoController.consultaServicoVM.dataFim}"
+						pattern="dd/MM/yyyy" />
+				</p:column>
+				<p:column>
+					<p:commandButton icon="ui-icon-search" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"
+						style="padding:8px" value="#{msg['label.pesquisar']}" process="@this filtroPesquisaServico"
+						action="#{consultaServicoController.pesquisar()}" update="consultaServicosForm panelCalculo" />
+				</p:column>
+			</p:panelGrid>
 
-		<h:panelGrid rendered="#{not consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}" id="panelCalculo" styleClass="botoes" columns="3" style="margin:auto;margin-top:15px">
-			<p:outputLabel value="#{label.campo.soma.total}" />
-			<h:outputLabel id="calculo" value="#{consultaServicoController.valorTotalPesquisa}">
-				<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-			</h:outputLabel>
-			<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" 
-				style="margin-left:10px" value="#{msg['label.calcular']}" icon="ui-icon-calculator"
-				action="#{consultaServicoController.calcularValorTotalPesquisa}" update="calculo" />
-		</h:panelGrid>
+			<h:panelGrid id="panelCalculo" styleClass="botoes" columns="3" style="margin:auto;margin-top:15px">
+				<p:outputLabel value="#{label.campo.soma.total}" />
+				<h:outputLabel id="calculo" value="#{consultaServicoController.valorTotalPesquisa}">
+					<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+				</h:outputLabel>
+				<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" style="margin-left:10px"
+					value="#{msg['label.calcular']}" icon="ui-icon-calculator"
+					action="#{consultaServicoController.calcularValorTotalPesquisa}" update="calculo" />
+			</h:panelGrid>
 
 		</p:panel>
 	</h:form>
