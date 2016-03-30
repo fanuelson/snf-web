@@ -27,8 +27,7 @@
 
 					<p:outputLabel value="#{msg['label.tipo']}" for="tipoUsuario" />
 					<p:selectOneMenu style="width:100px" id="tipoUsuario" converter="tipoUsuarioConverter" required="true"
-						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.role.tipoUsuario}" filter="true"
-						filterMatchMode="contains">
+						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.role.tipoUsuario}" >
 						<c:selectItem itemLabel="#{msg['label.selecione']}" itemValue="#{null}" noSelectionOption="true" />
 						<c:selectItems value="#{cadastroFuncionarioController.tiposUsuario}" var="tipoUsuario" itemValue="#{tipoUsuario}"
 							itemLabel="#{tipoUsuario.permissao}" />

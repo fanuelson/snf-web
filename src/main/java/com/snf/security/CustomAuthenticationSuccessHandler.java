@@ -44,6 +44,8 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 	public String getHomePage(Usuario usuario) throws IOException {
 		switch (usuario != null ? usuario.getTipo() : TipoUsuario.INEXISTENTE) {
+		case FUNCIONARIO:
+			return PATH_PAGINA_INICIAL_CAIXA;
 		case CAIXA:
 			return PATH_PAGINA_INICIAL_CAIXA;
 		case GERENTE:

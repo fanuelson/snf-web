@@ -5,16 +5,18 @@ import java.util.Date;
 
 import com.snf.model.Funcionario;
 
-public class ConsultaServicoVM implements Serializable{
-	
+public class ConsultaServicoVM implements Serializable {
+
 	private static final long serialVersionUID = 340286260547316478L;
 
 	private Funcionario funcionario;
-	
+
+	private boolean isTipoFuncionarioLogado;
+
 	private Date dataInicio;
-	
+
 	private Date dataFim;
-	
+
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
@@ -38,5 +40,13 @@ public class ConsultaServicoVM implements Serializable{
 	public void setDataFim(Date dataFim) {
 		this.dataFim = dataFim;
 	}
-	
+
+	public boolean isTipoFuncionarioLogado() {
+		return isTipoFuncionarioLogado;
+	}
+
+	public void setTipoFuncionarioLogado(boolean isTipoFuncionarioLogado) {
+		this.isTipoFuncionarioLogado = isTipoFuncionarioLogado;
+	}
+
 }

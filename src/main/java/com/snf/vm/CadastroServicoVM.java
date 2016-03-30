@@ -14,13 +14,15 @@ public class CadastroServicoVM implements Serializable {
 
 	@Inject
 	private Servico servico;
-	
+
 	private Date data;
-	
+
 	private boolean naoExisteCaixaAberto;
-	
+
+	private boolean isTipoFuncionarioLogado;
+
 	@PostConstruct
-	public void init(){
+	public void init() {
 		data = new Date();
 	}
 
@@ -47,5 +49,13 @@ public class CadastroServicoVM implements Serializable {
 	public void setNaoExisteCaixaAberto(boolean naoExisteCaixaAberto) {
 		this.naoExisteCaixaAberto = naoExisteCaixaAberto;
 	}
-	
+
+	public boolean isTipoFuncionarioLogado() {
+		return isTipoFuncionarioLogado;
+	}
+
+	public void setTipoFuncionarioLogado(boolean isTipoFuncionarioLogado) {
+		this.isTipoFuncionarioLogado = isTipoFuncionarioLogado;
+	}
+
 }

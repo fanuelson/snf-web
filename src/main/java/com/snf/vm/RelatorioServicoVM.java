@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.snf.model.Funcionario;
 
-public class EstatisticaServicoVM implements Serializable {
+public class RelatorioServicoVM implements Serializable {
 
 	private static final long serialVersionUID = -836588887077362085L;
 

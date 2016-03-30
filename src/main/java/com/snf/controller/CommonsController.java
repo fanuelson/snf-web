@@ -27,7 +27,7 @@ public class CommonsController implements Serializable {
 	private static final String PATH_PAGINA_INICIAL_GERENTE = "/pages/home/inicioGerente.xhtml";
 	private static final String PATH_PAGINA_LOGIN = "/login.xhtml";
 
-	public Usuario getUsuario() {
+	public Usuario getUsuarioLogado() {
 		try {
 			return (Usuario) SecurityContextHolder.getContext().getAuthentication().getDetails();
 		} catch (Exception e) {
@@ -41,8 +41,10 @@ public class CommonsController implements Serializable {
 	}
 
 	public String getPaginaInicial() {
-		switch (getUsuario() != null ? getUsuario().getTipo() : TipoUsuario.INEXISTENTE) {
+		switch (getUsuarioLogado() != null ? getUsuarioLogado().getTipo() : TipoUsuario.INEXISTENTE) {
 		case CAIXA:
+			return PATH_PAGINA_INICIAL_CAIXA;
+		case FUNCIONARIO:
 			return PATH_PAGINA_INICIAL_CAIXA;
 		case GERENTE:
 			return PATH_PAGINA_INICIAL_GERENTE;
@@ -52,7 +54,7 @@ public class CommonsController implements Serializable {
 	}
 
 	public boolean loginEfetuado() {
-		return getUsuario() != null ? true : false;
+		return getUsuarioLogado() != null ? true : false;
 	}
 
 }

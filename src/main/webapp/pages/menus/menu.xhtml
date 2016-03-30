@@ -13,21 +13,23 @@
 					<p:menuitem value="#{msg['label.consultar']}" url="/pages/consulta/funcionarios.xhtml" icon="ui-icon-search" />
 				</p:submenu>
 			</sec:authorize>
-			<sec:authorize access="hasRole('GERENTE')">
-				<p:submenu label="#{msg['label.menu.servicos']}" url="#" icon="ui-icon-scissors">
+			<p:submenu label="#{msg['label.menu.servicos']}" url="#" icon="ui-icon-scissors">
+				<sec:authorize access="hasAnyRole('GERENTE', 'CAIXA','FUNCIONARIO')">
 					<p:menuitem value="#{msg['label.cadastrar']}" url="/pages/cadastro/servico.xhtml" icon="ui-icon-disk" />
+				</sec:authorize>
+				<sec:authorize access="hasAnyRole('GERENTE','FUNCIONARIO')">
 					<p:menuitem value="#{msg['label.consultar']}" url="/pages/consulta/servicos.xhtml" icon="ui-icon-search" />
-				</p:submenu>
-			</sec:authorize>
+				</sec:authorize>
+			</p:submenu>
 			<sec:authorize access="hasRole('GERENTE')">
-				<p:submenu label="#{msg['label.menu.estatisticas']}" url="#" icon="ui-icon-image">
-					<p:menuitem value="#{msg['label.menu.servicos']}" url="/pages/estatistica/estatisticaServico.xhtml" />
+				<p:submenu label="#{msg['label.menu.relatorios']}" url="#" icon="ui-icon-image">
+					<p:menuitem value="#{msg['label.menu.servicos']}" url="/pages/relatorio/relatorioServico.xhtml" />
 				</p:submenu>
 			</sec:authorize>
 			<c:facet name="options">
 				<p:graphicImage library="imagens" name="person.png" width="20" style="margin-right:5px;position: relative;top: 3px;" />
-				<p:outputLabel style="margin-right:15px;font-weight:bold" value="Olá #{commonsController.usuario.nome}" />
-				<p:button value="#{msg['label.sair']}" href="#{request.contextPath}/j_spring_security_logout" icon="ui-icon-power" />
+				<p:outputLabel style="margin-right:15px;font-weight:bold" value="Olá #{commonsController.usuarioLogado.nome}" />
+				<p:button onclick="PF('statusDialog').show()"  value="#{msg['label.sair']}" href="#{request.contextPath}/j_spring_security_logout" icon="ui-icon-power" />
 			</c:facet>
 		</p:menubar>
 	</sec:authorize>

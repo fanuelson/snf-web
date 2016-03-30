@@ -11,8 +11,10 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
+import com.snf.enums.TipoUsuario;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
+import com.snf.model.Usuario;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
 import com.snf.util.DataUtil;
@@ -36,6 +38,9 @@ public class ConsultaServicoController implements Serializable {
 	@Inject
 	private ConsultaServicoVM consultaServicoVM;
 	
+	@Inject
+	private CommonsController commonsController;
+	
 	private List<Servico> servicos;
 	
 	private List<Servico> servicosFiltered;
@@ -47,8 +52,16 @@ public class ConsultaServicoController implements Serializable {
 	@PostConstruct
 	public void init(){
 		valorTotalPesquisa = 0;
-		servicos = servicoService.getAll();
-		funcionarios = funcionarioService.getAll();
+		Usuario userLogado = commonsController.getUsuarioLogado();
+		if(userLogado.getTipo().equals(TipoUsuario.FUNCIONARIO)){
+			consultaServicoVM.setTipoFuncionarioLogado(true);
+			servicos = servicoService.getServicosByPeriodoAndFuncionario(null, null,(Funcionario) userLogado);
+			consultaServicoVM.setFuncionario((Funcionario)userLogado);
+		}else{
+			consultaServicoVM.setTipoFuncionarioLogado(false);
+			servicos = servicoService.getAll();
+			funcionarios = funcionarioService.getAll();
+		}
 		calcularValorTotalPesquisa();
 	}
 	

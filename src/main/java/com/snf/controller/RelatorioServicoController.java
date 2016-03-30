@@ -24,17 +24,17 @@ import com.snf.service.ServicoService;
 import com.snf.util.CollectionsUtils;
 import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
-import com.snf.vm.EstatisticaServicoVM;
+import com.snf.vm.RelatorioServicoVM;
 import com.snf.vo.ServicoDataValorVO;
 
 @Named
 @ViewScoped
-public class EstatisticaServicoController implements Serializable {
+public class RelatorioServicoController implements Serializable {
 
 	private static final long serialVersionUID = 8284251730157488128L;
-	
-	static final Logger log = Logger.getLogger(EstatisticaServicoController.class);
-	
+
+	static final Logger log = Logger.getLogger(RelatorioServicoController.class);
+
 	private static final String formato_data_americano = "yyyy-MM-dd";
 
 	@Inject
@@ -46,14 +46,14 @@ public class EstatisticaServicoController implements Serializable {
 	private LineChartModel animatedModel1;
 
 	@Inject
-	private EstatisticaServicoVM estatisticaServicoVM;
+	private RelatorioServicoVM relatorioServicoVM;
 
 	private List<Funcionario> funcionarios;
 
 	private List<ServicoDataValorVO> servicos;
 
 	private double valorTotalPesquisa = 0;
-	
+
 	private double valorMaxEixoY = 0;
 
 	@PostConstruct
@@ -65,12 +65,12 @@ public class EstatisticaServicoController implements Serializable {
 	}
 
 	public void pesquisar() {
-		Date dataInicialPesquisada = estatisticaServicoVM.getDataInicial();
-		Date dataFinalPesquisada = estatisticaServicoVM.getDataFinal();
-		estatisticaServicoVM.setDataInicial(DataUtil.getDataHoraZerada(dataInicialPesquisada));
-		estatisticaServicoVM.setDataFinal(DataUtil.getDataHoraFinalDia(dataFinalPesquisada));
+		Date dataInicialPesquisada = relatorioServicoVM.getDataInicial();
+		Date dataFinalPesquisada = relatorioServicoVM.getDataFinal();
+		relatorioServicoVM.setDataInicial(DataUtil.getDataHoraZerada(dataInicialPesquisada));
+		relatorioServicoVM.setDataFinal(DataUtil.getDataHoraFinalDia(dataFinalPesquisada));
 		if (periodoPesquisaValido()) {
-			Funcionario funcionarioPesquisado = estatisticaServicoVM.getFuncionario();
+			Funcionario funcionarioPesquisado = relatorioServicoVM.getFuncionario();
 			servicos = servicoService.servicosByPeriodoAndFuncionario(dataInicialPesquisada, dataFinalPesquisada,
 					funcionarioPesquisado);
 			if (CollectionsUtils.isNullOrEmpty(servicos))
@@ -78,7 +78,7 @@ public class EstatisticaServicoController implements Serializable {
 			calcularValorTotalPesquisa();
 			calcularValorMaxEixoY();
 		} else {
-			servicos=null;
+			servicos = null;
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
 		}
 		createAnimatedModels();
@@ -91,21 +91,20 @@ public class EstatisticaServicoController implements Serializable {
 			valorTotalPesquisa += servicoVO.getValor();
 		}
 	}
-	
+
 	public void calcularValorMaxEixoY() {
 		Double maiorValor = 0.0;
 		for (ServicoDataValorVO servicoVO : servicos) {
-			if(servicoVO.getValor() > maiorValor) {
+			if (servicoVO.getValor() > maiorValor) {
 				maiorValor = servicoVO.getValor();
 			}
 		}
 		valorMaxEixoY = maiorValor + 100;
 	}
-	
 
 	private boolean periodoPesquisaValido() {
-		if (estatisticaServicoVM.getDataInicial() != null && estatisticaServicoVM.getDataFinal() != null) {
-			return estatisticaServicoVM.getDataInicial().before(estatisticaServicoVM.getDataFinal());
+		if (relatorioServicoVM.getDataInicial() != null && relatorioServicoVM.getDataFinal() != null) {
+			return relatorioServicoVM.getDataInicial().before(relatorioServicoVM.getDataFinal());
 		}
 		return true;
 	}
@@ -134,7 +133,8 @@ public class EstatisticaServicoController implements Serializable {
 			series1.set(DataUtil.getDataFormatada(new Date(), formato_data_americano), 0);
 		} else {
 			for (ServicoDataValorVO servicoVO : servicos) {
-				series1.set(DataUtil.getDataFormatada(servicoVO.getData(), formato_data_americano), servicoVO.getValor());
+				series1.set(DataUtil.getDataFormatada(servicoVO.getData(), formato_data_americano),
+						servicoVO.getValor());
 			}
 		}
 		return series1;
@@ -164,14 +164,6 @@ public class EstatisticaServicoController implements Serializable {
 		this.animatedModel1 = animatedModel1;
 	}
 
-	public EstatisticaServicoVM getEstatisticaServicoVM() {
-		return estatisticaServicoVM;
-	}
-
-	public void setEstatisticaServicoVM(EstatisticaServicoVM estatisticaServicoVM) {
-		this.estatisticaServicoVM = estatisticaServicoVM;
-	}
-
 	public List<Funcionario> getFuncionarios() {
 		return funcionarios;
 	}
@@ -182,6 +174,14 @@ public class EstatisticaServicoController implements Serializable {
 
 	public double getValorTotalPesquisa() {
 		return valorTotalPesquisa;
+	}
+
+	public RelatorioServicoVM getRelatorioServicoVM() {
+		return relatorioServicoVM;
+	}
+
+	public void setRelatorioServicoVM(RelatorioServicoVM relatorioServicoVM) {
+		this.relatorioServicoVM = relatorioServicoVM;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.snf.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,8 +12,10 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
+import com.snf.enums.TipoUsuario;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
+import com.snf.model.Usuario;
 import com.snf.service.CaixaService;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
@@ -40,11 +43,21 @@ public class CadastroServicoController implements Serializable {
 	@Inject
 	private CaixaService caixaService;
 	
-	private List<Funcionario> funcionarios;
+	@Inject
+	private CommonsController commons;
+	
+	private List<Funcionario> funcionarios = new ArrayList<>();
 	
 	@PostConstruct
 	public void init(){
-		funcionarios = funcionarioService.getAll();
+		Usuario usuarioLogado = commons.getUsuarioLogado();
+		if(usuarioLogado.getTipo().equals(TipoUsuario.FUNCIONARIO)){
+			cadastroServicoVM.getServico().setFuncionario((Funcionario) usuarioLogado);
+			cadastroServicoVM.setTipoFuncionarioLogado(true);
+		}else{
+			cadastroServicoVM.setTipoFuncionarioLogado(false);
+			funcionarios = funcionarioService.getAll();
+		}
 		cadastroServicoVM.setNaoExisteCaixaAberto(!caixaService.existeCaixaAberto());
 	}
 	

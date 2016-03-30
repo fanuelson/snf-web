@@ -54,7 +54,7 @@
 							<h:outputText value="#{servico.nomeCliente}" />
 						</p:column>
 
-						<p:column headerText="#{msg['label.editar.excluir']}" style="width:11%;text-align:center">
+						<p:column rendered="#{not consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}" headerText="#{msg['label.editar.excluir']}" style="width:11%;text-align:center">
 
 							<p:commandLink style="margin-right:20px" process="@this" update="consultaServicosForm">
 								<p:graphicImage width="25px" library="imagens" name="editIcon.png" />

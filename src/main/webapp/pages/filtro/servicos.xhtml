@@ -4,7 +4,7 @@
 	<h:form id="filtroPesquisaServico">
 		<p:panel header="#{msg['label.filtro.pesquisa']}" style="margin:10px auto 10px auto;width:80%">
 		<p:panelGrid styleClass="botoes" style="margin:auto;margin-top:10px">
-			<p:column>
+			<p:column rendered="#{not consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}" >
 				<p:outputLabel style="display:inherit" value="#{msg['label.campo.funcionario']}" for="funcionario" />
 				<p:selectOneMenu style="width:250px" id="funcionario"
 					value="#{consultaServicoController.consultaServicoVM.funcionario}" converter="funcionarioConverter">
@@ -29,7 +29,7 @@
 			</p:column>
 		</p:panelGrid>
 
-		<h:panelGrid id="panelCalculo" styleClass="botoes" columns="3" style="margin:auto;margin-top:15px">
+		<h:panelGrid rendered="#{not consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}" id="panelCalculo" styleClass="botoes" columns="3" style="margin:auto;margin-top:15px">
 			<p:outputLabel value="#{label.campo.soma.total}" />
 			<h:outputLabel id="calculo" value="#{consultaServicoController.valorTotalPesquisa}">
 				<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
