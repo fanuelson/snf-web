@@ -54,10 +54,11 @@ public class CadastroFuncionarioController implements Serializable {
 				preencherDadosUsuario(func, role);
 				funcionarioService.salvar(func);
 				MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
+				limparFuncionario();
 			}else{
 				MessagesUtils.exibirMensagemErro("mensagem.senhas.nao.iguais");
 			}
-			limparCampos();
+			limparSenhas();
 		} catch (Exception e) {
 			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro("mensagem.erro.salvar.registro");
@@ -72,8 +73,13 @@ public class CadastroFuncionarioController implements Serializable {
 		func.setSenha(encripta.encripta(senha));
 	}
 
-	private void limparCampos() {
+	private void limparFuncionario() {
 		cadastroFuncionarioVM.setFuncionario(new Funcionario());
+	}
+	
+	private void limparSenhas() {
+		cadastroFuncionarioVM.setSenha("");
+		cadastroFuncionarioVM.setSenhaNovamente("");
 	}
 
 	public CadastroFuncionarioVM getCadastroFuncionarioVM() {
