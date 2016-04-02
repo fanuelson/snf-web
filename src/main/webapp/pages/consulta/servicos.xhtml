@@ -30,12 +30,12 @@
 							</h:outputText>
 						</p:column>
 
-						<p:column style="width:15%" filterMatchMode="contains" filterBy="#{servico.nome}"
+						<p:column style="width:14%" filterMatchMode="contains" filterBy="#{servico.nome}"
 							headerText="#{msg['label.nome']}">
 							<h:outputText value="#{servico.nome}" />
 						</p:column>
 
-						<p:column style="width:25% " filterMatchMode="contains" filterBy="#{servico.descricao}"
+						<p:column style="width:24% " filterMatchMode="contains" filterBy="#{servico.descricao}"
 							headerText="#{msg['label.descricao']}">
 							<h:outputText value="#{servico.descricao}" />
 						</p:column>
@@ -45,9 +45,9 @@
 							<h:outputText value="#{servico.funcionario.nome}" />
 						</p:column>
 
-						<p:column style="width:5% " headerText="#{msg['label.valor']}" sortBy="#{servico.valor}">
+						<p:column style="width:8% " headerText="#{msg['label.valor']}" sortBy="#{servico.valor}">
 							<h:outputText value="#{servico.valor}">
-								<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+								<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 							</h:outputText>
 						</p:column>
 
@@ -57,7 +57,7 @@
 						</p:column>
 
 						<p:column rendered="#{not consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}"
-							headerText="#{msg['label.editar.excluir']}" style="width:11%;text-align:center">
+							headerText="#{msg['label.editar.excluir']}" style="width:9%;text-align:center">
 
 							<p:commandLink style="margin-right:20px" process="@this" update="consultaServicosForm">
 								<p:graphicImage width="25px" library="imagens" name="editIcon.png" />

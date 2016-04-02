@@ -28,17 +28,17 @@
 							</p:column>
 							<p:column width="12%" headerText="Valor Inicial" sortBy="#{caixa.valorInicial}" > 
 								<h:outputText value="#{caixa.valorInicial}">
-									<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+									<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 							<p:column width="12%" headerText="Valor Final">
-								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual}">
-									<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+								<h:outputText  rendered="#{not caixa.aberto}" value="#{caixa.valorAtual}">
+									<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 							<p:column width="12%" headerText="Receita">
 								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual - caixa.valorInicial}">
-									<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+									<c:convertNumber currencySymbol="R$" type="currency" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 								</h:outputText>
 							</p:column>
 
@@ -52,7 +52,8 @@
 							<h:panelGrid style="margin:5px 0 5px 0;">
 
 								<p:outputLabel for="valorInicial" value="#{msg['label.valor.inicial']}" />
-								<h:inputText required="true" id="valorInicial" type="number"
+								
+								<h:inputText required="true" id="valorInicial"
 									value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}">
 									<c:convertNumber locale="pt_br" minFractionDigits="2" maxFractionDigits="2" />
 									<c:validateDoubleRange minimum="0.1" />
