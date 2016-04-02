@@ -16,30 +16,36 @@
 							value="#{homeGerenteController.aberturaCaixaVM.caixas}" emptyMessage="Nenhum caixa cadastrado"
 							widgetVar="servicosTable" id="caixaTable" paginator="true" rows="10" rowExpandMode="false"
 							rowsPerPageTemplate="5,10,15,20,30">
-							<p:column width="32%" headerText="Data Abertura">
+							<p:column width="25%" headerText="Data Abertura">
 								<h:outputText value="#{caixa.dataAberturaFormatada}">
 									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 								</h:outputText>
 							</p:column>
-							<p:column width="32%" headerText="Data Fechamento">
+							<p:column width="25%" headerText="Data Fechamento">
 								<h:outputText value="#{caixa.dataFechamentoFormatado}">
 									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 								</h:outputText>
 							</p:column>
-							<p:column width="12%" headerText="Valor Inicial" sortBy="#{caixa.valorInicial}" > 
+							<p:column width="15%" headerText="Valor Inicial" sortBy="#{caixa.valorInicial}">
 								<h:outputText value="#{caixa.valorInicial}">
 									<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 								</h:outputText>
 							</p:column>
-							<p:column width="12%" headerText="Valor Final">
-								<h:outputText  rendered="#{not caixa.aberto}" value="#{caixa.valorAtual}">
+							<p:column width="15%" headerText="Valor Final">
+								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual}">
 									<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 								</h:outputText>
 							</p:column>
-							<p:column width="12%" headerText="Receita">
+							<p:column width="20%" headerText="Receita">
 								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual - caixa.valorInicial}">
 									<c:convertNumber currencySymbol="R$" type="currency" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 								</h:outputText>
+								<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) gt 0.0}"
+									style="margin-left:10px;float:right" library="imagens" name="upIcon.png" />
+								<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) lt 0.0}"
+									style="margin-left:10px;float:right" library="imagens" name="downIcon.png" />
+								<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) eq 0.0}"
+									style="margin-left:10px;float:right" library="imagens" name="boxBlue.png" />
 							</p:column>
 
 						</p:dataTable>
@@ -52,7 +58,7 @@
 							<h:panelGrid style="margin:5px 0 5px 0;">
 
 								<p:outputLabel for="valorInicial" value="#{msg['label.valor.inicial']}" />
-								
+
 								<h:inputText required="true" id="valorInicial"
 									value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}">
 									<c:convertNumber locale="pt_br" minFractionDigits="2" maxFractionDigits="2" />

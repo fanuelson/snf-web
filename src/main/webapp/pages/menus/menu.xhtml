@@ -26,10 +26,12 @@
 					<p:menuitem value="#{msg['label.menu.servicos']}" url="/pages/relatorio/relatorioServico.xhtml" />
 				</p:submenu>
 			</sec:authorize>
+			<p:menuitem value="#{msg['label.transacoes']}" url="#" icon="ui-icon-transferthick-e-w" />
 			<c:facet name="options">
 				<p:graphicImage library="imagens" name="person.png" width="20" style="margin-right:5px;position: relative;top: 3px;" />
 				<p:outputLabel style="margin-right:15px;font-weight:bold" value="Olá #{commonsController.usuarioLogado.nome}" />
-				<p:button onclick="PF('statusDialog').show()"  value="#{msg['label.sair']}" href="#{request.contextPath}/j_spring_security_logout" icon="ui-icon-power" />
+				<p:button styleClass="btnDanger" onclick="PF('statusDialog').show()" value="#{msg['label.sair']}"
+					href="#{request.contextPath}/j_spring_security_logout" icon="ui-icon-power" style="box-shadow:none !important" />
 			</c:facet>
 		</p:menubar>
 	</sec:authorize>
