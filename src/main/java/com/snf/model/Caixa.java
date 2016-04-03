@@ -37,7 +37,7 @@ public class Caixa implements Serializable {
 	private Double valorAtual;
 
 	@OneToMany(mappedBy = "caixa", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
-	private List<Transacao> transacoes = new ArrayList<Transacao>();
+	private List<Transacao> transacoes = new ArrayList<>();
 
 	public void abrir(Double valorInicial) {
 		this.valorInicial = valorInicial;
