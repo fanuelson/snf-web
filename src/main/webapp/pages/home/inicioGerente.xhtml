@@ -15,13 +15,21 @@
 						<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="caixa"
 							value="#{homeGerenteController.aberturaCaixaVM.caixas}" emptyMessage="Nenhum caixa cadastrado"
 							widgetVar="servicosTable" id="caixaTable" paginator="true" rows="10" rowExpandMode="false"
-							rowsPerPageTemplate="5,10,15,20,30">
-							<p:column width="25%" headerText="Data Abertura">
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+							currentPageReportTemplate="Quantidade: {totalRecords} - Página {currentPage} de {totalPages}"
+							rowsPerPageTemplate="5,10,15,20,30" paginatorPosition="bottom">
+							<c:facet name="{Exporters}">
+								<h:commandLink style="float:right" immediate="true" title="Baixar como PDF">
+									<p:graphicImage library="imagens" name="pdfIcon.png" width="24" />
+									<p:dataExporter type="pdf" target="caixaTable" fileName="Relatório de Caixa" />
+								</h:commandLink>
+							</c:facet>
+							<p:column width="25%" headerText="Data Abertura" sortBy="#{caixa.dataAbertura}">
 								<h:outputText value="#{caixa.dataAberturaFormatada}">
 									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 								</h:outputText>
 							</p:column>
-							<p:column width="25%" headerText="Data Fechamento">
+							<p:column width="25%" headerText="Data Fechamento" sortBy="#{caixa.dataFechamento}">
 								<h:outputText value="#{caixa.dataFechamentoFormatado}">
 									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 								</h:outputText>

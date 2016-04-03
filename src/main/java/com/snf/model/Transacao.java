@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import com.snf.enums.TipoTransacao;
 
 @Entity
-public abstract class Transacao implements Serializable {
+public class Transacao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,6 +37,10 @@ public abstract class Transacao implements Serializable {
 
 	@Column(name = "valor")
 	private Double valor;
+	
+	public boolean isSaidaCaixa() {
+		return tipo.equals(TipoTransacao.DESPESA) || tipo.equals(TipoTransacao.RETIRADA);
+	}
 
 	public Long getIdTransacao() {
 		return idTransacao;

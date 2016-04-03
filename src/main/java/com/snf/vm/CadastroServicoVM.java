@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import com.snf.model.Servico;
+import com.snf.model.Transacao;
 
 public class CadastroServicoVM implements Serializable {
 
@@ -14,6 +15,9 @@ public class CadastroServicoVM implements Serializable {
 
 	@Inject
 	private Servico servico;
+	
+	@Inject
+	private Transacao transacao;
 
 	private Date data;
 
@@ -58,4 +62,12 @@ public class CadastroServicoVM implements Serializable {
 		this.isTipoFuncionarioLogado = isTipoFuncionarioLogado;
 	}
 
+	public Transacao getTransacao() {
+		return transacao;
+	}
+
+	public void setTransacao(Transacao transacao) {
+		this.transacao = transacao;
+	}
+	
 }

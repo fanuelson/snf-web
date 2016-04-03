@@ -53,6 +53,14 @@ public class CaixaService implements Serializable {
 		return caixaDAO.getAll();
 	}
 	
+	public List<Caixa> getAllOrderByDataAbertura() {
+		return caixaDAO.getAllOrderByDataAbertura();
+	}
+	
+	public List<Caixa> getAllOrderByDataAberturaFetchTransacoes() {
+		return caixaDAO.getAllOrderByDataAberturaFetchTransacoes();
+	}
+	
 	public boolean remover(Caixa caixa) {
 		return caixaDAO.delete(caixa);
 	}

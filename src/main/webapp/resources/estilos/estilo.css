@@ -18,6 +18,26 @@ html,body{
     background: linear-gradient(top, #27abff 0%,#059eff 100%) !important;
     -webkit-transition: none !important;
 }
+
+.linkTransacao {
+	text-decoration: none !important;
+}
+
+.linkTransacao:HOVER {
+	background: gainsboro !important;
+	text-decoration: none !important;
+}
+
+.linkTransacao:FOCUS {
+	background: gainsboro !important;
+	text-decoration: none !important;
+}
+
+.linkTransacao:ACTIVE {
+	background: gainsboro !important;
+	text-decoration: none !important;
+}
+
 .btnDanger{
 	
 	border: 1px solid #222222 !important;

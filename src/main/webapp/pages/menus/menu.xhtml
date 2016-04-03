@@ -26,7 +26,12 @@
 					<p:menuitem value="#{msg['label.menu.servicos']}" url="/pages/relatorio/relatorioServico.xhtml" />
 				</p:submenu>
 			</sec:authorize>
-			<p:menuitem value="#{msg['label.transacoes']}" url="#" icon="ui-icon-transferthick-e-w" />
+			<sec:authorize access="hasRole('GERENTE')">
+				<p:submenu label="#{msg['label.transacoes']}" url="#" icon="ui-icon-transferthick-e-w">
+					<p:menuitem value="#{msg['label.cadastrar']}" url="/pages/cadastro/transacao.xhtml" icon="ui-icon-disk" />
+					<p:menuitem value="#{msg['label.consultar']}" url="/pages/consulta/transacoes.xhtml" icon="ui-icon-search" />
+				</p:submenu>
+			</sec:authorize>
 			<c:facet name="options">
 				<p:graphicImage library="imagens" name="person.png" width="20" style="margin-right:5px;position: relative;top: 3px;" />
 				<p:outputLabel style="margin-right:15px;font-weight:bold" value="Olá #{commonsController.usuarioLogado.nome}" />

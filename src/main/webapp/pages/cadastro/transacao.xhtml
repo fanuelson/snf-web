@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
+	<ui:define name="corpoLayout">
+
+		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
+		<h:form prependId="false" id="linksTransacao">
+			<p:panel header="#{msg['label.cadastro.transacao']}" style="width:40%;margin:20px auto 20px auto">
+				<p:outputLabel style="margin:10px" value="É necessário abrir o caixa para cadastro de Serviço." styleClass="erro"
+					rendered="#{not cadastroTransacaoController.cadastroTransacaoVM.existeCaixaAberto}" />
+				<p:messages closable="true" severity="error" />
+
+				<h:panelGrid id="links" styleClass="ui-grid ui-grid-responsive" style="width:100%;margin:auto;padding:20px;"
+					columns="3">
+					<p:commandLink styleClass="ui-grid-row linkTransacao" action="#{cadastroTransacaoController.prepararRetirada()}"
+						update="linksTransacao" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" process="@this">
+						<p:graphicImage library="imagens" name="saidaIcon.png" width="50px" height="50px" />
+						<h3>RETIRADA</h3>
+					</p:commandLink>
+					<p:commandLink styleClass="ui-grid-row linkTransacao" action="#{cadastroTransacaoController.prepararDespesa()}"
+						update="linksTransacao" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" process="@this">
+						<p:graphicImage library="imagens" name="saidaIcon.png" width="50px" height="50px" />
+						<h3>DESPESA</h3>
+					</p:commandLink>
+					<p:commandLink styleClass="ui-grid-row linkTransacao" action="#{cadastroTransacaoController.prepararReceita()}"
+						update="linksTransacao" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" process="@this">
+						<p:graphicImage library="imagens" name="lucroIcon.png" width="50px" height="50px" />
+						<h3>RECEITA</h3>
+					</p:commandLink>
+				</h:panelGrid>
+
+
+				<p:panel id="cadastroTransacaoPanel" style="margin:10px auto 10px auto;height:235px"
+					rendered="#{cadastroTransacaoController.cadastroTransacaoVM.transacao.tipo ne null}">
+					<p:graphicImage library="imagens" name="carteiraIcon.jpg" width="150px" />
+					<div class="ui-grid ui-grid-responsive" style="width: 65%; float: right">
+						<div class="ui-grid-row">
+							<p:graphicImage rendered="#{cadastroTransacaoController.cadastroTransacaoVM.transacao.saidaCaixa}"
+								library="imagens" name="downIcon.png" width="16px" height="16px" />
+							<p:graphicImage rendered="#{not cadastroTransacaoController.cadastroTransacaoVM.transacao.saidaCaixa}"
+								library="imagens" name="upIcon.png" width="16px" height="16px" />
+							<h3 style="margin: 0 auto 25px 5px;">#{cadastroTransacaoController.cadastroTransacaoVM.transacao.tipo}</h3>
+						</div>
+
+						<h:panelGrid id="cadastroTransacaoPanelGrid">
+							<p:outputLabel for="caixaAberto" value="Caixa Aberto:" />
+							<p:inputText size="10" style="opacity:0.8" disabled="true" id="caixaAberto"
+								value="Id: #{cadastroTransacaoController.cadastroTransacaoVM.caixaAberto.id}">
+							</p:inputText>
+
+							<p:outputLabel for="tipo" value="Tipo:" />
+							<p:inputText size="10" style="opacity:0.8" disabled="true" id="tipo"
+								value="#{cadastroTransacaoController.cadastroTransacaoVM.transacao.tipo}">
+							</p:inputText>
+
+							<p:outputLabel value="#{msg['label.campo.valor']}" for="valor" />
+							<h:inputText id="valor" value="#{cadastroTransacaoController.cadastroTransacaoVM.transacao.valor}" size="10"
+								required="true" type="number" converterMessage="Preço inválido."
+								validatorMessage="Preço deve ser maior ou igual a 0,01">
+								<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+								<c:validateDoubleRange minimum="0.1" />
+							</h:inputText>
+
+						</h:panelGrid>
+						<p:commandButton onstart="PF('statusDialog').show()"
+							oncomplete="PF('statusDialog').hide();$('html, body').animate({ scrollTop: 100 }, 'slow');"
+							style="float:right;margin:10px" process="cadastroTransacaoPanel"
+							disabled="#{not cadastroTransacaoController.cadastroTransacaoVM.existeCaixaAberto}"
+							action="#{cadastroTransacaoController.salvar()}" update="msgs linksTransacao" icon="ui-icon-disk" iconPos="r"
+							value="Salvar" />
+					</div>
+				</p:panel>
+
+
+
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

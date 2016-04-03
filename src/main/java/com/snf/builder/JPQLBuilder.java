@@ -130,8 +130,8 @@ public class JPQLBuilder implements Serializable {
 		return this;
 	}
 
-	public JPQLBuilder dsc() {
-		queryString.append(" DSC ");
+	public JPQLBuilder desc() {
+		queryString.append(" DESC ");
 		return this;
 	}
 

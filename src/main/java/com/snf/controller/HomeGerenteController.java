@@ -30,7 +30,7 @@ public class HomeGerenteController implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		aberturaCaixaVM.setCaixas(caixaService.getAll());
+		aberturaCaixaVM.setCaixas(caixaService.getAllOrderByDataAbertura());
 		if(caixaService.getCaixaAberto()!=null){
 			aberturaCaixaVM.setCaixa(caixaService.getCaixaAberto());
 			aberturaCaixaVM.setExisteCaixaAberto(true);
@@ -44,7 +44,7 @@ public class HomeGerenteController implements Serializable {
 		try{
 			Caixa caixa = aberturaCaixaVM.getCaixa();
 			caixa = caixaService.abrirCaixa(caixa);
-			aberturaCaixaVM.getCaixas().add(caixa);
+			aberturaCaixaVM.getCaixas().add(0,caixa);
 			aberturaCaixaVM.setCaixa(caixa);
 			aberturaCaixaVM.setExisteCaixaAberto(true);
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");

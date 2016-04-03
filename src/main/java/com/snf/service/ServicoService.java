@@ -26,11 +26,11 @@ public class ServicoService implements Serializable {
 	@Inject
 	private CaixaService caixaService;
 
-	public void salvar(Servico servico) {
+	public Servico salvar(Servico servico) {
 		Caixa caixa = caixaService.getCaixaAberto();
 		caixa.adicionarValor(servico.getValor());
 		caixaService.salvar(caixa);
-		servicoDAO.save(servico);
+		return servicoDAO.save(servico);
 	}
 
 	public List<Servico> getAll() {

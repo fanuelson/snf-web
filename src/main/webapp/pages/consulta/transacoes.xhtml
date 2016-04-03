@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
+	<ui:define name="corpoLayout">
+
+		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
+
+		<p:panel styleClass="ui-grid ui-grid-responsive" header="Consulta de serviços"
+			style="margin: 20px auto 20px auto;width:95%">
+
+			<ui:include src="/pages/filtro/transacoes.xhtml" />
+
+			<h:form prependId="false" id="consultaServicosForm">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-10">
+						<h3 style="margin: 20px auto 10px 15px;">Caixas</h3>
+						<h:panelGrid style="padding:5px;width:100%">
+							<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="caixa"
+								value="#{consultaTransacaoController.consultaTransacaoVM.caixas}" emptyMessage="Nenhum caixa cadastrado"
+								selectionMode="single"
+								rowKey="#{caixa.id}" widgetVar="servicosTable" id="caixaTable" paginator="true" rows="30" rowExpandMode="false"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+								currentPageReportTemplate="Quantidade: {totalRecords} - Página {currentPage} de {totalPages}"
+								rowsPerPageTemplate="5,10,15,20,30" paginatorPosition="bottom">
+								<c:facet name="{Exporters}">
+									<h:commandLink style="float:right" immediate="true" title="Baixar como PDF">
+										<p:graphicImage library="imagens" name="pdfIcon.png" width="24" />
+										<p:dataExporter type="pdf" target="caixaTable" fileName="Relatório de Caixa" />
+									</h:commandLink>
+								</c:facet>
+								<p:ajax event="rowSelect" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"
+									update="transacoesTable" listener="#{consultaTransacaoController.selecionar}" />
+								<p:column width="15%" headerText="Data Abertura" sortBy="#{caixa.dataAbertura}">
+									<h:outputText value="#{caixa.dataAberturaFormatada}">
+										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
+									</h:outputText>
+								</p:column>
+								<p:column width="15%" headerText="Data Fechamento" sortBy="#{caixa.dataFechamento}">
+									<h:outputText value="#{caixa.dataFechamentoFormatado}">
+										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
+									</h:outputText>
+								</p:column>
+								<p:column width="15%" headerText="Valor Inicial" sortBy="#{caixa.valorInicial}">
+									<h:outputText value="#{caixa.valorInicial}">
+										<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2"
+											maxFractionDigits="2" />
+									</h:outputText>
+								</p:column>
+								<p:column width="15%" headerText="Valor Final">
+									<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual}">
+										<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2"
+											maxFractionDigits="2" />
+									</h:outputText>
+								</p:column>
+								<p:column width="20%" headerText="Receita" >
+									<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual - caixa.valorInicial}">
+										<c:convertNumber currencySymbol="R$" type="currency" locale="pt-br" minFractionDigits="2"
+											maxFractionDigits="2" />
+									</h:outputText>
+									<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) gt 0.0}"
+										style="margin-left:10px;float:right" library="imagens" name="upIcon.png" />
+									<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) lt 0.0}"
+										style="margin-left:10px;float:right" library="imagens" name="downIcon.png" />
+									<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) eq 0.0}"
+										style="margin-left:10px;float:right" library="imagens" name="boxBlue.png" />
+								</p:column>
+
+							</p:dataTable>
+
+						</h:panelGrid>
+					</div>
+					<div class="ui-grid-col-10">
+						<h3 style="margin: 20px auto 10px 15px;">Transações</h3>
+						<h:panelGrid style="padding:5px;width:100%">
+							<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="transacao"
+								value="#{consultaTransacaoController.consultaTransacaoVM.caixaSelecionado.transacoes}"
+								emptyMessage="Nenhum registro encontrado" widgetVar="transacoesTable" id="transacoesTable" paginator="true"
+								rows="30" rowExpandMode="false"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+								currentPageReportTemplate="Quantidade: {totalRecords} - Página {currentPage} de {totalPages}"
+								rowsPerPageTemplate="5,10,15,20,30" paginatorPosition="bottom">
+								<c:facet name="{Exporters}">
+									<h:commandLink style="float:right" immediate="true" title="Baixar como PDF">
+										<p:graphicImage library="imagens" name="pdfIcon.png" width="24" />
+										<p:dataExporter type="pdf" target="caixaTable" fileName="Relatório de Caixa" />
+									</h:commandLink>
+								</c:facet>
+								<p:column width="15%" headerText="Data" sortBy="#{transacao.data}">
+									<h:outputText value="#{transacao.data}">
+										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
+									</h:outputText>
+								</p:column>
+								<p:column width="15%" headerText="Tipo" sortBy="#{transacao.tipo}">
+									<h:outputText value="#{transacao.tipo}" />
+								</p:column>
+
+								<p:column width="20%" headerText="Valor" sortBy="#{transacao.valor}">
+									<h:outputText value="#{transacao.valor}">
+										<c:convertNumber currencySymbol="R$" type="currency" locale="pt-br" minFractionDigits="2"
+											maxFractionDigits="2" />
+									</h:outputText>
+									<p:graphicImage rendered="#{ (transacao.valor) gt 0.0}" style="margin-left:10px;float:right" library="imagens"
+										name="upIcon.png" />
+									<p:graphicImage rendered="#{ (transacao.valor) lt 0.0}" style="margin-left:10px;float:right" library="imagens"
+										name="downIcon.png" />
+									<p:graphicImage rendered="#{ (transacao.valor) eq 0.0}" style="margin-left:10px;float:right" library="imagens"
+										name="boxBlue.png" />
+								</p:column>
+
+							</p:dataTable>
+
+						</h:panelGrid>
+					</div>
+
+				</div>
+				<ui:include src="/pages/dialogs/confirmaExclusaoDialog.xhtml">
+					<ui:param name="mensagem" value="#{msg['label.confirmacao.exclusao.registro']}" />
+				</ui:include>
+
+
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

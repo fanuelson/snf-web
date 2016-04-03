@@ -28,6 +28,7 @@
 		<sec:intercept-url pattern="/pages/consulta/funcionarios.xhtml" access="hasRole('GERENTE')" />
 		<sec:intercept-url pattern="/pages/consulta/servicos.xhtml" access="hasAnyRole('GERENTE','FUNCIONARIO')" />
 		<sec:intercept-url pattern="/pages/relatorio/**" access="hasRole('GERENTE')" />
+		<sec:intercept-url pattern="/pages/cadastro/transacao.xhtml" access="hasRole('GERENTE')" />
 		<sec:intercept-url pattern="/pages/home/inicio.xhtml" access="hasAnyRole('CAIXA','FUNCIONARIO')" />
 
 		<sec:intercept-url pattern="/pages/dialogs/**" access="isAuthenticated()" />
