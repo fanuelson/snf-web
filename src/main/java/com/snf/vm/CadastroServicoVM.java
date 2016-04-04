@@ -15,15 +15,13 @@ public class CadastroServicoVM implements Serializable {
 	@Inject
 	private Servico servico;
 
-	private Date data;
-
 	private boolean naoExisteCaixaAberto;
 
 	private boolean isTipoFuncionarioLogado;
 
 	@PostConstruct
 	public void init() {
-		data = new Date();
+		servico.setData(new Date());
 	}
 
 	public Servico getServico() {
@@ -32,14 +30,6 @@ public class CadastroServicoVM implements Serializable {
 
 	public void setServico(Servico servico) {
 		this.servico = servico;
-	}
-
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
 	}
 
 	public boolean isNaoExisteCaixaAberto() {

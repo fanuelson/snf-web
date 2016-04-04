@@ -19,7 +19,6 @@ import com.snf.model.Usuario;
 import com.snf.service.CaixaService;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
-import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
 import com.snf.vm.CadastroServicoVM;
 
@@ -73,13 +72,12 @@ public class CadastroServicoController implements Serializable {
 	}
 
 	private Servico salvarServico() {
-		cadastroServicoVM.getServico().setData(DataUtil.dateToTimeStamp(cadastroServicoVM.getData()));
 		return servicoService.salvar(cadastroServicoVM.getServico());
 	}
 
 	private void limparCampos() {
 		cadastroServicoVM.setServico(new Servico());
-		cadastroServicoVM.setData(new Date());
+		cadastroServicoVM.getServico().setData(new Date());
 	}
 
 	public CadastroServicoVM getCadastroServicoVM() {

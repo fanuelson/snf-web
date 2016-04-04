@@ -1,7 +1,7 @@
 package com.snf.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,7 +38,7 @@ public class Servico implements Serializable {
 	private String nomeCliente;
 	
 	@Column(name="data")
-	private Timestamp data;
+	private Date data;
 
 	public Long getId() {
 		return idServico;
@@ -88,11 +88,11 @@ public class Servico implements Serializable {
 		this.nomeCliente = nomeCliente;
 	}
 
-	public Timestamp getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(Timestamp data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 

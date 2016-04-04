@@ -24,12 +24,15 @@
 									<p:dataExporter type="pdf" target="caixaTable" fileName="Relatório de Caixa" />
 								</h:commandLink>
 							</c:facet>
-							<p:column width="25%" headerText="#{msg['label.header.data.abertura']}" sortBy="#{caixa.dataAbertura}">
+							<p:column width="10%" headerText="#{msg['label.header.id']}" sortBy="#{caixa.id}">
+								<h:outputText value="#{caixa.id}" />
+							</p:column>
+							<p:column width="20%" headerText="#{msg['label.header.data.abertura']}" sortBy="#{caixa.dataAbertura}">
 								<h:outputText value="#{caixa.dataAberturaFormatada}">
 									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 								</h:outputText>
 							</p:column>
-							<p:column width="25%" headerText="#{msg['label.header.data.fechamento']}" sortBy="#{caixa.dataFechamento}">
+							<p:column width="20%" headerText="#{msg['label.header.data.fechamento']}" sortBy="#{caixa.dataFechamento}">
 								<h:outputText value="#{caixa.dataFechamentoFormatado}">
 									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 								</h:outputText>
@@ -39,7 +42,7 @@
 									<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 								</h:outputText>
 							</p:column>
-							<p:column width="15%" headerText="#{msg['label.header.valor.final']}" sortBy="#{caixa.valorAtual}" >
+							<p:column width="15%" headerText="#{msg['label.header.valor.final']}" sortBy="#{caixa.valorAtual}">
 								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual}">
 									<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 								</h:outputText>
@@ -90,12 +93,18 @@
 									<p:graphicImage library="imagens" name="caixa-reg.jpg" height="100px" width="100px" />
 									<p:commandButton value="#{msg['label.fechar.caixa']}" action="#{homeGerenteController.fecharCaixa()}"
 										update="formAbrirCaixa" icon="ui-icon-locked" onstart="PF('statusDialog').show()"
-										oncomplete="PF('statusDialog').hide()" >
+										oncomplete="PF('statusDialog').hide()">
 										<p:confirm />
 									</p:commandButton>
 								</div>
 
 								<h:panelGrid style="margin-left:10px" columns="2">
+									<p:outputLabel for="idCaixa" value="#{msg['label.header.id']}" />
+									<p:outputLabel />
+									<p:inputText style="opacity:0.8" disabled="true" id="idCaixa"
+										value="#{homeGerenteController.aberturaCaixaVM.caixa.id}">
+									</p:inputText>
+									<p:outputLabel />
 									<p:outputLabel for="dataInicialCaixa" value="#{msg['label.data.abertura']}" />
 									<p:outputLabel />
 									<p:inputText style="opacity:0.8" disabled="true" id="dataInicialCaixa"
@@ -138,11 +147,11 @@
 					</div>
 				</div>
 			</p:panel>
-			
-			<ui:include src="/pages/dialogs/confirmaFechamentoCaixaDialog.xhtml" >
+
+			<ui:include src="/pages/dialogs/confirmaFechamentoCaixaDialog.xhtml">
 				<ui:param name="mensagem" value="#{msg['mensagem.confirmacao.fechamento.caixa']}" />
 			</ui:include>
-			
+
 		</h:form>
 	</ui:define>
 </ui:composition>

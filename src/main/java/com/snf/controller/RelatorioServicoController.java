@@ -31,6 +31,8 @@ import com.snf.vo.ServicoDataValorVO;
 @ViewScoped
 public class RelatorioServicoController implements Serializable {
 
+	private static final int um_dia = 1;
+
 	private static final long serialVersionUID = 8284251730157488128L;
 
 	static final Logger log = Logger.getLogger(RelatorioServicoController.class);
@@ -55,7 +57,7 @@ public class RelatorioServicoController implements Serializable {
 	private double valorTotalPesquisa = 0;
 
 	private double valorMaxEixoY = 0;
-
+	
 	@PostConstruct
 	public void init() {
 		funcionarios = funcionarioService.getAll();
@@ -65,11 +67,9 @@ public class RelatorioServicoController implements Serializable {
 	}
 
 	public void pesquisar() {
-		Date dataInicialPesquisada = relatorioServicoVM.getDataInicial();
-		Date dataFinalPesquisada = relatorioServicoVM.getDataFinal();
-		relatorioServicoVM.setDataInicial(DataUtil.getDataHoraZerada(dataInicialPesquisada));
-		relatorioServicoVM.setDataFinal(DataUtil.getDataHoraFinalDia(dataFinalPesquisada));
-		if (periodoPesquisaValido()) {
+		Date dataInicialPesquisada = DataUtil.getDataHoraZerada(relatorioServicoVM.getDataInicial());
+		Date dataFinalPesquisada = DataUtil.getDataHoraFinalDia(relatorioServicoVM.getDataFinal());
+		if (periodoPesquisaValido(dataInicialPesquisada, dataFinalPesquisada)) {
 			Funcionario funcionarioPesquisado = relatorioServicoVM.getFuncionario();
 			servicos = servicoService.servicosByPeriodoAndFuncionario(dataInicialPesquisada, dataFinalPesquisada,
 					funcionarioPesquisado);
@@ -102,9 +102,9 @@ public class RelatorioServicoController implements Serializable {
 		valorMaxEixoY = maiorValor + 100;
 	}
 
-	private boolean periodoPesquisaValido() {
-		if (relatorioServicoVM.getDataInicial() != null && relatorioServicoVM.getDataFinal() != null) {
-			return relatorioServicoVM.getDataInicial().before(relatorioServicoVM.getDataFinal());
+	private boolean periodoPesquisaValido(Date dataInicio, Date dataFim) {
+		if (dataInicio != null && dataFim != null) {
+			return dataInicio.before(dataFim);
 		}
 		return true;
 	}
@@ -142,6 +142,8 @@ public class RelatorioServicoController implements Serializable {
 
 	private DateAxis criarEixoX() {
 		DateAxis xAxis = new DateAxis("Datas");
+		Date dataMaxima = DataUtil.somarDias(relatorioServicoVM.getDataFinal(), um_dia);
+		xAxis.setMax(DataUtil.getDataFormatada(DataUtil.getDataHoraZerada(dataMaxima), formato_data_americano));
 		xAxis.setTickAngle(-30);
 		xAxis.setTickFormat("%#d/%m/%y");
 		return xAxis;

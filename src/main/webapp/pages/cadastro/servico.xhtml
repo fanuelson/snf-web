@@ -43,7 +43,7 @@
 					<p:inputText id="nomeCliente" value="#{cadastroServicoController.cadastroServicoVM.servico.nomeCliente}" />
 
 					<p:outputLabel value="#{msg['label.campo.data']}" for="data" />
-					<p:calendar required="true" id="data" value="#{cadastroServicoController.cadastroServicoVM.data}"
+					<p:calendar required="true" id="data" value="#{cadastroServicoController.cadastroServicoVM.servico.data}"
 						pattern="dd/MM/yyyy HH:mm:ss">
 
 					</p:calendar>

@@ -67,8 +67,19 @@ public class ConsultaTransacaoController implements Serializable {
 	private String formatarDouble(Double numero) {
 		String valorFormatado = String.valueOf(numero) ;
 		String naoDecimal = valorFormatado.split("\\.")[0] ;
+		String naoDecimalFormatado = "" ;
 		String decimal = valorFormatado.split("\\.")[1];
-		naoDecimal = naoDecimal.replaceAll(",", ".");
+		naoDecimal = naoDecimal.replace(",", ".");
+		int aux = 0;
+		for(int i = naoDecimal.length() - 1; i >= 0 ; i--){
+			if(aux==3){
+				naoDecimalFormatado += ".";
+				aux=-1;
+			}
+			naoDecimalFormatado += naoDecimal.charAt(i);
+			aux++;
+		}
+		naoDecimal = new StringBuffer(naoDecimalFormatado).reverse().toString();
 		if(decimal.length()>1)
 			decimal = decimal.substring(0, 2);
 		else

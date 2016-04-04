@@ -3,7 +3,10 @@ package com.snf.vm;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
+
 import com.snf.model.Funcionario;
+import com.snf.util.DataUtil;
 
 public class RelatorioServicoVM implements Serializable {
 
@@ -14,6 +17,12 @@ public class RelatorioServicoVM implements Serializable {
 	private Date dataInicial;
 
 	private Date dataFinal;
+	
+	@PostConstruct
+	public void init() {
+		dataInicial = DataUtil.diminuirDias(DataUtil.getDataAtualHoraZerada(), 7);
+		dataFinal = DataUtil.getDataAtualHoraFinalDia();
+	}
 
 	public Funcionario getFuncionario() {
 		return funcionario;
