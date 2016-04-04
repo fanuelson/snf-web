@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import com.snf.model.Caixa;
 
 public class ConsultaTransacaoVM implements Serializable {
@@ -19,6 +21,7 @@ public class ConsultaTransacaoVM implements Serializable {
 
 	private List<Caixa> caixasFiltered = new ArrayList<>();
 
+	@Inject
 	private Caixa caixaSelecionado;
 
 	public Date getDataInicio() {

@@ -5,15 +5,15 @@
 
 		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
 
-		<p:panel styleClass="ui-grid ui-grid-responsive" header="Consulta de serviços"
+		<p:panel styleClass="ui-grid ui-grid-responsive" header="#{msg['label.header.consulta.transacoes']}"
 			style="margin: 20px auto 20px auto;width:95%">
 
 			<ui:include src="/pages/filtro/transacoes.xhtml" />
 
-			<h:form prependId="false" id="consultaServicosForm">
+			<h:form prependId="false" id="consultaCaixaTransacaoForm">
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-10">
-						<h3 style="margin: 20px auto 10px 15px;">Caixas</h3>
+						<h3 style="margin: 20px auto 10px 15px;">#{msg['label.caixas']}</h3>
 						<h:panelGrid style="padding:5px;width:100%">
 							<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="caixa"
 								value="#{consultaTransacaoController.consultaTransacaoVM.caixas}" emptyMessage="Nenhum caixa cadastrado"
@@ -30,29 +30,29 @@
 								</c:facet>
 								<p:ajax event="rowSelect" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"
 									update="transacoesTable" listener="#{consultaTransacaoController.selecionar}" />
-								<p:column width="15%" headerText="Data Abertura" sortBy="#{caixa.dataAbertura}">
+								<p:column width="15%" headerText="#{msg['label.header.data.abertura']}" sortBy="#{caixa.dataAbertura}">
 									<h:outputText value="#{caixa.dataAberturaFormatada}">
 										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 									</h:outputText>
 								</p:column>
-								<p:column width="15%" headerText="Data Fechamento" sortBy="#{caixa.dataFechamento}">
+								<p:column width="15%" headerText="#{msg['label.header.data.fechamento']}" sortBy="#{caixa.dataFechamento}">
 									<h:outputText value="#{caixa.dataFechamentoFormatado}">
 										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 									</h:outputText>
 								</p:column>
-								<p:column width="15%" headerText="Valor Inicial" sortBy="#{caixa.valorInicial}">
+								<p:column width="15%" headerText="#{msg['label.header.valor.inicial']}" sortBy="#{caixa.valorInicial}">
 									<h:outputText value="#{caixa.valorInicial}">
 										<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2"
 											maxFractionDigits="2" />
 									</h:outputText>
 								</p:column>
-								<p:column width="15%" headerText="Valor Final">
+								<p:column width="15%" headerText="#{msg['label.header.valor.final']}" sortBy="#{caixa.valorAtual}">
 									<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual}">
 										<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2"
 											maxFractionDigits="2" />
 									</h:outputText>
 								</p:column>
-								<p:column width="20%" headerText="Receita" >
+								<p:column width="20%" headerText="#{msg['label.header.receita']}" >
 									<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual - caixa.valorInicial}">
 										<c:convertNumber currencySymbol="R$" type="currency" locale="pt-br" minFractionDigits="2"
 											maxFractionDigits="2" />
@@ -65,12 +65,22 @@
 										style="margin-left:10px;float:right" library="imagens" name="boxBlue.png" />
 								</p:column>
 
+								<p:columnGroup type="footer">
+									<p:row>
+										<p:column footerText="#{msg['label.campo.soma.total']}" />
+										<p:column footerText="#{msg['label.traco']}" />
+										<p:column footerText="#{msg['label.traco']}" />
+										<p:column footerText="#{msg['label.traco']}" />
+										<p:column footerText="#{consultaTransacaoController.valorTotalCaixas}"  />
+									</p:row>
+								</p:columnGroup>
+
 							</p:dataTable>
 
 						</h:panelGrid>
 					</div>
 					<div class="ui-grid-col-10">
-						<h3 style="margin: 20px auto 10px 15px;">Transações</h3>
+						<h3 style="margin: 20px auto 10px 15px;">#{msg['label.transacoes']}</h3>
 						<h:panelGrid style="padding:5px;width:100%">
 							<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="transacao"
 								value="#{consultaTransacaoController.consultaTransacaoVM.caixaSelecionado.transacoes}"
@@ -82,19 +92,19 @@
 								<c:facet name="{Exporters}">
 									<h:commandLink style="float:right" immediate="true" title="Baixar como PDF">
 										<p:graphicImage library="imagens" name="pdfIcon.png" width="24" />
-										<p:dataExporter type="pdf" target="caixaTable" fileName="Relatório de Caixa" />
+										<p:dataExporter type="pdf" target="transacoesTable" fileName="Relatório de Transações" />
 									</h:commandLink>
 								</c:facet>
-								<p:column width="15%" headerText="Data" sortBy="#{transacao.data}">
+								<p:column width="15%" headerText="#{msg['label.data']}" sortBy="#{transacao.data}">
 									<h:outputText value="#{transacao.data}">
 										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 									</h:outputText>
 								</p:column>
-								<p:column width="15%" headerText="Tipo" sortBy="#{transacao.tipo}">
+								<p:column width="15%" headerText="#{msg['label.tipo']}" sortBy="#{transacao.tipo}">
 									<h:outputText value="#{transacao.tipo}" />
 								</p:column>
 
-								<p:column width="20%" headerText="Valor" sortBy="#{transacao.valor}">
+								<p:column width="20%" headerText="#{msg['label.valor']}" sortBy="#{transacao.valor}">
 									<h:outputText value="#{transacao.valor}">
 										<c:convertNumber currencySymbol="R$" type="currency" locale="pt-br" minFractionDigits="2"
 											maxFractionDigits="2" />
@@ -106,6 +116,14 @@
 									<p:graphicImage rendered="#{ (transacao.valor) eq 0.0}" style="margin-left:10px;float:right" library="imagens"
 										name="boxBlue.png" />
 								</p:column>
+								
+								<p:columnGroup type="footer">
+									<p:row>
+										<p:column footerText="#{msg['label.campo.soma.total']}" style="text-align:right" />
+										<p:column footerText="#{msg['label.traco']}" />
+										<p:column footerText="#{consultaTransacaoController.valorTotalTransacoes}" />
+									</p:row>
+								</p:columnGroup>
 
 							</p:dataTable>
 

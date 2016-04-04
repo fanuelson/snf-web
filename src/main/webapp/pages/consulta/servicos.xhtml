@@ -5,12 +5,12 @@
 
 		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
 
-		<p:panel header="Consulta de serviços" style="margin: 20px auto 20px auto;width:95%">
+		<p:panel header="#{msg['label.header.consulta.servicos']}" style="margin: 20px auto 20px auto;width:95%;padding:0 !important">
 
 			<ui:include src="/pages/filtro/servicos.xhtml" />
 
 			<h:form id="consultaServicosForm">
-				<h:panelGrid style="padding:30px">
+				<h:panelGrid style="padding:5px">
 					<p:outputLabel rendered="#{consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}"
 						value="#{msg['label.meus.servicos']}" style="font-size:20px" />
 					<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="servico"

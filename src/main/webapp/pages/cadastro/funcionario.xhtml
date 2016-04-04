@@ -25,7 +25,7 @@
 					<p:inputText size="20" required="true" id="senhaNovamenteFuncionario" type="password"
 						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.senhaNovamente}" />
 
-					<p:outputLabel value="#{msg['label.tipo']}" for="tipoUsuario" />
+					<p:outputLabel value="#{msg['label.campo.tipo']}" for="tipoUsuario" />
 					<p:selectOneMenu style="width:100px" id="tipoUsuario" converter="tipoUsuarioConverter" required="true"
 						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.role.tipoUsuario}" >
 						<c:selectItem itemLabel="#{msg['label.selecione']}" itemValue="#{null}" noSelectionOption="true" />

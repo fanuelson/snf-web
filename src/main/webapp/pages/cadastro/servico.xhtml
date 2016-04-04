@@ -7,7 +7,7 @@
 
 		<h:form id="cadastroServicoForm">
 			<p:panel header="#{msg['label.cadastro.servico']}" style="width:50%;margin:20px auto 20px auto">
-				<p:outputLabel style="margin:10px" value="É necessário abrir o caixa para cadastro de Serviço." styleClass="erro"
+				<p:outputLabel style="margin:10px" value="#{msg['mensagem.necessario.abrir.caixa']}" styleClass="erro"
 					rendered="#{cadastroServicoController.cadastroServicoVM.naoExisteCaixaAberto}" />
 				<p:messages closable="true" severity="error" />
 				<h:panelGrid style="width:100%;margin:auto;padding:20px;">

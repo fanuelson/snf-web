@@ -12,16 +12,13 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import com.snf.enums.TipoTransacao;
 import com.snf.enums.TipoUsuario;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
-import com.snf.model.Transacao;
 import com.snf.model.Usuario;
 import com.snf.service.CaixaService;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
-import com.snf.service.TransacaoService;
 import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
 import com.snf.vm.CadastroServicoVM;
@@ -39,9 +36,6 @@ public class CadastroServicoController implements Serializable {
 
 	@Inject
 	private ServicoService servicoService;
-
-	@Inject
-	private TransacaoService transacaoService;
 
 	@Inject
 	private CaixaService caixaService;
@@ -69,8 +63,7 @@ public class CadastroServicoController implements Serializable {
 
 	public void salvar() {
 		try {
-			Servico servicoSalvo = salvarServico();
-			salvarTransacao(servicoSalvo);
+			salvarServico();
 			limparCampos();
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
 		} catch (Exception e) {
@@ -83,20 +76,10 @@ public class CadastroServicoController implements Serializable {
 		cadastroServicoVM.getServico().setData(DataUtil.dateToTimeStamp(cadastroServicoVM.getData()));
 		return servicoService.salvar(cadastroServicoVM.getServico());
 	}
-	
-	private void salvarTransacao(Servico servico) {
-		Transacao transacao = cadastroServicoVM.getTransacao();
-		transacao.setCaixa(caixaService.getCaixaAberto());
-		transacao.setData(new Date());
-		transacao.setTipo(TipoTransacao.RECEITA);
-		transacao.setValor(servico.getValor());
-		transacaoService.salvar(transacao);
-	}
 
 	private void limparCampos() {
 		cadastroServicoVM.setServico(new Servico());
 		cadastroServicoVM.setData(new Date());
-		cadastroServicoVM.setTransacao(new Transacao());
 	}
 
 	public CadastroServicoVM getCadastroServicoVM() {

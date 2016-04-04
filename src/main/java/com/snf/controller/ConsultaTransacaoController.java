@@ -12,6 +12,7 @@ import org.primefaces.event.SelectEvent;
 
 import com.snf.model.Caixa;
 import com.snf.model.Servico;
+import com.snf.model.Transacao;
 import com.snf.service.CaixaService;
 import com.snf.vm.ConsultaTransacaoVM;
 
@@ -45,6 +46,34 @@ public class ConsultaTransacaoController implements Serializable {
 
 	public void remover(Servico servico) {
 
+	}
+	
+	public String getValorTotalCaixas() {
+		Double valorTotal = 0.0;
+		for (Caixa caixa : consultaTransacaoVM.getCaixas()) {
+			valorTotal += (caixa.getValorAtual() - caixa.getValorInicial());
+		}
+		return formatarDouble(valorTotal);
+	}
+	
+	public String getValorTotalTransacoes() {
+		Double valorTotal = 0.0;
+		for (Transacao transacao : consultaTransacaoVM.getCaixaSelecionado().getTransacoes()) {
+			valorTotal += transacao.getValor();
+		}
+		return formatarDouble(valorTotal);
+	}
+	
+	private String formatarDouble(Double numero) {
+		String valorFormatado = String.valueOf(numero) ;
+		String naoDecimal = valorFormatado.split("\\.")[0] ;
+		String decimal = valorFormatado.split("\\.")[1];
+		naoDecimal = naoDecimal.replaceAll(",", ".");
+		if(decimal.length()>1)
+			decimal = decimal.substring(0, 2);
+		else
+			decimal = decimal.substring(0, 1) + "0";
+		return "R$ "+naoDecimal+","+decimal;
 	}
 
 	public ConsultaTransacaoVM getConsultaTransacaoVM() {
