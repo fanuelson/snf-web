@@ -51,5 +51,24 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 
 		return caixas;
 	}
+	
+	public Caixa getCaixaAberto() {
+		Caixa caixa = null;
+
+		try {
+			getManager().clear();
+			JPQLBuilder queryBuilder = new JPQLBuilder()
+					.select("DISTINCT c")
+					.from(Caixa.class, "c")
+					.where("c.dataFechamento IS NULL", null);
+
+			TypedQuery<Caixa> query = getManager().createQuery(queryBuilder.contruir(), Caixa.class);
+			caixa = query.getSingleResult();
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+
+		return caixa;
+	}
 
 }

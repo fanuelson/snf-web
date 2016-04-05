@@ -31,13 +31,7 @@ public class CaixaService implements Serializable {
 	}
 	
 	public Caixa getCaixaAberto() {
-		List<Caixa> caixas = caixaDAO.getAll();
-		for (Caixa caixa : caixas) {
-			if(caixa.isAberto()) {
-				return caixa;
-			}
-		}
-		return null;
+		return caixaDAO.getCaixaAberto();
 	}
 	
 	public boolean existeCaixaAberto() {
