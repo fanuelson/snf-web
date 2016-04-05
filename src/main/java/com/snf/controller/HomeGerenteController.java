@@ -35,6 +35,7 @@ public class HomeGerenteController implements Serializable {
 			aberturaCaixaVM.setCaixa(caixaService.getCaixaAberto());
 			aberturaCaixaVM.setExisteCaixaAberto(true);
 		} else {
+			aberturaCaixaVM.setCaixa(new Caixa());
 			aberturaCaixaVM.setExisteCaixaAberto(false);
 		}
 		
@@ -43,10 +44,8 @@ public class HomeGerenteController implements Serializable {
 	public void salvarCaixa() {
 		try{
 			Caixa caixa = aberturaCaixaVM.getCaixa();
-			caixa = caixaService.abrirCaixa(caixa);
-			aberturaCaixaVM.getCaixas().add(0,caixa);
-			aberturaCaixaVM.setCaixa(caixa);
-			aberturaCaixaVM.setExisteCaixaAberto(true);
+			caixaService.abrirCaixa(caixa);
+			init();
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
 		} catch (Exception e){
 			log.error(e.toString());
@@ -58,8 +57,7 @@ public class HomeGerenteController implements Serializable {
 		try{
 			Caixa caixa = aberturaCaixaVM.getCaixa();
 			caixaService.fecharCaixa(caixa);
-			aberturaCaixaVM.setExisteCaixaAberto(false);
-			aberturaCaixaVM.setCaixa(new Caixa());
+			init();
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
 		} catch (Exception e){
 			log.error(e.toString());

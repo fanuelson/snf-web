@@ -66,6 +66,7 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 			caixa = query.getSingleResult();
 		} catch (Exception e) {
 			log.error(e.toString());
+			return null;
 		}
 
 		return caixa;
