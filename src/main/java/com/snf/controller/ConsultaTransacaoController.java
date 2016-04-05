@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 
 import com.snf.model.Caixa;
-import com.snf.model.Servico;
 import com.snf.model.Transacao;
 import com.snf.service.CaixaService;
 import com.snf.util.CollectionsUtils;
@@ -44,14 +43,6 @@ public class ConsultaTransacaoController implements Serializable {
 	public void selecionar(SelectEvent event) {
 		Caixa caixaSelecionado = (Caixa) event.getObject();
 		consultaTransacaoVM.setCaixaSelecionado(caixaSelecionado);
-	}
-
-	public void pesquisar() {
-
-	}
-
-	public void remover(Servico servico) {
-
 	}
 
 	public Double getValorTotalCaixas() {
