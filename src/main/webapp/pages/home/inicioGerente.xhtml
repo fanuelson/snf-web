@@ -116,7 +116,7 @@
 									<p:outputLabel />
 									<p:inputText style="opacity:0.8" disabled="true" id="valorInicialCaixa"
 										value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}">
-										<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+										<c:convertNumber pattern="R$ #" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 										<c:validateDoubleRange minimum="0.1" />
 									</p:inputText>
 									<p:outputLabel />
@@ -125,7 +125,7 @@
 									<p:outputLabel />
 									<p:inputText style="opacity:0.8" disabled="true" id="valorAtual"
 										value="#{homeGerenteController.aberturaCaixaVM.caixa.valorAtual}">
-										<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+										<c:convertNumber pattern="R$ #" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 										<c:validateDoubleRange minimum="0.1" />
 									</p:inputText>
 									<p:outputLabel />
@@ -134,7 +134,7 @@
 									<p:outputLabel />
 									<p:inputText style="opacity:0.8" disabled="true" id="receitaCorrente"
 										value="#{homeGerenteController.aberturaCaixaVM.caixa.valorAtual - homeGerenteController.aberturaCaixaVM.caixa.valorInicial}">
-										<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+										<c:convertNumber pattern="R$ #" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 										<c:validateDoubleRange minimum="0.1" />
 									</p:inputText>
 									<p:graphicImage library="imagens" name="money.png" width="20px" />

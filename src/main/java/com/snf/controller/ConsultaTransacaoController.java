@@ -1,6 +1,7 @@
 package com.snf.controller;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -14,6 +15,7 @@ import com.snf.model.Caixa;
 import com.snf.model.Servico;
 import com.snf.model.Transacao;
 import com.snf.service.CaixaService;
+import com.snf.util.CollectionsUtils;
 import com.snf.vm.ConsultaTransacaoVM;
 
 @Named
@@ -32,7 +34,11 @@ public class ConsultaTransacaoController implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		consultaTransacaoVM.setCaixas(caixaService.getAllOrderByDataAberturaFetchTransacoes());
+		List<Caixa> caixas = caixaService.getAllOrderByDataAberturaFetchTransacoes();
+		consultaTransacaoVM.setCaixas(caixas);
+		if(!CollectionsUtils.isNullOrEmpty(caixas)) {
+			consultaTransacaoVM.setCaixaSelecionado(caixas.get(0));
+		}
 	}
 
 	public void selecionar(SelectEvent event) {
@@ -47,44 +53,21 @@ public class ConsultaTransacaoController implements Serializable {
 	public void remover(Servico servico) {
 
 	}
-	
-	public String getValorTotalCaixas() {
+
+	public Double getValorTotalCaixas() {
 		Double valorTotal = 0.0;
 		for (Caixa caixa : consultaTransacaoVM.getCaixas()) {
 			valorTotal += (caixa.getValorAtual() - caixa.getValorInicial());
 		}
-		return formatarDouble(valorTotal);
+		return valorTotal;
 	}
-	
-	public String getValorTotalTransacoes() {
+
+	public Double getValorTotalTransacoes() {
 		Double valorTotal = 0.0;
 		for (Transacao transacao : consultaTransacaoVM.getCaixaSelecionado().getTransacoes()) {
 			valorTotal += transacao.getValor();
 		}
-		return formatarDouble(valorTotal);
-	}
-	
-	private String formatarDouble(Double numero) {
-		String valorFormatado = String.valueOf(numero) ;
-		String naoDecimal = valorFormatado.split("\\.")[0] ;
-		String naoDecimalFormatado = "" ;
-		String decimal = valorFormatado.split("\\.")[1];
-		naoDecimal = naoDecimal.replace(",", ".");
-		int aux = 0;
-		for(int i = naoDecimal.length() - 1; i >= 0 ; i--){
-			if(aux==3){
-				naoDecimalFormatado += ".";
-				aux=-1;
-			}
-			naoDecimalFormatado += naoDecimal.charAt(i);
-			aux++;
-		}
-		naoDecimal = new StringBuffer(naoDecimalFormatado).reverse().toString();
-		if(decimal.length()>1)
-			decimal = decimal.substring(0, 2);
-		else
-			decimal = decimal.substring(0, 1) + "0";
-		return "R$ "+naoDecimal+","+decimal;
+		return valorTotal;
 	}
 
 	public ConsultaTransacaoVM getConsultaTransacaoVM() {

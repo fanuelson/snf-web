@@ -6,20 +6,20 @@
 		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
 
 		<p:panel styleClass="ui-grid ui-grid-responsive" header="#{msg['label.header.consulta.transacoes']}"
-			style="margin: 20px auto 20px auto;width:95%">
+			style="margin: 20px auto 20px auto;width:99%;">
 
 			<ui:include src="/pages/filtro/transacoes.xhtml" />
 
 			<h:form prependId="false" id="consultaCaixaTransacaoForm">
-				<div class="ui-grid-row">
+				<div class="ui-grid-row" style="margin:1px" >
 					<div class="ui-grid-col-10">
-						<h3 style="margin: 20px auto 10px 15px;" >#{msg['label.caixas']}</h3>
-						<H4 style="margin: 20px auto 10px 15px;" >#{msg['mensagem.info.selecione.caixa']}</H4>
+						<h3 style="margin: 20px auto 10px 15px;">#{msg['label.caixas']}</h3>
+						<H4 style="margin: 20px auto 10px 15px;">#{msg['mensagem.info.selecione.caixa']}</H4>
 						<h:panelGrid style="padding:5px;width:100%">
 							<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="caixa"
 								value="#{consultaTransacaoController.consultaTransacaoVM.caixas}" emptyMessage="Nenhum caixa cadastrado"
-								selectionMode="single"
-								rowKey="#{caixa.id}" widgetVar="servicosTable" id="caixaTable" paginator="true" rows="30" rowExpandMode="false"
+								selectionMode="single" rowKey="#{caixa.id}" widgetVar="servicosTable" id="caixaTable" paginator="true" rows="30"
+								rowExpandMode="false"
 								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
 								currentPageReportTemplate="Quantidade: {totalRecords} - Página {currentPage} de {totalPages}"
 								rowsPerPageTemplate="5,10,15,20,30" paginatorPosition="bottom">
@@ -35,25 +35,39 @@
 									<h:outputText value="#{caixa.dataAberturaFormatada}">
 										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 									</h:outputText>
+									<c:facet name="footer">
+										<p:column>
+											<h:outputText value="#{msg['label.campo.soma.total']}" />
+										</p:column>
+									</c:facet>
 								</p:column>
 								<p:column width="15%" headerText="#{msg['label.header.data.fechamento']}" sortBy="#{caixa.dataFechamento}">
 									<h:outputText value="#{caixa.dataFechamentoFormatado}">
 										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 									</h:outputText>
+									<c:facet name="footer">
+										<h:outputText value="#{msg['label.traco']}" />
+									</c:facet>
 								</p:column>
 								<p:column width="15%" headerText="#{msg['label.header.valor.inicial']}" sortBy="#{caixa.valorInicial}">
 									<h:outputText value="#{caixa.valorInicial}">
 										<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2"
 											maxFractionDigits="2" />
 									</h:outputText>
+									<c:facet name="footer">
+										<h:outputText value="#{msg['label.traco']}" />
+									</c:facet>
 								</p:column>
 								<p:column width="15%" headerText="#{msg['label.header.valor.final']}" sortBy="#{caixa.valorAtual}">
 									<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual}">
 										<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2"
 											maxFractionDigits="2" />
 									</h:outputText>
+									<c:facet name="footer">
+										<h:outputText value="#{msg['label.traco']}" />
+									</c:facet>
 								</p:column>
-								<p:column width="20%" headerText="#{msg['label.header.receita']}" >
+								<p:column width="20%" headerText="#{msg['label.header.receita']}">
 									<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual - caixa.valorInicial}">
 										<c:convertNumber currencySymbol="R$" type="currency" locale="pt-br" minFractionDigits="2"
 											maxFractionDigits="2" />
@@ -64,23 +78,25 @@
 										style="margin-left:10px;float:right" library="imagens" name="downIcon.png" />
 									<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) eq 0.0}"
 										style="margin-left:10px;float:right" library="imagens" name="boxBlue.png" />
+									<c:facet name="footer">
+										<h:outputText value="#{consultaTransacaoController.valorTotalCaixas}">
+											<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2"
+												maxFractionDigits="2" />
+										</h:outputText>
+										<p:graphicImage rendered="#{ consultaTransacaoController.valorTotalCaixas gt 0.0}"
+										style="margin-left:10px;float:right" library="imagens" name="upIcon.png" />
+									<p:graphicImage rendered="#{ consultaTransacaoController.valorTotalCaixas lt 0.0}"
+										style="margin-left:10px;float:right" library="imagens" name="downIcon.png" />
+									<p:graphicImage rendered="#{ consultaTransacaoController.valorTotalCaixas eq 0.0}"
+										style="margin-left:10px;float:right" library="imagens" name="boxBlue.png" />
+									</c:facet>
 								</p:column>
-
-								<p:columnGroup type="footer">
-									<p:row>
-										<p:column footerText="#{msg['label.campo.soma.total']}" />
-										<p:column footerText="#{msg['label.traco']}" />
-										<p:column footerText="#{msg['label.traco']}" />
-										<p:column footerText="#{msg['label.traco']}" />
-										<p:column footerText="#{consultaTransacaoController.valorTotalCaixas}"  />
-									</p:row>
-								</p:columnGroup>
 
 							</p:dataTable>
 
 						</h:panelGrid>
 					</div>
-					<div class="ui-grid-col-10">
+					<div class="ui-grid-col-5">
 						<h3 style="margin: 20px auto 10px 15px;">#{msg['label.transacoes']}</h3>
 						<h:panelGrid style="padding:5px;width:100%">
 							<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="transacao"
@@ -100,9 +116,17 @@
 									<h:outputText value="#{transacao.data}">
 										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 									</h:outputText>
+									<c:facet name="footer">
+										<p:column>
+											<h:outputText value="#{msg['label.campo.soma.total']}" />
+										</p:column>
+									</c:facet>
 								</p:column>
 								<p:column width="15%" headerText="#{msg['label.tipo']}" sortBy="#{transacao.tipo}">
 									<h:outputText value="#{transacao.tipo}" />
+									<c:facet name="footer">
+										<h:outputText value="#{msg['label.traco']}" />
+									</c:facet>
 								</p:column>
 
 								<p:column width="20%" headerText="#{msg['label.valor']}" sortBy="#{transacao.valor}">
@@ -116,15 +140,20 @@
 										name="downIcon.png" />
 									<p:graphicImage rendered="#{ (transacao.valor) eq 0.0}" style="margin-left:10px;float:right" library="imagens"
 										name="boxBlue.png" />
+									<c:facet name="footer">
+										<h:outputText value="#{consultaTransacaoController.valorTotalTransacoes}">
+											<c:convertNumber currencySymbol="R$" type="currency" locale="pt-br" minFractionDigits="2"
+												maxFractionDigits="2" />
+										</h:outputText>
+										<p:graphicImage rendered="#{ consultaTransacaoController.valorTotalTransacoes gt 0.0}" style="margin-left:10px;float:right" library="imagens"
+											name="upIcon.png" />
+										<p:graphicImage rendered="#{ consultaTransacaoController.valorTotalTransacoes lt 0.0}" style="margin-left:10px;float:right" library="imagens"
+											name="downIcon.png" />
+										<p:graphicImage rendered="#{ consultaTransacaoController.valorTotalTransacoes eq 0.0}" style="margin-left:10px;float:right" library="imagens"
+											name="boxBlue.png" />
+									</c:facet>
+
 								</p:column>
-								
-								<p:columnGroup type="footer">
-									<p:row>
-										<p:column footerText="#{msg['label.campo.soma.total']}" style="text-align:right" />
-										<p:column footerText="#{msg['label.traco']}" />
-										<p:column footerText="#{consultaTransacaoController.valorTotalTransacoes}" />
-									</p:row>
-								</p:columnGroup>
 
 							</p:dataTable>
 

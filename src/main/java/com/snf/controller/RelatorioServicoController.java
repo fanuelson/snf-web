@@ -57,7 +57,7 @@ public class RelatorioServicoController implements Serializable {
 	private double valorTotalPesquisa = 0;
 
 	private double valorMaxEixoY = 0;
-	
+
 	@PostConstruct
 	public void init() {
 		funcionarios = funcionarioService.getAll();
