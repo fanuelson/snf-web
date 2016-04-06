@@ -30,12 +30,11 @@
 		</p:panelGrid>
 
 		<h:panelGrid id="painelCalculo" styleClass="botoes" columns="3" style="margin:auto;margin-top:15px">
-			<p:outputLabel value="#{msg['label.campo.soma.total']}" />
+			<p:outputLabel value="#{msg['label.soma.total.pesquisa']}" />
 			<h:outputLabel id="calculo" value="#{relatorioServicoController.valorTotalPesquisa}">
 				<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 			</h:outputLabel>
-			<p:commandButton icon="ui-icon-calculator" style="margin-left:10px" value="#{msg['label.calcular']}"
-				action="#{relatorioServicoController.calcularValorTotalPesquisa()}" update="calculo" />
+			
 		</h:panelGrid>
 
 	</h:form>

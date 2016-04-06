@@ -30,13 +30,11 @@
 			</p:panelGrid>
 
 			<h:panelGrid id="panelCalculo" styleClass="botoes" columns="3" style="margin:auto;margin-top:15px">
-				<p:outputLabel value="#{label.campo.soma.total}" />
+				<p:outputLabel value="#{msg['label.soma.total.pesquisa']}" />
 				<h:outputLabel id="calculo" value="#{consultaServicoController.valorTotalPesquisa}">
 					<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 				</h:outputLabel>
-				<p:commandButton onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" style="margin-left:10px"
-					value="#{msg['label.calcular']}" icon="ui-icon-calculator"
-					action="#{consultaServicoController.calcularValorTotalPesquisa}" update="calculo" />
+				
 			</h:panelGrid>
 
 		</p:panel>
