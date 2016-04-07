@@ -35,14 +35,19 @@ public class ConsultaTransacaoController implements Serializable {
 	public void init() {
 		List<Caixa> caixas = caixaService.getAllOrderByDataAberturaFetchTransacoes();
 		consultaTransacaoVM.setCaixas(caixas);
-		if(!CollectionsUtils.isNullOrEmpty(caixas)) {
+		if (!CollectionsUtils.isNullOrEmpty(caixas)) {
 			consultaTransacaoVM.setCaixaSelecionado(caixas.get(0));
 		}
 	}
 
-	public void selecionar(SelectEvent event) {
+	public void selecionarCaixa(SelectEvent event) {
 		Caixa caixaSelecionado = (Caixa) event.getObject();
 		consultaTransacaoVM.setCaixaSelecionado(caixaSelecionado);
+	}
+
+	public void selecionarTransacao(SelectEvent event) {
+		Transacao transacaoSelecionada = (Transacao) event.getObject();
+		consultaTransacaoVM.setTransacaoSelecionada(transacaoSelecionada);
 	}
 
 	public Double getValorTotalCaixas() {

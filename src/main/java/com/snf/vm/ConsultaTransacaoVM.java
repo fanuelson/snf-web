@@ -8,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.snf.model.Caixa;
+import com.snf.model.Transacao;
 
 public class ConsultaTransacaoVM implements Serializable {
 
@@ -23,6 +24,8 @@ public class ConsultaTransacaoVM implements Serializable {
 
 	@Inject
 	private Caixa caixaSelecionado;
+
+	private Transacao transacaoSelecionada;
 
 	public Date getDataInicio() {
 		return dataInicio;
@@ -62,6 +65,14 @@ public class ConsultaTransacaoVM implements Serializable {
 
 	public void setCaixasFiltered(List<Caixa> caixasFiltered) {
 		this.caixasFiltered = caixasFiltered;
+	}
+
+	public Transacao getTransacaoSelecionada() {
+		return transacaoSelecionada;
+	}
+
+	public void setTransacaoSelecionada(Transacao transacaoSelecionada) {
+		this.transacaoSelecionada = transacaoSelecionada;
 	}
 
 }

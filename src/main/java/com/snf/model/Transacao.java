@@ -32,12 +32,15 @@ public class Transacao implements Serializable {
 	@Column(name = "tipo")
 	private TipoTransacao tipo;
 
+	@Column(name = "descricao")
+	private String descricao;
+
 	@Column(name = "data")
 	private Date data;
 
 	@Column(name = "valor")
 	private Double valor;
-	
+
 	public boolean isSaidaCaixa() {
 		return tipo.equals(TipoTransacao.DESPESA) || tipo.equals(TipoTransacao.RETIRADA);
 	}
@@ -80,6 +83,16 @@ public class Transacao implements Serializable {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
+	}
+	
+	
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@Override

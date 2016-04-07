@@ -30,44 +30,56 @@
 				</h:panelGrid>
 
 
-				<p:panel id="cadastroTransacaoPanel" style="margin:10px auto 10px auto;height:235px"
+				<p:panel id="cadastroTransacaoPanel" style="margin:10px auto 10px auto;"
 					rendered="#{cadastroTransacaoController.cadastroTransacaoVM.transacao.tipo ne null}">
-					<p:graphicImage library="imagens" name="carteiraIcon.jpg" width="150px" />
-					<div class="ui-grid ui-grid-responsive" style="width: 65%; float: right">
+					<div class="ui-grid ui-grid-responsive">
 						<div class="ui-grid-row">
-							<p:graphicImage rendered="#{cadastroTransacaoController.cadastroTransacaoVM.transacao.saidaCaixa}"
-								library="imagens" name="downIcon.png" width="16px" height="16px" />
-							<p:graphicImage rendered="#{not cadastroTransacaoController.cadastroTransacaoVM.transacao.saidaCaixa}"
-								library="imagens" name="upIcon.png" width="16px" height="16px" />
-							<h3 style="margin: 0 auto 25px 5px;">#{cadastroTransacaoController.cadastroTransacaoVM.transacao.tipo}</h3>
+							<div class="ui-grid-col-4">
+								<p:graphicImage library="imagens" name="carteiraIcon.jpg" width="150px" />
+							</div>
+							<div class="ui-grid-col-8">
+								<div class="ui-grid ui-grid-responsive">
+									<div class="ui-grid-row">
+										<p:graphicImage rendered="#{cadastroTransacaoController.cadastroTransacaoVM.transacao.saidaCaixa}"
+											library="imagens" name="downIcon.png" width="16px" height="16px" />
+										<p:graphicImage rendered="#{not cadastroTransacaoController.cadastroTransacaoVM.transacao.saidaCaixa}"
+											library="imagens" name="upIcon.png" width="16px" height="16px" />
+										<h3 style="margin: 0 auto 25px 5px;">#{cadastroTransacaoController.cadastroTransacaoVM.transacao.tipo}</h3>
+									</div>
+
+									<h:panelGrid id="cadastroTransacaoPanelGrid">
+										<p:outputLabel for="caixaAberto" value="#{msg['label.caixa.aberto']}" />
+										<p:inputText size="10" style="opacity:0.8" disabled="true" id="caixaAberto"
+											value="Id: #{cadastroTransacaoController.cadastroTransacaoVM.caixaAberto.id}">
+										</p:inputText>
+
+										<p:outputLabel for="tipo" value="#{msg['label.campo.tipo']}" />
+										<p:inputText size="10" style="opacity:0.8" disabled="true" id="tipo"
+											value="#{cadastroTransacaoController.cadastroTransacaoVM.transacao.tipo}">
+										</p:inputText>
+
+										<p:outputLabel for="descricao" value="#{msg['label.campo.descricao']}" />
+										<p:inputTextarea id="descricao" value="#{cadastroTransacaoController.cadastroTransacaoVM.transacao.descricao}"
+											maxlength="100" cols="40" rows="5" />
+
+										<p:outputLabel style="font-size:32px" value="#{msg['label.campo.valor']}" for="valor" />
+										<h:inputText style="font-size:32px" id="valor" value="#{cadastroTransacaoController.cadastroTransacaoVM.transacao.valor}" size="10"
+											required="true" type="number" converterMessage="Preço inválido."
+											validatorMessage="Preço deve ser maior ou igual a 0,01">
+											<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+											<c:validateDoubleRange minimum="0.1" />
+										</h:inputText>
+
+									</h:panelGrid>
+									<p:commandButton onstart="PF('statusDialog').show()"
+										oncomplete="PF('statusDialog').hide();$('html, body').animate({ scrollTop: 100 }, 'slow');"
+										style="margin:10px;float:right" process="cadastroTransacaoPanel"
+										disabled="#{not cadastroTransacaoController.cadastroTransacaoVM.existeCaixaAberto}"
+										action="#{cadastroTransacaoController.salvar()}" update="msgs linksTransacao" icon="ui-icon-disk" iconPos="r"
+										value="#{msg['label.salvar']}" />
+								</div>
+							</div>
 						</div>
-
-						<h:panelGrid id="cadastroTransacaoPanelGrid">
-							<p:outputLabel for="caixaAberto" value="#{msg['label.caixa.aberto']}" />
-							<p:inputText size="10" style="opacity:0.8" disabled="true" id="caixaAberto"
-								value="Id: #{cadastroTransacaoController.cadastroTransacaoVM.caixaAberto.id}">
-							</p:inputText>
-
-							<p:outputLabel for="tipo" value="#{msg['label.campo.tipo']}" />
-							<p:inputText size="10" style="opacity:0.8" disabled="true" id="tipo"
-								value="#{cadastroTransacaoController.cadastroTransacaoVM.transacao.tipo}">
-							</p:inputText>
-
-							<p:outputLabel value="#{msg['label.campo.valor']}" for="valor" />
-							<h:inputText id="valor" value="#{cadastroTransacaoController.cadastroTransacaoVM.transacao.valor}" size="10"
-								required="true" type="number" converterMessage="Preço inválido."
-								validatorMessage="Preço deve ser maior ou igual a 0,01">
-								<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-								<c:validateDoubleRange minimum="0.1" />
-							</h:inputText>
-
-						</h:panelGrid>
-						<p:commandButton onstart="PF('statusDialog').show()"
-							oncomplete="PF('statusDialog').hide();$('html, body').animate({ scrollTop: 100 }, 'slow');"
-							style="float:right;margin:10px" process="cadastroTransacaoPanel"
-							disabled="#{not cadastroTransacaoController.cadastroTransacaoVM.existeCaixaAberto}"
-							action="#{cadastroTransacaoController.salvar()}" update="msgs linksTransacao" icon="ui-icon-disk" iconPos="r"
-							value="#{msg['label.salvar']}" />
 					</div>
 				</p:panel>
 

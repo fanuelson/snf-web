@@ -30,10 +30,10 @@
 									</h:commandLink>
 								</c:facet>
 								<p:ajax event="rowSelect" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"
-									update="transacoesTable" listener="#{consultaTransacaoController.selecionar}" />
+									update="transacoesTable" listener="#{consultaTransacaoController.selecionarCaixa}" />
 								<p:column width="15%" headerText="#{msg['label.header.data.abertura']}" sortBy="#{caixa.dataAbertura}">
 									<h:outputText value="#{caixa.dataAberturaFormatada}">
-										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
+										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-03:00" />
 									</h:outputText>
 									<c:facet name="footer">
 										<p:column>
@@ -43,7 +43,7 @@
 								</p:column>
 								<p:column width="15%" headerText="#{msg['label.header.data.fechamento']}" sortBy="#{caixa.dataFechamento}">
 									<h:outputText value="#{caixa.dataFechamentoFormatado}">
-										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
+										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-03:00" />
 									</h:outputText>
 									<c:facet name="footer">
 										<h:outputText value="#{msg['label.traco']}" />
@@ -97,17 +97,18 @@
 						</h:panelGrid>
 					</div>
 					<div class="ui-grid-col-5">
-						<H4 style="margin: 20px auto 10px 15px;"></H4>
-						<br clear="@All" />
 						<h3 style="margin: 20px auto 10px 15px;">#{msg['label.transacoes']}</h3>
+						<H4 style="margin: 20px auto 10px 15px;">#{msg['mensagem.info.selecione.transacao']}</H4>
 						<h:panelGrid style="padding:5px;width:100%">
 							<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="transacao"
 								value="#{consultaTransacaoController.consultaTransacaoVM.caixaSelecionado.transacoes}"
 								emptyMessage="Nenhum registro encontrado" widgetVar="transacoesTable" id="transacoesTable" paginator="true"
-								rows="30" rowExpandMode="false"
+								rows="30" rowExpandMode="false" selectionMode="single" rowKey="#{transacao.idTransacao}"
 								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
 								currentPageReportTemplate="Quantidade: {totalRecords} - Página {currentPage} de {totalPages}"
 								rowsPerPageTemplate="5,10,15,20,30" paginatorPosition="bottom">
+								<p:ajax event="rowSelect" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide();PF('visualizaTransacaoDialog').show()"
+									update="visualizaTransacaoForm" listener="#{consultaTransacaoController.selecionarTransacao}" />
 								<c:facet name="{Exporters}">
 									<h:commandLink style="float:right" immediate="true" title="Baixar como PDF">
 										<p:graphicImage library="imagens" name="pdfIcon.png" width="24" />
@@ -116,7 +117,7 @@
 								</c:facet>
 								<p:column width="15%" headerText="#{msg['label.data']}" sortBy="#{transacao.data}">
 									<h:outputText value="#{transacao.data}">
-										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
+										<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-03:00" />
 									</h:outputText>
 									<c:facet name="footer">
 										<p:column>
@@ -167,8 +168,9 @@
 					<ui:param name="mensagem" value="#{msg['label.confirmacao.exclusao.registro']}" />
 				</ui:include>
 
-
 			</h:form>
 		</p:panel>
+		
+		<ui:include src="/pages/dialogs/visualizaTransacaoDialog.xhtml" />
 	</ui:define>
 </ui:composition>
