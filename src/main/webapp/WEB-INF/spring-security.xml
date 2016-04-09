@@ -22,14 +22,13 @@
 		<sec:intercept-url pattern="/publico/**" access="permitAll" />
 		<sec:intercept-url pattern="/javax.faces.resource/**" access="permitAll" />
 		<sec:intercept-url pattern="/pages/home/inicioGerente.xhtml" access="hasRole('GERENTE')" />
-		<sec:intercept-url pattern="/pages/cadastro/funcionario.xhtml" access="hasRole('GERENTE')" />
-		<sec:intercept-url pattern="/pages/cadastro/servico.xhtml" access="hasAnyRole('GERENTE','CAIXA','FUNCIONARIO')" />
-		<sec:intercept-url pattern="/pages/filtro/**" access="hasRole('GERENTE')" />
-		<sec:intercept-url pattern="/pages/consulta/funcionarios.xhtml" access="hasRole('GERENTE')" />
-		<sec:intercept-url pattern="/pages/consulta/servicos.xhtml" access="hasAnyRole('GERENTE','FUNCIONARIO')" />
-		<sec:intercept-url pattern="/pages/relatorio/**" access="hasRole('GERENTE')" />
-		<sec:intercept-url pattern="/pages/cadastro/transacao.xhtml" access="hasRole('GERENTE')" />
-		<sec:intercept-url pattern="/pages/consulta/transacoes.xhtml" access="hasRole('GERENTE')" />
+		<sec:intercept-url pattern="/pages/funcionario/cadastroFuncionario.xhtml" access="hasRole('GERENTE')" />
+		<sec:intercept-url pattern="/pages/servico/cadastroServico.xhtml" access="hasAnyRole('GERENTE','CAIXA','FUNCIONARIO')" />
+		<sec:intercept-url pattern="/pages/funcionario/consultaFuncionarios.xhtml" access="hasRole('GERENTE')" />
+		<sec:intercept-url pattern="/pages/servico/consultaServicos.xhtml" access="hasAnyRole('GERENTE','FUNCIONARIO')" />
+		<sec:intercept-url pattern="/pages/servico/relatorioServico.xhtml" access="hasRole('GERENTE')" />
+		<sec:intercept-url pattern="/pages/transacao/cadastroTransacao.xhtml" access="hasRole('GERENTE')" />
+		<sec:intercept-url pattern="/pages/transacao/consultaTransacoes.xhtml" access="hasRole('GERENTE')" />
 		<sec:intercept-url pattern="/pages/home/inicio.xhtml" access="hasAnyRole('CAIXA','FUNCIONARIO')" />
 
 		<sec:intercept-url pattern="/pages/dialogs/**" access="isAuthenticated()" />
