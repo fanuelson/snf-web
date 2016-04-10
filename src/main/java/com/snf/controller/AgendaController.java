@@ -29,6 +29,10 @@ import com.snf.vm.AgendaVM;
 @ViewScoped
 public class AgendaController implements Serializable {
 
+	private static final String mensagem_erro = "mensagem.erro.salvar.registro";
+
+	private static final String mensagem_sucesso = "mensagem.sucesso.salvar.registro";
+
 	private static final long serialVersionUID = 1L;
 
 	static final Logger log = Logger.getLogger(AgendaController.class);
@@ -84,10 +88,10 @@ public class AgendaController implements Serializable {
 		try {
 			servicoService.salvar(agendaVM.getServicoSelected());
 			init();
-			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
+			MessagesUtils.exibirMensagemSucesso(mensagem_sucesso);
 		} catch (Exception e) {
 			log.error(e.toString());
-			MessagesUtils.exibirMensagemErro("mensagem.erro.salvar.registro");
+			MessagesUtils.exibirMensagemErro(mensagem_erro);
 		}
 	}
 	
@@ -95,10 +99,10 @@ public class AgendaController implements Serializable {
 		try {
 			servicoService.salvarServicoPago(agendaVM.getServicoSelected());
 			init();
-			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
+			MessagesUtils.exibirMensagemSucesso(mensagem_sucesso);
 		} catch (Exception e) {
 			log.error(e.toString());
-			MessagesUtils.exibirMensagemErro("mensagem.erro.salvar.registro");
+			MessagesUtils.exibirMensagemErro(mensagem_erro);
 		}
 	}
 	
@@ -106,10 +110,10 @@ public class AgendaController implements Serializable {
 		try {
 			servicoService.agendar(agendaVM.getServicoSelected());
 			init();
-			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
+			MessagesUtils.exibirMensagemSucesso(mensagem_sucesso);
 		} catch (Exception e) {
 			log.error(e.toString());
-			MessagesUtils.exibirMensagemErro("mensagem.erro.salvar.registro");
+			MessagesUtils.exibirMensagemErro(mensagem_erro);
 		}
 	}
 
@@ -117,10 +121,10 @@ public class AgendaController implements Serializable {
 		try {
 			servicoService.cancelar(agendaVM.getServicoSelected());
 			init();
-			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
+			MessagesUtils.exibirMensagemSucesso(mensagem_sucesso);
 		} catch (Exception e) {
 			log.error(e.toString());
-			MessagesUtils.exibirMensagemErro("mensagem.erro.salvar.registro");
+			MessagesUtils.exibirMensagemErro(mensagem_erro);
 		}
 	}
 
