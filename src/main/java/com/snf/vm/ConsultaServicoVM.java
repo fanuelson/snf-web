@@ -1,9 +1,11 @@
 package com.snf.vm;
 
 import java.io.Serializable;
-import java.util.Date;
+
+import javax.inject.Inject;
 
 import com.snf.model.Funcionario;
+import com.snf.vo.ConsultaServicoVO;
 
 public class ConsultaServicoVM implements Serializable {
 
@@ -13,9 +15,8 @@ public class ConsultaServicoVM implements Serializable {
 
 	private boolean isTipoFuncionarioLogado;
 
-	private Date dataInicio;
-
-	private Date dataFim;
+	@Inject
+	private ConsultaServicoVO filtro;
 
 	public Funcionario getFuncionario() {
 		return funcionario;
@@ -23,22 +24,6 @@ public class ConsultaServicoVM implements Serializable {
 
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
-	}
-
-	public Date getDataInicio() {
-		return dataInicio;
-	}
-
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
-
-	public Date getDataFim() {
-		return dataFim;
-	}
-
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
 	}
 
 	public boolean isTipoFuncionarioLogado() {
@@ -49,4 +34,12 @@ public class ConsultaServicoVM implements Serializable {
 		this.isTipoFuncionarioLogado = isTipoFuncionarioLogado;
 	}
 
+	public ConsultaServicoVO getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(ConsultaServicoVO filtro) {
+		this.filtro = filtro;
+	}
+	
 }

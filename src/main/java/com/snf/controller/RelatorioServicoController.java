@@ -1,6 +1,7 @@
 package com.snf.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class RelatorioServicoController implements Serializable {
 
 	private List<Funcionario> funcionarios;
 
-	private List<ServicoDataValorVO> servicos;
+	private List<ServicoDataValorVO> servicos = new ArrayList<>();
 
 	private double valorTotalPesquisa = 0;
 
@@ -78,7 +79,6 @@ public class RelatorioServicoController implements Serializable {
 			calcularValorTotalPesquisa();
 			calcularValorMaxEixoY();
 		} else {
-			servicos = null;
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
 		}
 		createAnimatedModels();
@@ -88,7 +88,8 @@ public class RelatorioServicoController implements Serializable {
 	public void calcularValorTotalPesquisa() {
 		valorTotalPesquisa = 0;
 		for (ServicoDataValorVO servicoVO : servicos) {
-			valorTotalPesquisa += servicoVO.getValor();
+			if(servicoVO.getValor()!=null)
+				valorTotalPesquisa += servicoVO.getValor();
 		}
 	}
 
@@ -142,8 +143,12 @@ public class RelatorioServicoController implements Serializable {
 
 	private DateAxis criarEixoX() {
 		DateAxis xAxis = new DateAxis("Datas");
-		Date dataMaxima = DataUtil.somarDias(relatorioServicoVM.getDataFinal(), um_dia);
-		xAxis.setMax(DataUtil.getDataFormatada(DataUtil.getDataHoraZerada(dataMaxima), formato_data_americano));
+		Date dataMaxima;
+		if(!CollectionsUtils.isNullOrEmpty(servicos))
+			dataMaxima = DataUtil.somarDias(servicos.get(servicos.size()-1).getData(), um_dia);
+		else
+			dataMaxima = DataUtil.somarDias(relatorioServicoVM.getDataFinal(), um_dia);
+		xAxis.setMax(DataUtil.getDataFormatada(DataUtil.getDataHoraFinalDia(dataMaxima), formato_data_americano));
 		xAxis.setTickAngle(-30);
 		xAxis.setTickFormat("%#d/%m/%y");
 		return xAxis;

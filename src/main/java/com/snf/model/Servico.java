@@ -6,47 +6,52 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.primefaces.model.ScheduleEvent;
+
+import com.snf.enums.StatusServico;
+
 @Entity
-public class Servico implements Serializable {
+public class Servico implements Serializable, ScheduleEvent {
 
 	private static final long serialVersionUID = 8436701701647338073L;
 
 	@Id
 	@GeneratedValue
-	@Column(name="idServico")
+	@Column(name = "idServico")
 	private Long idServico;
-	
-	@Column(name="nome")
+
+	@Column(name = "nome")
 	private String nome;
-	
-	@Column(name="descricao")
+
+	@Column(name = "descricao")
 	private String descricao;
-	
-	@ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-	@JoinColumn(name="idFuncionario" , nullable = true)
+
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinColumn(name = "idFuncionario", nullable = true)
 	private Funcionario funcionario;
-	
-	@Column(name="valor")
+
+	@Column(name = "valor")
 	private Double valor;
-	
-	@Column(name="nomeCliente")
+
+	@Column(name = "nomeCliente")
 	private String nomeCliente;
-	
-	@Column(name="data")
-	private Date data;
 
-	public Long getId() {
-		return idServico;
-	}
+	@Column(name = "dataInicio")
+	private Date dataInicio;
 
-	public void setId(Long id) {
-		this.idServico = id;
-	}
+	@Column(name = "dataFim")
+	private Date dataFim;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private StatusServico status;
 
 	public String getNome() {
 		return nome;
@@ -88,12 +93,36 @@ public class Servico implements Serializable {
 		this.nomeCliente = nomeCliente;
 	}
 
-	public Date getData() {
-		return data;
+	public Date getDataInicio() {
+		return dataInicio;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setDataInicio(Date data) {
+		this.dataInicio = data;
+	}
+
+	public Long getIdServico() {
+		return idServico;
+	}
+
+	public void setIdServico(Long idServico) {
+		this.idServico = idServico;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
+	}
+
+	public StatusServico getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusServico status) {
+		this.status = status;
 	}
 
 	@Override
@@ -120,5 +149,85 @@ public class Servico implements Serializable {
 			return false;
 		return true;
 	}
-	
+
+	public void cancelar() {
+		status = StatusServico.CANCELADO;
+	}
+
+	public void pagar(Double valor) {
+		this.valor = valor;
+		status = StatusServico.PAGO;
+	}
+
+	public boolean isNaoFoiAgendado() {
+		return idServico == null;
+	}
+
+	public boolean isPodeSalvar() {
+		return idServico != null;
+	}
+
+	public boolean isPodePagar() {
+		return status != null && status.equals(StatusServico.AGENDADO);
+	}
+
+	public boolean isPodeCancelar() {
+		return status != null && status.equals(StatusServico.AGENDADO);
+	}
+
+	@Override
+	public String getId() {
+		if (this.idServico != null)
+			return this.idServico.toString();
+		return null;
+	}
+
+	@Override
+	public void setId(String id) {
+
+	}
+
+	@Override
+	public Object getData() {
+		return null;
+	}
+
+	@Override
+	public String getTitle() {
+		return this.nome + "-" + funcionario.getNome();
+	}
+
+	@Override
+	public Date getStartDate() {
+		return this.dataInicio;
+	}
+
+	@Override
+	public Date getEndDate() {
+		return this.dataFim;
+	}
+
+	@Override
+	public boolean isAllDay() {
+		return false;
+	}
+
+	@Override
+	public String getStyleClass() {
+		if (status != null)
+			return status.getEstiloCss();
+
+		return null;
+	}
+
+	@Override
+	public boolean isEditable() {
+		return true;
+	}
+
+	@Override
+	public String getDescription() {
+		return null;
+	}
+
 }

@@ -13,13 +13,13 @@
 				</p:selectOneMenu>
 			</p:column>
 			<p:column>
-				<p:outputLabel style="display:inherit" value="#{msg['label.campo.data.inicial']}" for="dataInicial" />
-				<p:calendar id="dataInicial"
+				<p:outputLabel style="display:inherit" value="#{msg['label.data.a.partir.de']}" for="dataInicial" />
+				<p:calendar id="dataInicial" size="10"
 					value="#{relatorioServicoController.relatorioServicoVM.dataInicial}" pattern="dd/MM/yyyy" />
 			</p:column>
 			<p:column>
-				<p:outputLabel style="display:inherit" value="#{msg['label.campo.data.final']}" for="dataFinal" />
-				<p:calendar styleClass="botoes" id="dataFinal"
+				<p:outputLabel style="display:inherit" value="#{msg['label.ate']}" for="dataFinal" />
+				<p:calendar size="10" styleClass="botoes" id="dataFinal"
 					value="#{relatorioServicoController.relatorioServicoVM.dataFinal}" pattern="dd/MM/yyyy" />
 			</p:column>
 			<p:column>

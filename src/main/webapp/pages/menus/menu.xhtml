@@ -8,9 +8,14 @@
 				icon="ui-icon-home" />
 
 			<sec:authorize access="hasRole('GERENTE')">
+				<p:menuitem value="#{msg['label.caixa']}" url="/pages/caixa/gerenciarCaixa.xhtml" icon="ui-icon-calculator" />
+			</sec:authorize>
+			<sec:authorize access="hasRole('GERENTE')">
 				<p:submenu label="#{msg['label.menu.funcionarios']}" url="#" icon="ui-icon-person">
-					<p:menuitem value="#{msg['label.cadastrar']}" url="/pages/funcionario/cadastroFuncionario.xhtml" icon="ui-icon-disk" />
-					<p:menuitem value="#{msg['label.consultar']}" url="/pages/funcionario/consultaFuncionarios.xhtml" icon="ui-icon-search" />
+					<p:menuitem value="#{msg['label.cadastrar']}" url="/pages/funcionario/cadastroFuncionario.xhtml"
+						icon="ui-icon-disk" />
+					<p:menuitem value="#{msg['label.consultar']}" url="/pages/funcionario/consultaFuncionarios.xhtml"
+						icon="ui-icon-search" />
 				</p:submenu>
 			</sec:authorize>
 			<p:submenu label="#{msg['label.menu.servicos']}" url="#" icon="ui-icon-scissors">
@@ -36,7 +41,8 @@
 				<p:graphicImage library="imagens" name="person.png" width="20" style="margin-right:5px;position: relative;top: 3px;" />
 				<p:outputLabel style="margin-right:15px;font-weight:bold" value="Olá #{commonsController.usuarioLogado.nome}" />
 				<p:button styleClass="btnDanger" onclick="PF('statusDialog').show()" value="#{msg['label.sair']}"
-					href="#{request.contextPath}/j_spring_security_logout" icon="ui-icon-power" style="box-shadow:none !important" />
+					href="#{request.contextPath}/j_spring_security_logout" icon="ui-icon-power"
+					style="box-shadow:none !important;background: red !important;" />
 			</c:facet>
 		</p:menubar>
 	</sec:authorize>
