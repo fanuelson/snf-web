@@ -4,154 +4,98 @@
 
 	<ui:define name="corpoLayout">
 
-		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
+		<p:growl id="msgs" widgetVar="msgs" showDetail="false" autoUpdate="true" />
 
-		<h3 style="padding: 20px 0 0 50px;">#{msg['mensgem.bem.vindo']}</h3>
-		<h:form prependId="false" id="formAbrirCaixa">
-			<p:panel header="#{msg['label.caixas']}" style="width:98%;margin:10px auto 20px auto">
-				<div class="ui-grid ui-grid-responsive">
-					<div class="ui-grid-col-8">
-						<h3 style="padding: 20px 0 0 50px;">#{msg['label.historico.caixas']}</h3>
-						<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="caixa"
-							value="#{homeGerenteController.aberturaCaixaVM.caixas}" emptyMessage="Nenhum caixa cadastrado"
-							widgetVar="servicosTable" id="caixaTable" paginator="true" rows="10" rowExpandMode="false"
-							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
-							currentPageReportTemplate="Quantidade: {totalRecords} - Página {currentPage} de {totalPages}"
-							rowsPerPageTemplate="5,10,15,20,30" paginatorPosition="bottom">
-							<c:facet name="{Exporters}">
-								<h:commandLink style="float:right" immediate="true" title="Baixar como PDF">
-									<p:graphicImage library="imagens" name="pdfIcon.png" width="24" />
-									<p:dataExporter type="pdf" target="caixaTable" fileName="Relatório de Caixa" />
-								</h:commandLink>
-							</c:facet>
-							<p:column width="10%" headerText="#{msg['label.header.id']}" sortBy="#{caixa.id}">
-								<h:outputText value="#{caixa.id}" />
-							</p:column>
-							<p:column width="20%" headerText="#{msg['label.header.data.abertura']}" sortBy="#{caixa.dataAbertura}">
-								<h:outputText value="#{caixa.dataAberturaFormatada}">
-									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
-								</h:outputText>
-							</p:column>
-							<p:column width="20%" headerText="#{msg['label.header.data.fechamento']}" sortBy="#{caixa.dataFechamento}">
-								<h:outputText value="#{caixa.dataFechamentoFormatado}">
-									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
-								</h:outputText>
-							</p:column>
-							<p:column width="15%" headerText="#{msg['label.header.valor.inicial']}" sortBy="#{caixa.valorInicial}">
-								<h:outputText value="#{caixa.valorInicial}">
-									<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-								</h:outputText>
-							</p:column>
-							<p:column width="15%" headerText="#{msg['label.header.valor.final']}" sortBy="#{caixa.valorAtual}">
-								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual}">
-									<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-								</h:outputText>
-							</p:column>
-							<p:column width="20%" headerText="#{msg['label.header.receita']}">
-								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual - caixa.valorInicial}">
-									<c:convertNumber currencySymbol="R$" type="currency" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-								</h:outputText>
-								<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) gt 0.0}"
-									style="margin-left:10px;float:right" library="imagens" name="upIcon.png" />
-								<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) lt 0.0}"
-									style="margin-left:10px;float:right" library="imagens" name="downIcon.png" />
-								<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) eq 0.0}"
-									style="margin-left:10px;float:right" library="imagens" name="boxBlue.png" />
-							</p:column>
+		<h:form prependId="false" id="formCalendario">
+			<p:panel header="#{msg['label.header.agenda']}" style="width:98%;margin:10px auto 20px auto">
+				<p:schedule axisFormat="H:mm" timeFormat="H:mm" id="schedule" value="#{agendaController.agendaVM.agendaModel}"
+					widgetVar="myschedule" timeZone="GMT-03:00">
 
-						</p:dataTable>
+					<p:ajax event="dateSelect" listener="#{agendaController.onDateSelect}" update="detalhesServico" process="@this"
+						onstart="PF('statusDialog').show()" oncomplete="PF('servicoDialog').show();PF('statusDialog').hide();" />
+					<p:ajax event="eventSelect" listener="#{agendaController.onServicoSelect}" update="detalhesServico" process="@this"
+						onstart="PF('statusDialog').show()" oncomplete="PF('servicoDialog').show();PF('statusDialog').hide();" />
+					<p:ajax event="eventMove" listener="#{agendaController.onServicoMove}" onstart="PF('statusDialog').show()"
+						oncomplete="PF('statusDialog').hide()" />
+					<p:ajax event="eventResize" listener="#{agendaController.onServicoResize}" onstart="PF('statusDialog').show()"
+						oncomplete="PF('statusDialog').hide()" />
 
-					</div>
-					<div class="ui-grid-col-4">
-						<p:panel header="#{msg['label.ABRIR.CAIXA']}" style="margin:auto;width:55%"
-							rendered="#{not homeGerenteController.aberturaCaixaVM.existeCaixaAberto}">
-
-							<h:panelGrid style="margin:5px 0 5px 0;">
-
-								<p:outputLabel for="valorInicial" value="#{msg['label.valor.inicial']}" />
-
-								<h:inputText required="true" id="valorInicial"
-									value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}">
-									<c:convertNumber locale="pt_br" minFractionDigits="2" maxFractionDigits="2" />
-									<c:validateDoubleRange minimum="0.1" />
-								</h:inputText>
-
-							</h:panelGrid>
-
-							<p:commandButton value="#{msg['label.abrir.caixa']}" process="valorInicial @this"
-								onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"
-								action="#{homeGerenteController.salvarCaixa()}" update="formAbrirCaixa" icon="ui-icon-unlocked" />
-
-						</p:panel>
-
-						<p:panel style="margin:10px auto 20px auto;width:90%" styleClass="ui-grid ui-grid-responsive"
-							header="#{msg['label.CAIXA.ABERTO']}" rendered="#{homeGerenteController.aberturaCaixaVM.existeCaixaAberto}">
-
-							<div class="ui-grid-row">
-
-								<div class="ui-grid-col-5">
-									<p:graphicImage library="imagens" name="caixa-reg.jpg" height="100px" width="100px" />
-									<p:commandButton value="#{msg['label.fechar.caixa']}" action="#{homeGerenteController.fecharCaixa()}"
-										update="formAbrirCaixa" icon="ui-icon-locked" onstart="PF('statusDialog').show()"
-										oncomplete="PF('statusDialog').hide()">
-										<p:confirm />
-									</p:commandButton>
-								</div>
-
-								<h:panelGrid style="margin-left:10px" columns="2">
-									<p:outputLabel for="idCaixa" value="#{msg['label.header.id']}" />
-									<p:outputLabel />
-									<p:inputText style="opacity:0.8" disabled="true" id="idCaixa"
-										value="#{homeGerenteController.aberturaCaixaVM.caixa.id}">
-									</p:inputText>
-									<p:outputLabel />
-									<p:outputLabel for="dataInicialCaixa" value="#{msg['label.data.abertura']}" />
-									<p:outputLabel />
-									<p:inputText style="opacity:0.8" disabled="true" id="dataInicialCaixa"
-										value="#{homeGerenteController.aberturaCaixaVM.caixa.dataAberturaFormatada}">
-									</p:inputText>
-									<p:outputLabel />
-
-									<p:outputLabel for="valorInicialCaixa" value="#{msg['label.valor.inicial']}" />
-									<p:outputLabel />
-									<p:inputText style="opacity:0.8" disabled="true" id="valorInicialCaixa"
-										value="#{homeGerenteController.aberturaCaixaVM.caixa.valorInicial}">
-										<c:convertNumber pattern="R$ #0" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-										<c:validateDoubleRange minimum="0.1" />
-									</p:inputText>
-									<p:outputLabel />
-
-									<p:outputLabel for="valorAtual" value="#{msg['label.valor.atual']}" />
-									<p:outputLabel />
-									<p:inputText style="opacity:0.8" disabled="true" id="valorAtual"
-										value="#{homeGerenteController.aberturaCaixaVM.caixa.valorAtual}">
-										<c:convertNumber pattern="R$ #0" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-										<c:validateDoubleRange minimum="0.1" />
-									</p:inputText>
-									<p:outputLabel />
-
-									<p:outputLabel for="receitaCorrente" value="#{msg['label.receita.corrente']}" />
-									<p:outputLabel />
-									<p:inputText style="opacity:0.8" disabled="true" id="receitaCorrente"
-										value="#{homeGerenteController.aberturaCaixaVM.caixa.valorAtual - homeGerenteController.aberturaCaixaVM.caixa.valorInicial}">
-										<c:convertNumber pattern="R$ #0" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
-										<c:validateDoubleRange minimum="0.1" />
-									</p:inputText>
-									<p:graphicImage library="imagens" name="money.png" width="20px" />
-
-								</h:panelGrid>
-
-							</div>
-
-						</p:panel>
-					</div>
-				</div>
+				</p:schedule>
 			</p:panel>
 
-			<ui:include src="/pages/dialogs/confirmaFechamentoCaixaDialog.xhtml">
-				<ui:param name="mensagem" value="#{msg['mensagem.confirmacao.fechamento.caixa']}" />
-			</ui:include>
+			<p:dialog modal="true" widgetVar="servicoDialog" header="#{msg['header.dialog.servico']}" showEffect="clip"
+				hideEffect="clip">
+				<p:messages autoUpdate="true" />
+				<h:panelGrid id="detalhesServico" style="width:100%;margin:auto;padding:20px;">
+
+					<p:outputLabel for="nome" value="#{msg['label.campo.nome']}" />
+					<p:inputText size="30" required="true" id="nome" value="#{agendaController.agendaVM.servicoSelected.nome}" />
+
+					<p:outputLabel value="#{msg['label.campo.descricao']}" for="descricao" />
+					<p:inputTextarea rows="7" cols="70" id="descricao" value="#{agendaController.agendaVM.servicoSelected.descricao}" />
+
+					<p:outputLabel value="#{msg['label.campo.funcionario']}" for="funcionario" />
+					<p:selectOneMenu style="width:300px" id="funcionario" required="true" converter="funcionarioConverter"
+						value="#{agendaController.agendaVM.servicoSelected.funcionario}" filter="true" filterMatchMode="contains">
+						<c:selectItem itemLabel="#{msg['label.selecione']}" itemValue="#{null}" noSelectionOption="true" />
+						<c:selectItems value="#{agendaController.agendaVM.funcionarios}" var="funcionario" itemValue="#{funcionario}"
+							itemLabel="#{funcionario.nome}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="#{msg['label.campo.nome.cliente']}" for="nomeCliente" />
+					<p:inputText id="nomeCliente" value="#{agendaController.agendaVM.servicoSelected.nomeCliente}" />
+
+					<p:outputLabel value="#{msg['label.campo.inicio']}" for="dataInicio" />
+					<p:calendar required="true" id="dataInicio" value="#{agendaController.agendaVM.servicoSelected.dataInicio}"
+						pattern="dd/MM/yyyy HH:mm" />
+
+					<p:outputLabel value="#{msg['label.campo.fim']}" for="dataFim" />
+					<p:calendar id="dataFim" value="#{agendaController.agendaVM.servicoSelected.dataFim}" pattern="dd/MM/yyyy HH:mm" />
+
+					<p:row>
+						<p:commandButton onstart="PF('statusDialog').show()" process="detalhesServico @this"
+							rendered="#{agendaController.agendaVM.servicoSelected.idServico eq null}"
+							oncomplete="PF('statusDialog').hide();PF('myschedule').update();PF('servicoDialog').hide();"
+							style="float:right;margin:10px" value="#{msg['label.agendar.servico']}"
+							disabled="#{agendaController.agendaVM.naoExisteCaixaAberto}" action="#{agendaController.agendarServico()}"
+							icon="ui-icon-disk" iconPos="r" />
+						<p:commandButton onstart="PF('statusDialog').show()" process="detalhesServico @this"
+							oncomplete="PF('statusDialog').hide();PF('myschedule').update();PF('servicoDialog').hide();"
+							style="float:right;margin:10px" value="#{msg['label.salvar']}"
+							disabled="#{agendaController.agendaVM.naoExisteCaixaAberto}" action="#{agendaController.salvar()}"
+							icon="ui-icon-disk" iconPos="r" />
+						<p:commandButton onstart="PF('statusDialog').show()" process="detalhesServico @this"
+							rendered="#{agendaController.agendaVM.servicoSelected.status ne null and 
+							agendaController.agendaVM.servicoSelected.status eq 'AGENDADO'}"
+							oncomplete="PF('statusDialog').hide();PF('servicoDialog').hide();PF('myschedule').update()"
+							style="float:right;margin:10px;box-shadow:none !important" value="#{msg['label.cancelar.servico']}"
+							action="#{agendaController.cancelarServico()}" icon="ui-icon-circle-close" iconPos="r" styleClass="btnDanger" />
+						<p:commandButton value="Pagamento" process="@this" onstart="PF('statusDialog').show()"
+							rendered="#{agendaController.agendaVM.servicoSelected.status ne null and 
+							agendaController.agendaVM.servicoSelected.status ne 'PAGO'}"
+							oncomplete="PF('statusDialog').hide();PF('valorDialog').show()" />
+
+
+					</p:row>
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:dialog modal="true" widgetVar="valorDialog" header="Pagamento" showEffect="clip" hideEffect="clip">
+				<h:panelGrid id="valorPanel" style="text-align:center" >
+					<p:outputLabel style="font-size:28px" value="Valor:" />
+					<h:inputText id="valor" value="#{agendaController.agendaVM.servicoSelected.valor}" size="10" required="true"
+						type="number" style="font-size:28px" converterMessage="Preço inválido." validatorMessage="Valor deve ser maior ou igual a 0,01">
+						<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+						<c:validateDoubleRange minimum="0.1" />
+					</h:inputText>
+				</h:panelGrid>
+				<p:commandButton value="Pagar" action="#{agendaController.pagar()}" onstart="PF('statusDialog').show()"
+					process="valorPanel @this"
+					oncomplete="PF('statusDialog').hide();PF('myschedule').update();PF('valorDialog').hide();" />
+			</p:dialog>
+
 
 		</h:form>
 	</ui:define>
+
 </ui:composition>

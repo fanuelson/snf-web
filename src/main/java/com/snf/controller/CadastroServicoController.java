@@ -72,12 +72,12 @@ public class CadastroServicoController implements Serializable {
 	}
 
 	private Servico salvarServico() {
-		return servicoService.salvar(cadastroServicoVM.getServico());
+		return servicoService.salvarServicoPago(cadastroServicoVM.getServico());
 	}
 
 	private void limparCampos() {
 		cadastroServicoVM.setServico(new Servico());
-		cadastroServicoVM.getServico().setData(new Date());
+		cadastroServicoVM.getServico().setDataInicio(new Date());
 	}
 
 	public CadastroServicoVM getCadastroServicoVM() {

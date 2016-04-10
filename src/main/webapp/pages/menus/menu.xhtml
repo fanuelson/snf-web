@@ -8,6 +8,9 @@
 				icon="ui-icon-home" />
 
 			<sec:authorize access="hasRole('GERENTE')">
+				<p:menuitem value="#{msg['label.caixa']}" url="/pages/caixa/gerenciarCaixa.xhtml" icon="ui-icon-calculator" />
+			</sec:authorize>
+			<sec:authorize access="hasRole('GERENTE')">
 				<p:submenu label="#{msg['label.menu.funcionarios']}" url="#" icon="ui-icon-person">
 					<p:menuitem value="#{msg['label.cadastrar']}" url="/pages/funcionario/cadastroFuncionario.xhtml" icon="ui-icon-disk" />
 					<p:menuitem value="#{msg['label.consultar']}" url="/pages/funcionario/consultaFuncionarios.xhtml" icon="ui-icon-search" />

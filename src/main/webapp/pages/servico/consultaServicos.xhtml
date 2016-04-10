@@ -23,21 +23,27 @@
 								<p:inputText id="globalFilter" onkeyup="PF('servicosTable').filter()" />
 							</p:outputPanel>
 						</c:facet>
+						
+						<p:column style="width:10%" filterMatchMode="contains" filterBy="#{servico.idServico}"
+							headerText="#{msg['label.header.id']}">
+							<h:outputText value="#{servico.idServico}" />
+						</p:column>
 
-						<p:column style="width:8%" headerText="#{msg['label.data']}" sortBy="#{servico.data}">
-							<h:outputText value="#{servico.data}">
+						<p:column style="width:10%" headerText="#{msg['label.inicio']}" sortBy="#{servico.dataInicio}">
+							<h:outputText value="#{servico.dataInicio}">
+								<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-03:00" />
+							</h:outputText>
+						</p:column>
+						
+						<p:column style="width:10%" headerText="#{msg['label.fim']}" sortBy="#{servico.dataFim}">
+							<h:outputText value="#{servico.dataFim}">
 								<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-03:00" />
 							</h:outputText>
 						</p:column>
 
-						<p:column style="width:14%" filterMatchMode="contains" filterBy="#{servico.nome}"
+						<p:column style="width:15%" filterMatchMode="contains" filterBy="#{servico.nome}"
 							headerText="#{msg['label.nome']}">
 							<h:outputText value="#{servico.nome}" />
-						</p:column>
-
-						<p:column style="width:24% " filterMatchMode="contains" filterBy="#{servico.descricao}"
-							headerText="#{msg['label.descricao']}">
-							<h:outputText value="#{servico.descricao}" />
 						</p:column>
 
 						<p:column style="width:12% " headerText="#{msg['label.funcionario']}" filterMatchMode="contains"
@@ -45,7 +51,7 @@
 							<h:outputText value="#{servico.funcionario.nome}" />
 						</p:column>
 
-						<p:column style="width:8% " headerText="#{msg['label.valor']}" sortBy="#{servico.valor}">
+						<p:column style="width:10% " headerText="#{msg['label.valor']}" sortBy="#{servico.valor}">
 							<h:outputText value="#{servico.valor}">
 								<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 							</h:outputText>

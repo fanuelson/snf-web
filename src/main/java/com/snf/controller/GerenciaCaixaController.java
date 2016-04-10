@@ -16,11 +16,11 @@ import com.snf.vm.AberturaCaixaVM;
 
 @Named
 @ViewScoped
-public class HomeGerenteController implements Serializable {
+public class GerenciaCaixaController implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	static final Logger log = Logger.getLogger(HomeGerenteController.class);
+	static final Logger log = Logger.getLogger(GerenciaCaixaController.class);
 
 	@Inject
 	private CaixaService caixaService;

@@ -1,7 +1,6 @@
 package com.snf.controller;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -26,92 +25,92 @@ import com.snf.vm.ConsultaServicoVM;
 public class ConsultaServicoController implements Serializable {
 
 	private static final long serialVersionUID = -8784362664957105320L;
-	
+
 	static final Logger log = Logger.getLogger(ConsultaServicoController.class);
 
 	@Inject
 	private ServicoService servicoService;
-	
+
 	@Inject
 	private FuncionarioService funcionarioService;
-	
+
 	@Inject
 	private ConsultaServicoVM consultaServicoVM;
-	
+
 	@Inject
 	private CommonsController commonsController;
-	
+
 	private List<Servico> servicos;
-	
+
 	private List<Servico> servicosFiltered;
-	
+
 	private List<Funcionario> funcionarios;
-	
+
 	private double valorTotalPesquisa;
-	
+
 	@PostConstruct
-	public void init(){
+	public void init() {
 		valorTotalPesquisa = 0;
 		Usuario userLogado = commonsController.getUsuarioLogado();
-		if(userLogado.getTipo().equals(TipoUsuario.FUNCIONARIO)){
+		if (userLogado.getTipo().equals(TipoUsuario.FUNCIONARIO)) {
+			consultaServicoVM.getFiltro().setFuncionario((Funcionario) userLogado);
 			consultaServicoVM.setTipoFuncionarioLogado(true);
-			servicos = servicoService.getServicosByPeriodoAndFuncionario(null, null,(Funcionario) userLogado);
-			consultaServicoVM.setFuncionario((Funcionario)userLogado);
-		}else{
+			servicos = servicoService.getServicosByPeriodoAndFuncionario(consultaServicoVM.getFiltro());
+			consultaServicoVM.setFuncionario((Funcionario) userLogado);
+		} else {
 			consultaServicoVM.setTipoFuncionarioLogado(false);
 			servicos = servicoService.getAll();
 			funcionarios = funcionarioService.getAll();
 		}
 		calcularValorTotalPesquisa();
 	}
-	
-	public void calcularValorTotalPesquisa(){
+
+	public void calcularValorTotalPesquisa() {
 		valorTotalPesquisa = 0;
 		for (Servico servico : servicos) {
-			valorTotalPesquisa+=servico.getValor();
+			if(servico.getValor()!=null)
+				valorTotalPesquisa += servico.getValor();
 		}
 	}
-	
-	public void pesquisar(){
-		Date dataInicialPesquisada = consultaServicoVM.getDataInicio();
-		Date dataFinalPesquisada = consultaServicoVM.getDataFim();
-		consultaServicoVM.setDataInicio(DataUtil.getDataHoraZerada(dataInicialPesquisada));
-		consultaServicoVM.setDataFim(DataUtil.getDataHoraFinalDia(dataFinalPesquisada));
-		if(periodoPesquisaValido()){
+
+	public void pesquisar() {
+		if (periodoPesquisaValido()) {
 			pesquisarPeriodoFuncionario();
 			calcularValorTotalPesquisa();
 			limparFiltered();
-		}else
+		} else
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
 	}
-	
-	public void remover(Servico servico){
-		try{
+
+	public void remover(Servico servico) {
+		try {
 			servicoService.remover(servico);
 			servicos.remove(servico);
-			if(servicosFiltered!=null)
+			if (servicosFiltered != null)
 				servicosFiltered.remove(servico);
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.remover.registro");
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro("mensagem.erro.remover.registro");
 		}
 	}
-	
-	private void pesquisarPeriodoFuncionario(){
-		servicos = servicoService.getServicosByPeriodoAndFuncionario(consultaServicoVM.getDataInicio(), consultaServicoVM.getDataFim(), consultaServicoVM.getFuncionario());
+
+	private void pesquisarPeriodoFuncionario() {
+		servicos = servicoService.getServicosByPeriodoAndFuncionario(consultaServicoVM.getFiltro());
 	}
-	
-	private void limparFiltered(){
+
+	private void limparFiltered() {
 		servicosFiltered = null;
 	}
-	
-	private boolean periodoPesquisaValido(){
-		 if(consultaServicoVM.getDataInicio()!=null && consultaServicoVM.getDataFim()!=null){
-			 return consultaServicoVM.getDataInicio().before(consultaServicoVM.getDataFim());
-		 }
-		 return true;
+
+	private boolean periodoPesquisaValido() {
+		if (DataUtil.getDataHoraZerada(consultaServicoVM.getFiltro().getDataInicial()) != null
+				&& DataUtil.getDataHoraFinalDia(consultaServicoVM.getFiltro().getDataFinal()) != null) {
+			return DataUtil.getDataHoraZerada(consultaServicoVM.getFiltro().getDataInicial())
+					.before(DataUtil.getDataHoraFinalDia(consultaServicoVM.getFiltro().getDataFinal()));
+		}
+		return true;
 	}
 
 	public ConsultaServicoVM getConsultaServicoVM() {
@@ -153,5 +152,5 @@ public class ConsultaServicoController implements Serializable {
 	public void setValorTotalPesquisa(double valorTotalPesquisa) {
 		this.valorTotalPesquisa = valorTotalPesquisa;
 	}
-	
+
 }

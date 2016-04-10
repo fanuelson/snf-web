@@ -21,7 +21,7 @@ public class CadastroServicoVM implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		servico.setData(new Date());
+		servico.setDataInicio(new Date());
 	}
 
 	public Servico getServico() {

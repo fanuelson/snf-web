@@ -9,11 +9,13 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 
 import com.snf.dao.ServicoDAO;
+import com.snf.enums.StatusServico;
 import com.snf.enums.TipoTransacao;
 import com.snf.model.Caixa;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.model.Transacao;
+import com.snf.vo.ConsultaServicoVO;
 import com.snf.vo.ServicoDataValorVO;
 
 public class ServicoService implements Serializable {
@@ -27,17 +29,33 @@ public class ServicoService implements Serializable {
 
 	@Inject
 	private CaixaService caixaService;
-	
+
 	@Inject
 	private TransacaoService transacaoService;
-	
-	public Servico salvar(Servico servico) {
+
+	public Servico salvarServicoPago(Servico servico) {
 		Caixa caixaAberto = caixaService.getCaixaAberto();
+		servico.setStatus(StatusServico.PAGO);
 		caixaAberto.adicionarValor(servico.getValor());
 		Transacao transacao = criarTransacao(servico, caixaAberto);
 		transacaoService.salvar(transacao);
 		caixaService.salvar(caixaAberto);
 		return servicoDAO.save(servico);
+	}
+	
+	public Servico salvar(Servico servico){
+		return servicoDAO.save(servico);
+	}
+	
+	public Servico agendar(Servico servico) {
+		servico.setStatus(StatusServico.AGENDADO);
+		servico.setValor(null);
+		return servicoDAO.save(servico);
+	}
+
+	public void cancelar(Servico servico) {
+		servico.cancelar();
+		servicoDAO.save(servico);
 	}
 
 	private Transacao criarTransacao(Servico servico, Caixa caixaAberto) {
@@ -54,15 +72,15 @@ public class ServicoService implements Serializable {
 	}
 
 	public void remover(Servico servico) {
-		servicoDAO.delete(servico.getId());
+		servicoDAO.delete(servico.getIdServico());
 	}
 
 	public Servico getServico(Long id) {
 		return servicoDAO.getById(id);
 	}
 
-	public List<Servico> getServicosByPeriodoAndFuncionario(Date dataInicio, Date dataFim, Funcionario funcionario) {
-		return servicoDAO.getServicosByPeriodoAndFuncionario(dataInicio, dataFim, funcionario);
+	public List<Servico> getServicosByPeriodoAndFuncionario(ConsultaServicoVO filtro) {
+		return servicoDAO.getServicosByPeriodoAndFuncionario(filtro);
 	}
 
 	public List<ServicoDataValorVO> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal,
