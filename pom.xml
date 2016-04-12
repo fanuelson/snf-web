@@ -12,6 +12,25 @@
 		<org.springframework.version>3.2.7.RELEASE</org.springframework.version>
 		<spring-security.version>3.2.7.RELEASE</spring-security.version>
 	</properties>
+	
+	<profiles>
+		<profile>
+			<id>teste</id>
+			<properties>
+				<projName>snf-web-teste</projName>
+				<targetServer>servidorLocal</targetServer>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>producao</id>
+			<properties>
+				<projName>snf-web-prod</projName>
+				<targetServer>servidorLocal</targetServer>
+			</properties>
+		</profile>
+	</profiles>
+
 
 	<build>
 		<plugins>
@@ -23,9 +42,20 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>http://localhost:8080/manager/text</url>
+					<server>${targetServer}</server>
+					<path>/${projName}</path>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-	
+
 	<repositories>
 		<repository>
 			<id>prime-repo</id>
@@ -35,7 +65,7 @@
 	</repositories>
 
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
 			<artifactId>delta</artifactId>
@@ -186,14 +216,14 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring-security.version}</version>
 		</dependency>
-		
+
 		<dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-taglibs</artifactId>
-            <version>${spring-security.version}</version>
-        </dependency>
-        
-        <dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.webflow</groupId>
 			<artifactId>spring-faces</artifactId>
 			<version>2.3.2.RELEASE</version>
@@ -278,14 +308,14 @@
 			<artifactId>jasypt</artifactId>
 			<version>1.9.2</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
 			<version>2.1.7</version>
 		</dependency>
-		
-		
+
+
 
 
 	</dependencies>
