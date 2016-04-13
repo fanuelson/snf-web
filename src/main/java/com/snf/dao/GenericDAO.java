@@ -3,15 +3,11 @@ package com.snf.dao;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
-
-import com.snf.builder.JPQLBuilder;
 
 @SuppressWarnings("unchecked")
 public abstract class GenericDAO<T , ID> implements Serializable {
@@ -69,12 +65,6 @@ public abstract class GenericDAO<T , ID> implements Serializable {
     	}
     }
     
-    public void colocarParametros(Query query, JPQLBuilder builder) {
-    	for (Map.Entry<String, Object> parametros : builder.getParametros().entrySet()) {
-			query.setParameter(parametros.getKey(), parametros.getValue());
-		}
-    }
- 
     public List<T> getAll() {
         return manager.createQuery("FROM " + getTypeClass().getName()).getResultList();
     }

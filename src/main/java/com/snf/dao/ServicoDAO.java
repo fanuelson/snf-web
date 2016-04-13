@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
 import com.snf.builder.JPQLBuilder;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
@@ -22,21 +19,22 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 	public List<Servico> getServicosByPeriodoAndFuncionario(ConsultaServicoVO filtro) {
 
 		List<Servico> servicos = null;
-
 		try {
+			
 			getManager().clear();
-			JPQLBuilder queryBuilder = new JPQLBuilder().select("s").from(Servico.class, "s")
+			servicos = new JPQLBuilder()
+					.select("s")
+					.from(Servico.class, "s")
 					.where("(:dataInicial IS NULL OR  s.dataInicio >= :dataInicial)", DataUtil.getDataHoraZerada(filtro.getDataInicial()))
 					.and("(:dataFinal IS NULL OR s.dataInicio <= :dataFinal)", DataUtil.getDataHoraFinalDia(filtro.getDataFinal()))
-					.and("(:func = null OR s.funcionario = :func)", filtro.getFuncionario());
+					.and("(:func = null OR s.funcionario = :func)", filtro.getFuncionario())
+					.contruir(getManager())
+					.getResultList();
 
-			Query query = getManager().createQuery(queryBuilder.contruir());
-			colocarParametros(query, queryBuilder);
-
-			servicos = query.getResultList();
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
+		
 		return servicos;
 	}
 
@@ -46,18 +44,17 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 
 		try {
 			getManager().clear();
-			JPQLBuilder queryBuilder = new JPQLBuilder()
-					.select("new com.snf.vo.ServicoDataValorVO(s.dataInicio ,SUM(s.valor))").from(Servico.class, "s")
+			servicosVO = new JPQLBuilder()
+					.select("new com.snf.vo.ServicoDataValorVO(s.dataInicio ,SUM(s.valor))")
+					.from(Servico.class, "s")
 					.where("(:dataInicial=null OR DATE(s.dataInicio) >= :dataInicial)", dataInicial)
 					.and("(:dataFinal=null OR DATE(s.dataInicio) <= :dataFinal)", dataFinal)
-					.and("(s.funcionario = :Func OR null = :Func )", funcionario).groupBy("extract(day from s.dataInicio)")
-					.orderBy("s.dataInicio").asc();
+					.and("(s.funcionario = :Func OR null = :Func )", funcionario)
+					.groupBy("extract(day from s.dataInicio)")
+					.orderBy("s.dataInicio").asc()
+					.contruir(getManager(), ServicoDataValorVO.class)
+					.getResultList();
 
-			TypedQuery<ServicoDataValorVO> query = getManager().createQuery(queryBuilder.contruir(),
-					ServicoDataValorVO.class);
-
-			colocarParametros(query, queryBuilder);
-			servicosVO = query.getResultList();
 		} catch (Exception e) {
 			log.error(e.toString());
 		}

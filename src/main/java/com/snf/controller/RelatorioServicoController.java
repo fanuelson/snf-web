@@ -96,7 +96,7 @@ public class RelatorioServicoController implements Serializable {
 	public void calcularValorMaxEixoY() {
 		Double maiorValor = 0.0;
 		for (ServicoDataValorVO servicoVO : servicos) {
-			if (servicoVO.getValor() > maiorValor) {
+			if (servicoVO.getValor() != null && servicoVO.getValor() > maiorValor) {
 				maiorValor = servicoVO.getValor();
 			}
 		}

@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import org.apache.log4j.Logger;
 
 public class JPQLBuilder implements Serializable {
@@ -41,6 +45,24 @@ public class JPQLBuilder implements Serializable {
 
 	public String contruir() {
 		return queryString.toString();
+	}
+
+	public Query contruir(EntityManager em) {
+		Query query = em.createQuery(this.contruir());
+		colocarValorDosParametros(query);
+		return query;
+	}
+
+	public <T> TypedQuery<T> contruir(EntityManager em, Class<T> returnType) {
+		TypedQuery<T> query = em.createQuery(this.contruir(), returnType);
+		colocarValorDosParametros(query);
+		return query;
+	}
+
+	private void colocarValorDosParametros(Query query) {
+		for (Map.Entry<String, Object> parametro : getParametros().entrySet()) {
+			query.setParameter(parametro.getKey(), parametro.getValue());
+		}
 	}
 
 	public JPQLBuilder from(Class<?> classe, String alias) {
@@ -92,24 +114,24 @@ public class JPQLBuilder implements Serializable {
 		return this;
 	}
 
-	public JPQLBuilder where(String restricao, Object valor) {
+	public JPQLBuilder where(String clausulaWhere, Object valor) {
 		queryString.append(WHERE);
-		queryString.append(restricao);
-		inserirParametro(" " + restricao + " ", valor);
+		queryString.append(clausulaWhere);
+		inserirParametro(" " + clausulaWhere + " ", valor);
 		return this;
 	}
 
-	public JPQLBuilder and(String restricao, Object valor) {
+	public JPQLBuilder and(String clausulaWhere, Object valor) {
 		queryString.append(AND);
-		queryString.append(restricao);
-		inserirParametro(" " + restricao + " ", valor);
+		queryString.append(clausulaWhere);
+		inserirParametro(" " + clausulaWhere + " ", valor);
 		return this;
 	}
 
-	public JPQLBuilder or(String restricao, Object valor) {
+	public JPQLBuilder or(String clausulaWhere, Object valor) {
 		queryString.append(OR);
-		queryString.append(restricao);
-		inserirParametro(" " + restricao + " ", valor);
+		queryString.append(clausulaWhere);
+		inserirParametro(" " + clausulaWhere + " ", valor);
 		return this;
 	}
 
@@ -135,17 +157,17 @@ public class JPQLBuilder implements Serializable {
 		return this;
 	}
 
-	private void inserirParametro(String restricao, Object valor) {
-		parametros.put(getNomeParametro(restricao), valor);
+	private void inserirParametro(String clausulaWhere, Object valor) {
+		parametros.put(getNomeParametro(clausulaWhere), valor);
 	}
 
-	public String getNomeParametro(String restricao) {
+	public String getNomeParametro(String clausulaWhere) {
 		String nomeParametro = "";
 
-		for (int i = restricao.lastIndexOf(":") + 1; i < restricao.length(); i++) {
-			if (restricao.charAt(i) == ' ')
+		for (int i = clausulaWhere.lastIndexOf(":") + 1; i < clausulaWhere.length(); i++) {
+			if (clausulaWhere.charAt(i) == ' ')
 				break;
-			nomeParametro += restricao.charAt(i);
+			nomeParametro += clausulaWhere.charAt(i);
 		}
 		nomeParametro = nomeParametro.replaceAll("\\(", "");
 		nomeParametro = nomeParametro.replaceAll("\\)", "");
