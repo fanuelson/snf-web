@@ -4,67 +4,9 @@ html,body{
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif !important;
   	font-size: 0.9em !important;
 }
-.btnDanger:ACTIVE {
-	border: 1px solid #222222 !important;
-    color: #FFF !important;
-    font-size: 12px !important;
-    box-shadow: none !important;
-    background: #222222 !important;
-    background: -moz-linear-gradient(top, #27abff 0%, #059eff 100%) !important;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#222222), color-stop(100%,#222222)) !important;
-    background: -webkit-linear-gradient(top, rgba(255, 39, 39, 0.83) 0%,#FF0505 100%) !important;
-    background: -o-linear-gradient(top, #27abff 0%,#059eff 100%) !important;
-    background: -ms-linear-gradient(top, #27abff 0%,#059eff 100%) !important;
-    background: linear-gradient(top, #27abff 0%,#059eff 100%) !important;
-    -webkit-transition: none !important;
-}
 
-.btnDanger .ui-state-focus {
-	border: 1px solid #222222 !important;
-    color: #FFF !important;
-    font-size: 12px !important;
-    box-shadow: none !important;
-    background: #222222 !important;
-    background: -moz-linear-gradient(top, #27abff 0%, #059eff 100%) !important;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#222222), color-stop(100%,#222222)) !important;
-    background: -webkit-linear-gradient(top, rgba(255, 39, 39, 0.83) 0%,#FF0505 100%) !important;
-    background: -o-linear-gradient(top, #27abff 0%,#059eff 100%) !important;
-    background: -ms-linear-gradient(top, #27abff 0%,#059eff 100%) !important;
-    background: linear-gradient(top, #27abff 0%,#059eff 100%) !important;
-    -webkit-transition: none !important;
-}
 
-.btnDanger .ui-state-hover {
-	border: 1px solid #222222 !important;
-    color: #FFF !important;
-    font-size: 12px !important;
-    box-shadow: none !important;
-    background: #222222 !important;
-    background: -moz-linear-gradient(top, #27abff 0%, #059eff 100%) !important;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#222222), color-stop(100%,#222222)) !important;
-    background: -webkit-linear-gradient(top, rgba(255, 39, 39, 0.83) 0%,#FF0505 100%) !important;
-    background: -o-linear-gradient(top, #27abff 0%,#059eff 100%) !important;
-    background: -ms-linear-gradient(top, #27abff 0%,#059eff 100%) !important;
-    background: linear-gradient(top, #27abff 0%,#059eff 100%) !important;
-    -webkit-transition: none !important;
-}
-
-.btnDanger .ui-state-active {
-	border: 1px solid #222222 !important;
-    color: #FFF !important;
-    font-size: 12px !important;
-    box-shadow: none !important;
-    background: #222222 !important;
-    background: -moz-linear-gradient(top, #27abff 0%, #059eff 100%) !important;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#222222), color-stop(100%,#222222)) !important;
-    background: -webkit-linear-gradient(top, rgba(255, 39, 39, 0.83) 0%,#FF0505 100%) !important;
-    background: -o-linear-gradient(top, #27abff 0%,#059eff 100%) !important;
-    background: -ms-linear-gradient(top, #27abff 0%,#059eff 100%) !important;
-    background: linear-gradient(top, #27abff 0%,#059eff 100%) !important;
-    -webkit-transition: none !important;
-}
-
-.btnDanger{
+.ui-button.ui-state-default.btnDanger{
 	
 	border: 1px solid #222222 !important;
     color: #FFF !important;
@@ -78,6 +20,9 @@ html,body{
     background: -ms-linear-gradient(top, #27abff 0%,#059eff 100%) !important;
     background: linear-gradient(top, #27abff 0%,#059eff 100%) !important;
     -webkit-transition: none !important;
+}
+button.ui-button.ui-state-default span, .btnDanger{
+	text-shadow: none !important;
 }
 
 
