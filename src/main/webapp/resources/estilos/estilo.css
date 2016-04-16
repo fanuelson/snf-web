@@ -7,7 +7,6 @@ html,body{
 
 
 .ui-button.ui-state-default.btnDanger{
-	
 	border: 1px solid #222222 !important;
     color: #FFF !important;
     font-size: 12px !important;
@@ -25,6 +24,9 @@ button.ui-button.ui-state-default span, .btnDanger{
 	text-shadow: none !important;
 }
 
+.ui-button.ui-state-default.btnDanger:hover{
+	background: -webkit-linear-gradient(top, rgba(171, 0, 0, 0.83) 0%,#FF0000 100%) !important;
+}
 
 .servicoCancelado {
 	background: red !important;

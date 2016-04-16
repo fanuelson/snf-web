@@ -41,8 +41,7 @@
 				<p:graphicImage library="imagens" name="person.png" width="20" style="margin-right:5px;position: relative;top: 3px;" />
 				<p:outputLabel style="margin-right:15px;font-weight:bold" value="Olá #{commonsController.usuarioLogado.nome}" />
 				<p:button styleClass="btnDanger" onclick="PF('statusDialog').show()" value="#{msg['label.sair']}"
-					href="#{request.contextPath}/j_spring_security_logout" icon="ui-icon-power"
-					style="box-shadow:none !important;background: red !important;" />
+					href="#{request.contextPath}/j_spring_security_logout" icon="ui-icon-power" />
 			</c:facet>
 		</p:menubar>
 	</sec:authorize>
