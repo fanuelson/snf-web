@@ -17,7 +17,6 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 	private static final long serialVersionUID = 8644808566924847383L;
 
 	public List<Servico> getServicosByPeriodoAndFuncionario(ConsultaServicoVO filtro) {
-
 		List<Servico> servicos = null;
 		try {
 			

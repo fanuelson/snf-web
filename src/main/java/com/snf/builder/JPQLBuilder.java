@@ -120,6 +120,12 @@ public class JPQLBuilder implements Serializable {
 		inserirParametro(" " + clausulaWhere + " ", valor);
 		return this;
 	}
+	
+	public JPQLBuilder where(String clausulaWhere) {
+		queryString.append(WHERE);
+		queryString.append(clausulaWhere);
+		return this;
+	}
 
 	public JPQLBuilder and(String clausulaWhere, Object valor) {
 		queryString.append(AND);

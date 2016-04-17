@@ -2,8 +2,6 @@ package com.snf.dao;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
-
 import com.snf.builder.JPQLBuilder;
 import com.snf.model.Caixa;
 
@@ -16,14 +14,14 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 
 		try {
 			getManager().clear();
-			JPQLBuilder queryBuilder = new JPQLBuilder()
+			caixas = new JPQLBuilder()
 					.select("c")
 					.from(Caixa.class, "c")
 					.orderBy("c.dataAbertura")
-					.desc();
+					.desc()
+					.contruir(getManager(), Caixa.class)
+					.getResultList();
 
-			TypedQuery<Caixa> query = getManager().createQuery(queryBuilder.contruir(), Caixa.class);
-			caixas = query.getResultList();
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
@@ -36,15 +34,14 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 
 		try {
 			getManager().clear();
-			JPQLBuilder queryBuilder = new JPQLBuilder()
+			caixas = new JPQLBuilder()
 					.select("DISTINCT c")
 					.from(Caixa.class, "c")
 					.leftJoinFetch("c.transacoes", "t")
 					.orderBy("c.dataAbertura")
-					.desc();
-
-			TypedQuery<Caixa> query = getManager().createQuery(queryBuilder.contruir(), Caixa.class);
-			caixas = query.getResultList();
+					.desc()
+					.contruir(getManager(), Caixa.class)
+					.getResultList();
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
@@ -57,13 +54,13 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 
 		try {
 			getManager().clear();
-			JPQLBuilder queryBuilder = new JPQLBuilder()
+			caixa = new JPQLBuilder()
 					.select("DISTINCT c")
 					.from(Caixa.class, "c")
-					.where("c.dataFechamento IS NULL", null);
+					.where("c.dataFechamento IS NULL")
+					.contruir(getManager(), Caixa.class)
+					.getSingleResult();
 
-			TypedQuery<Caixa> query = getManager().createQuery(queryBuilder.contruir(), Caixa.class);
-			caixa = query.getSingleResult();
 		} catch (Exception e) {
 			log.error(e.toString());
 			return null;

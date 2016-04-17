@@ -1,12 +1,10 @@
 package com.snf.dao;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
-import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 
@@ -30,15 +28,14 @@ public class CustomUserDAO implements Serializable {
 	
 	public Usuario getUsuarioByLogin(String login){
 		try {
-			JPQLBuilder stringBuilder = new JPQLBuilder()
+			return new JPQLBuilder()
 					.select("u")
 					.from(Usuario.class, "u")
 					.innerJoinFetch("u.roles", "r")
-					.where("u.login = :log", login);
-			Query q = springManager.createQuery(stringBuilder.contruir());
-			colocarParametros(q, stringBuilder);
+					.where("u.login = :log", login)
+					.contruir(springManager, Usuario.class)
+					.getSingleResult();
 			
-			return (Usuario) q.getSingleResult();
 		} catch (NoResultException e) {
 			log.error(e.toString());
 			throw e;
@@ -60,12 +57,6 @@ public class CustomUserDAO implements Serializable {
     	}
     	return usuario;
     	
-    }
-	
-	public void colocarParametros(Query query, JPQLBuilder builder) {
-    	for (Map.Entry<String, Object> parametros : builder.getParametros().entrySet()) {
-			query.setParameter(parametros.getKey(), parametros.getValue());
-		}
     }
 
 }
