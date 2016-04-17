@@ -1,11 +1,15 @@
 package com.snf.library;
 
+import java.io.Serializable;
+
 import org.apache.log4j.Logger;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Encripta {
+public class Encripta implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	static final Logger log = Logger.getLogger(Encripta.class);
 

@@ -12,6 +12,7 @@
 		<class>com.snf.model.Caixa</class>
 		<class>com.snf.model.TipoUsuario</class>
 		<class>com.snf.model.Role</class>
+		<class>com.snf.model.Transacao</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/salaoBeleza" />
