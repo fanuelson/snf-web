@@ -3,6 +3,7 @@ package com.snf.dao;
 import java.util.List;
 
 import com.snf.builder.JPQLBuilder;
+import com.snf.genericDao.GenericDAO;
 import com.snf.model.Caixa;
 
 public class CaixaDAO extends GenericDAO<Caixa, Long> {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.snf.builder.JPQLBuilder;
+import com.snf.genericDao.GenericDAO;
 import com.snf.model.Funcionario;
 
 public class FuncionarioDAO extends GenericDAO<Funcionario, Long> {

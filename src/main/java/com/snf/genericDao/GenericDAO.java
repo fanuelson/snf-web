@@ -1,4 +1,4 @@
-package com.snf.dao;
+package com.snf.genericDao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -14,7 +14,7 @@ public abstract class GenericDAO<T , ID> implements Serializable {
 
 	private static final long serialVersionUID = 3836419209780168990L;
 	
-	static final Logger log = Logger.getLogger(GenericDAO.class);
+	protected static final Logger log = Logger.getLogger(GenericDAO.class);
 	
 	@Inject
 	private EntityManager manager;

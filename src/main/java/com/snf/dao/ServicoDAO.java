@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.snf.builder.JPQLBuilder;
+import com.snf.genericDao.GenericDAO;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.util.DataUtil;

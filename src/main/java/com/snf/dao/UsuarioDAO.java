@@ -1,5 +1,6 @@
 package com.snf.dao;
 
+import com.snf.genericDao.GenericDAO;
 import com.snf.model.Usuario;
 
 public class UsuarioDAO extends GenericDAO<Usuario, Long> {
