@@ -19,15 +19,14 @@ public class JPAUtil implements Serializable {
 
 	static final Logger log = Logger.getLogger(JPAUtil.class);
 
-	private EntityManagerFactory factory;
+	private static EntityManagerFactory factory = null;
 	
-	public JPAUtil() {
-		factory = Persistence.createEntityManagerFactory("salaoBeleza");
-	}
-
 	@Produces
 	@RequestScoped
 	public EntityManager createEntityManager() {
+		if(factory==null){
+			factory = Persistence.createEntityManagerFactory("salaoBeleza");
+		}
 		return factory.createEntityManager();
 	}
 
