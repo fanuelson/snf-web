@@ -9,18 +9,18 @@ public class AberturaCaixaVM implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Caixa caixa;
+	private Caixa caixaAberto;
 	
 	private List<Caixa> caixas;
 	
 	private boolean existeCaixaAberto;
 	
-	public Caixa getCaixa() {
-		return caixa;
+	public Caixa getCaixaAberto() {
+		return caixaAberto;
 	}
 
-	public void setCaixa(Caixa caixa) {
-		this.caixa = caixa;
+	public void setCaixaAberto(Caixa caixaAberto) {
+		this.caixaAberto = caixaAberto;
 	}
 
 	public boolean isExisteCaixaAberto() {

@@ -32,10 +32,10 @@ public class GerenciaCaixaController implements Serializable {
 	public void init() {
 		aberturaCaixaVM.setCaixas(caixaService.getAllOrderByDataAbertura());
 		if(caixaService.getCaixaAberto()!=null){
-			aberturaCaixaVM.setCaixa(caixaService.getCaixaAberto());
+			aberturaCaixaVM.setCaixaAberto(caixaService.getCaixaAberto());
 			aberturaCaixaVM.setExisteCaixaAberto(true);
 		} else {
-			aberturaCaixaVM.setCaixa(new Caixa());
+			aberturaCaixaVM.setCaixaAberto(new Caixa());
 			aberturaCaixaVM.setExisteCaixaAberto(false);
 		}
 		
@@ -43,7 +43,7 @@ public class GerenciaCaixaController implements Serializable {
 	
 	public void salvarCaixa() {
 		try{
-			Caixa caixa = aberturaCaixaVM.getCaixa();
+			Caixa caixa = aberturaCaixaVM.getCaixaAberto();
 			caixaService.abrirCaixa(caixa);
 			init();
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
@@ -55,7 +55,7 @@ public class GerenciaCaixaController implements Serializable {
 	
 	public void fecharCaixa() {
 		try{
-			Caixa caixa = aberturaCaixaVM.getCaixa();
+			Caixa caixa = aberturaCaixaVM.getCaixaAberto();
 			caixaService.fecharCaixa(caixa);
 			init();
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");

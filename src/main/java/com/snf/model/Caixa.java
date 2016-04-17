@@ -47,6 +47,13 @@ public class Caixa implements Serializable {
 	public String getDataAberturaFormatada() {
 		return DataUtil.getDataFormatada(dataAbertura, "dd/MM/yyyy HH:mm");
 	}
+	
+	public Double getReceita() {
+		if(valorInicial!=null && valorAtual!=null)
+			return valorAtual - valorInicial;
+		else
+			return 0.0;
+	}
 
 	public String getDataFechamentoFormatado() {
 		if (dataFechamento != null)

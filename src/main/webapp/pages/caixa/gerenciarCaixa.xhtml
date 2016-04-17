@@ -47,14 +47,14 @@
 								</h:outputText>
 							</p:column>
 							<p:column width="20%" headerText="#{msg['label.header.receita']}">
-								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual - caixa.valorInicial}">
+								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.receita}">
 									<c:convertNumber currencySymbol="R$" type="currency" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 								</h:outputText>
-								<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) gt 0.0}"
+								<p:graphicImage rendered="#{caixa.receita gt 0.0}"
 									style="margin-left:10px;float:right" library="imagens" name="upIcon.png" />
-								<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) lt 0.0}"
+								<p:graphicImage rendered="#{caixa.receita lt 0.0}"
 									style="margin-left:10px;float:right" library="imagens" name="downIcon.png" />
-								<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) eq 0.0}"
+								<p:graphicImage rendered="#{caixa.receita eq 0.0}"
 									style="margin-left:10px;float:right" library="imagens" name="boxBlue.png" />
 							</p:column>
 
@@ -70,7 +70,7 @@
 								<p:outputLabel for="valorInicial" value="#{msg['label.valor.inicial']}" />
 
 								<h:inputText required="true" id="valorInicial"
-									value="#{gerenciaCaixaController.aberturaCaixaVM.caixa.valorInicial}">
+									value="#{gerenciaCaixaController.aberturaCaixaVM.caixaAberto.valorInicial}">
 									<c:convertNumber locale="pt_br" minFractionDigits="2" maxFractionDigits="2" />
 									<c:validateDoubleRange minimum="0.1" />
 								</h:inputText>
@@ -101,20 +101,20 @@
 									<p:outputLabel for="idCaixa" value="#{msg['label.header.id']}" />
 									<p:outputLabel />
 									<p:inputText style="opacity:0.8" disabled="true" id="idCaixa"
-										value="#{gerenciaCaixaController.aberturaCaixaVM.caixa.id}">
+										value="#{gerenciaCaixaController.aberturaCaixaVM.caixaAberto.id}">
 									</p:inputText>
 									<p:outputLabel />
 									<p:outputLabel for="dataInicialCaixa" value="#{msg['label.data.abertura']}" />
 									<p:outputLabel />
 									<p:inputText style="opacity:0.8" disabled="true" id="dataInicialCaixa"
-										value="#{gerenciaCaixaController.aberturaCaixaVM.caixa.dataAberturaFormatada}">
+										value="#{gerenciaCaixaController.aberturaCaixaVM.caixaAberto.dataAberturaFormatada}">
 									</p:inputText>
 									<p:outputLabel />
 
 									<p:outputLabel for="valorInicialCaixa" value="#{msg['label.valor.inicial']}" />
 									<p:outputLabel />
 									<p:inputText style="opacity:0.8" disabled="true" id="valorInicialCaixa"
-										value="#{gerenciaCaixaController.aberturaCaixaVM.caixa.valorInicial}">
+										value="#{gerenciaCaixaController.aberturaCaixaVM.caixaAberto.valorInicial}">
 										<c:convertNumber pattern="R$ #0" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 										<c:validateDoubleRange minimum="0.1" />
 									</p:inputText>
@@ -123,7 +123,7 @@
 									<p:outputLabel for="valorAtual" value="#{msg['label.valor.atual']}" />
 									<p:outputLabel />
 									<p:inputText style="opacity:0.8" disabled="true" id="valorAtual"
-										value="#{gerenciaCaixaController.aberturaCaixaVM.caixa.valorAtual}">
+										value="#{gerenciaCaixaController.aberturaCaixaVM.caixaAberto.valorAtual}">
 										<c:convertNumber pattern="R$ #0" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 										<c:validateDoubleRange minimum="0.1" />
 									</p:inputText>
@@ -132,7 +132,7 @@
 									<p:outputLabel for="receitaCorrente" value="#{msg['label.receita.corrente']}" />
 									<p:outputLabel />
 									<p:inputText style="opacity:0.8" disabled="true" id="receitaCorrente"
-										value="#{gerenciaCaixaController.aberturaCaixaVM.caixa.valorAtual - gerenciaCaixaController.aberturaCaixaVM.caixa.valorInicial}">
+										value="#{gerenciaCaixaController.aberturaCaixaVM.caixaAberto.receita}">
 										<c:convertNumber pattern="R$ #0" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 										<c:validateDoubleRange minimum="0.1" />
 									</p:inputText>

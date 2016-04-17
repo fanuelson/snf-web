@@ -68,15 +68,15 @@
 									</c:facet>
 								</p:column>
 								<p:column width="20%" headerText="#{msg['label.header.receita']}">
-									<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual - caixa.valorInicial}">
+									<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.receita}">
 										<c:convertNumber currencySymbol="R$" type="currency" locale="pt-br" minFractionDigits="2"
 											maxFractionDigits="2" />
 									</h:outputText>
-									<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) gt 0.0}"
+									<p:graphicImage rendered="#{caixa.receita gt 0.0}"
 										style="margin-left:10px;float:right" library="imagens" name="upIcon.png" />
-									<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) lt 0.0}"
+									<p:graphicImage rendered="#{caixa.receita lt 0.0}"
 										style="margin-left:10px;float:right" library="imagens" name="downIcon.png" />
-									<p:graphicImage rendered="#{ (caixa.valorAtual - caixa.valorInicial) eq 0.0}"
+									<p:graphicImage rendered="#{caixa.receita eq 0.0}"
 										style="margin-left:10px;float:right" library="imagens" name="boxBlue.png" />
 									<c:facet name="footer">
 										<h:outputText value="#{consultaTransacaoController.valorTotalCaixas}">
