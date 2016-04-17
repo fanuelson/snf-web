@@ -37,7 +37,7 @@ public class CadastroFuncionarioController implements Serializable {
 	private TipoUsuarioService tipoUsuarioService;
 	
 	@Inject
-	private Encripta encripta;
+	private Encripta encriptador;
 	
 	private List<TipoUsuario> tiposUsuario;
 	
@@ -70,7 +70,7 @@ public class CadastroFuncionarioController implements Serializable {
 		String senha = cadastroFuncionarioVM.getSenha();
 		func.getRoles().add(role);
 		func.setTipo(com.snf.enums.TipoUsuario.getTipoByRoles(func.getRoles()));
-		func.setSenha(encripta.encripta(senha));
+		func.setSenha(encriptador.encriptar(senha));
 	}
 
 	private void limparFuncionario() {

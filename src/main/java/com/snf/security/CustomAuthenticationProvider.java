@@ -16,7 +16,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import com.snf.library.Encripta;
+import com.snf.library.Encriptador;
 import com.snf.model.Usuario;
 import com.snf.service.CustomUserService;
 import com.snf.util.MessagesUtils;
@@ -27,7 +27,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	static final Logger log = Logger.getLogger(CustomAuthenticationProvider.class);
 	
 	@Autowired
-	private Encripta enc;
+	private Encriptador enc;
 	
 	@Autowired
 	private CustomUserService customUserService;
@@ -44,7 +44,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		try{
 			Usuario usuario = (Usuario) customUserService.loadUserByUsername(username);
 			
-			if(usuario.getSenha().equals(enc.encripta(password))){
+			if(enc.checkPassword(password, usuario.getSenha())){
 				Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
 				grantedAuths.addAll(usuario.getAuthorities());
 				auth = getAuth(usuario);
