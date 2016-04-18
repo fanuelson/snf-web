@@ -13,10 +13,10 @@
 				<h:panelGrid style="padding:5px">
 					<p:outputLabel rendered="#{consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}"
 						value="#{msg['label.meus.servicos']}" style="font-size:20px" />
-					<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="servico"
-						value="#{consultaServicoController.servicos}" emptyMessage="Nenhum serviço cadastrado"
-						filteredValue="#{consultaServicoController.servicosFiltered}" widgetVar="servicosTable" id="servicosTable"
-						paginator="true" rows="10" rowExpandMode="false" rowsPerPageTemplate="5,10,15,20,30">
+					<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="servico" lazy="true"
+						value="#{consultaServicoController.consultaServicoVM.servicos}" emptyMessage="Nenhum serviço cadastrado"
+						widgetVar="servicosTable" id="servicosTable"
+						paginator="true" rows="10" rowsPerPageTemplate="5,10,15,20,30">
 						<c:facet name="header">
 							<p:outputPanel style="width:100%">
 								<h:outputLabel style="margin-left:50px" value="#{msg['label.procurar']}" />
@@ -86,8 +86,9 @@
 					<ui:param name="mensagem" value="#{msg['label.confirmacao.exclusao.registro']}" />
 				</ui:include>
 
-
 			</h:form>
 		</p:panel>
+		
+		<p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" />
 	</ui:define>
 </ui:composition>

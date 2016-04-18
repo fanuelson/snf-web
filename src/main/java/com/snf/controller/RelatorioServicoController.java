@@ -26,7 +26,7 @@ import com.snf.util.CollectionsUtils;
 import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
 import com.snf.vm.RelatorioServicoVM;
-import com.snf.vo.ServicoDataValorVO;
+import com.snf.vo.RelatorioServicoVO;
 
 @Named
 @ViewScoped
@@ -53,7 +53,7 @@ public class RelatorioServicoController implements Serializable {
 
 	private List<Funcionario> funcionarios;
 
-	private List<ServicoDataValorVO> servicos = new ArrayList<>();
+	private List<RelatorioServicoVO> servicos = new ArrayList<>();
 
 	private double valorTotalPesquisa = 0;
 
@@ -87,7 +87,7 @@ public class RelatorioServicoController implements Serializable {
 
 	public void calcularValorTotalPesquisa() {
 		valorTotalPesquisa = 0;
-		for (ServicoDataValorVO servicoVO : servicos) {
+		for (RelatorioServicoVO servicoVO : servicos) {
 			if(servicoVO.getValor()!=null)
 				valorTotalPesquisa += servicoVO.getValor();
 		}
@@ -95,7 +95,7 @@ public class RelatorioServicoController implements Serializable {
 
 	public void calcularValorMaxEixoY() {
 		Double maiorValor = 0.0;
-		for (ServicoDataValorVO servicoVO : servicos) {
+		for (RelatorioServicoVO servicoVO : servicos) {
 			if (servicoVO.getValor() != null && servicoVO.getValor() > maiorValor) {
 				maiorValor = servicoVO.getValor();
 			}
@@ -133,7 +133,7 @@ public class RelatorioServicoController implements Serializable {
 			series1.set(DataUtil.getDataFormatada(DataUtil.diminuirDias(new Date(), 2), formato_data_americano), 0);
 			series1.set(DataUtil.getDataFormatada(new Date(), formato_data_americano), 0);
 		} else {
-			for (ServicoDataValorVO servicoVO : servicos) {
+			for (RelatorioServicoVO servicoVO : servicos) {
 				series1.set(DataUtil.getDataFormatada(servicoVO.getData(), formato_data_americano),
 						servicoVO.getValor());
 			}

@@ -5,19 +5,20 @@ import java.util.Date;
 import java.util.List;
 
 import com.snf.builder.JPQLBuilder;
+import com.snf.dataModel.PaginaDataModel;
 import com.snf.genericDao.GenericDAO;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.util.DataUtil;
-import com.snf.vo.ConsultaServicoVO;
-import com.snf.vo.ServicoDataValorVO;
+import com.snf.vo.FiltroConsultaServicoVO;
+import com.snf.vo.RelatorioServicoVO;
 
 @SuppressWarnings("unchecked")
 public class ServicoDAO extends GenericDAO<Servico, Long> {
 
 	private static final long serialVersionUID = 8644808566924847383L;
 
-	public List<Servico> getServicosByPeriodoAndFuncionario(ConsultaServicoVO filtro) {
+	public List<Servico> getServicosByPeriodoAndFuncionario(FiltroConsultaServicoVO filtro) {
 		List<Servico> servicos = null;
 		try {
 			
@@ -37,10 +38,28 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 		
 		return servicos;
 	}
+	
+	public PaginaDataModel<Servico> getServicosByPeriodoAndFuncionario(FiltroConsultaServicoVO filtro, PaginaDataModel<Servico> pagina) {
+		try {
+			getManager().clear();
+			pagina = new JPQLBuilder()
+					.select("s")
+					.from(Servico.class, "s")
+					.where("(:dataInicial IS NULL OR  s.dataInicio >= :dataInicial)", DataUtil.getDataHoraZerada(filtro.getDataInicial()))
+					.and("(:dataFinal IS NULL OR s.dataInicio <= :dataFinal)", DataUtil.getDataHoraFinalDia(filtro.getDataFinal()))
+					.and("(:func = null OR s.funcionario = :func)", filtro.getFuncionario())
+					.contruirPaginado(getManager(), pagina, Servico.class);
 
-	public List<ServicoDataValorVO> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal,
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+		
+		return pagina;
+	}
+
+	public List<RelatorioServicoVO> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal,
 			Funcionario funcionario) {
-		List<ServicoDataValorVO> servicosVO = new ArrayList<>();
+		List<RelatorioServicoVO> servicosVO = new ArrayList<>();
 
 		try {
 			getManager().clear();
@@ -52,7 +71,7 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 					.and("(s.funcionario = :Func OR null = :Func )", funcionario)
 					.groupBy("extract(day from s.dataInicio)")
 					.orderBy("s.dataInicio").asc()
-					.contruir(getManager(), ServicoDataValorVO.class)
+					.contruir(getManager(), RelatorioServicoVO.class)
 					.getResultList();
 
 		} catch (Exception e) {

@@ -24,9 +24,8 @@
 				</p:column>
 			</p:panelGrid>
 			<div style="text-align: right" >
-				<p:commandButton icon="ui-icon-search" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"
-					style="padding:8px" value="#{msg['label.pesquisar']}" process="@this filtroPesquisaServico"
-					action="#{consultaServicoController.pesquisar()}" update="consultaServicosForm panelCalculo" />
+				<p:commandButton icon="ui-icon-search" style="padding:8px" value="#{msg['label.pesquisar']}"
+					process="@this filtroPesquisaServico" update="consultaServicosForm panelCalculo" />
 			</div>
 			<h:panelGrid id="panelCalculo" styleClass="botoes" columns="3" style="margin:auto;margin-top:15px">
 				<p:outputLabel value="#{msg['label.soma.total.pesquisa']}" />

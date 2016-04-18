@@ -1,7 +1,9 @@
 package com.snf.builder;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -9,6 +11,8 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
+
+import com.snf.dataModel.PaginaDataModel;
 
 public class JPQLBuilder implements Serializable {
 
@@ -29,6 +33,7 @@ public class JPQLBuilder implements Serializable {
 	private static String LEFT_JOIN_FETCH = " LEFT JOIN FETCH ";
 	private static String RIGHT_JOIN = " RIGHT JOIN ";
 	private static String RIGHT_JOIN_FETCH = " RIGHT JOIN FETCH ";
+	private static String entityAlias;
 	private StringBuilder queryString;
 	private Map<String, Object> parametros;
 
@@ -40,13 +45,18 @@ public class JPQLBuilder implements Serializable {
 
 	public JPQLBuilder select(String alias) {
 		queryString.append(SELECT + alias);
+		entityAlias = alias;
+		return this;
+	}
+	
+	public JPQLBuilder contruirJPQL() {
 		return this;
 	}
 
 	public String contruir() {
 		return queryString.toString();
 	}
-
+	
 	public Query contruir(EntityManager em) {
 		Query query = em.createQuery(this.contruir());
 		colocarValorDosParametros(query);
@@ -57,6 +67,34 @@ public class JPQLBuilder implements Serializable {
 		TypedQuery<T> query = em.createQuery(this.contruir(), returnType);
 		colocarValorDosParametros(query);
 		return query;
+	}
+	
+	public <T> PaginaDataModel<T> contruirPaginado(EntityManager em, PaginaDataModel<T> paginaRetorno, Class<T> registrosType) {
+		TypedQuery<T> query = em.createQuery(this.contruir(), registrosType);
+		colocarValorDosParametros(query);
+		query.setFirstResult(paginaRetorno.getFirstResult());
+		query.setMaxResults(paginaRetorno.getPageSize());
+		List<T> registros = new ArrayList<>();
+		try {
+			registros = query.getResultList();
+			paginaRetorno.setRegistrosPagina(registros);
+			paginaRetorno.setTotalRegistros(getTotalRegistros(em));
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+		return paginaRetorno;
+	}
+	
+	public Integer getTotalRegistros(EntityManager em) {
+		String queryString = this.contruir();
+		String queryCount = queryString.replaceFirst(" "+entityAlias+" ", getCountAlias());
+		TypedQuery<Long> query = em.createQuery(queryCount, Long.class);
+		colocarValorDosParametros(query);
+		return query.getSingleResult().intValue();
+	}
+	
+	private String getCountAlias(){
+		return String.format(" count(%s) ", entityAlias);
 	}
 
 	private void colocarValorDosParametros(Query query) {
@@ -69,6 +107,12 @@ public class JPQLBuilder implements Serializable {
 		queryString.append(FROM);
 		queryString.append(classe.getSimpleName());
 		queryString.append(" " + alias + " ");
+		return this;
+	}
+	
+	public JPQLBuilder from(String fromClause) {
+		queryString.append(FROM);
+		queryString.append(" " + fromClause + " ");
 		return this;
 	}
 

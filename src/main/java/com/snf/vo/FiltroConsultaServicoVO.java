@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.snf.model.Funcionario;
 
-public class ConsultaServicoVO implements Serializable {
+public class FiltroConsultaServicoVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -9,14 +9,15 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 
 import com.snf.dao.ServicoDAO;
+import com.snf.dataModel.PaginaDataModel;
 import com.snf.enums.StatusServico;
 import com.snf.enums.TipoTransacao;
 import com.snf.model.Caixa;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.model.Transacao;
-import com.snf.vo.ConsultaServicoVO;
-import com.snf.vo.ServicoDataValorVO;
+import com.snf.vo.FiltroConsultaServicoVO;
+import com.snf.vo.RelatorioServicoVO;
 
 public class ServicoService implements Serializable {
 
@@ -79,12 +80,16 @@ public class ServicoService implements Serializable {
 		return servicoDAO.getById(id);
 	}
 
-	public List<Servico> getServicosByPeriodoAndFuncionario(ConsultaServicoVO filtro) {
+	public List<Servico> getServicosByPeriodoAndFuncionario(FiltroConsultaServicoVO filtro) {
 		return servicoDAO.getServicosByPeriodoAndFuncionario(filtro);
 	}
 
-	public List<ServicoDataValorVO> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal,
+	public List<RelatorioServicoVO> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal,
 			Funcionario funcionario) {
 		return servicoDAO.servicosByPeriodoAndFuncionario(dataInicial, dataFinal, funcionario);
+	}
+	
+	public PaginaDataModel<Servico> getServicosByPeriodoAndFuncionario(FiltroConsultaServicoVO filtro, PaginaDataModel<Servico> pagina) {
+		return servicoDAO.getServicosByPeriodoAndFuncionario(filtro, pagina);
 	}
 }

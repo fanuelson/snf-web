@@ -2,12 +2,12 @@ package com.snf.vo;
 
 import java.util.Date;
 
-public class ServicoDataValorVO {
+public class RelatorioServicoVO {
 
 	private Date data;
 	private Double valor;
 	
-	public ServicoDataValorVO(Date data, Double valor) {
+	public RelatorioServicoVO(Date data, Double valor) {
 		super();
 		this.data = data;
 		this.valor = valor;
