@@ -2,12 +2,16 @@ package com.snf.dataModel;
 
 import java.util.List;
 
+import org.primefaces.model.SortOrder;
+
 public class PaginaDataModel<T> {
 
 	private List<T> registrosPagina;
 	private int totalRegistros;
 	private int firstResult;
 	private int pageSize;
+	private String sortField;
+	private String sortOrder;
 
 	public List<T> getRegistrosPagina() {
 		return registrosPagina;
@@ -40,5 +44,33 @@ public class PaginaDataModel<T> {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
+
+	public String getSortField() {
+		return sortField;
+	}
+
+	public void setSortField(String sortField) {
+		this.sortField = sortField;
+	}
+
+	public String getSortOrder() {
+		return sortOrder;
+	}
+
+	public void setSortOrder(SortOrder sortOrder) {
+		switch (sortOrder) {
+		case ASCENDING:
+			this.sortOrder = "ASC" ;
+			break;
+		case DESCENDING:
+			this.sortOrder = "DESC" ;
+			break;
+		default:
+			this.sortOrder = "";
+			break;
+		}
+	}
+	
+	
 
 }

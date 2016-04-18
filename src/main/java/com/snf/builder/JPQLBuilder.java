@@ -33,7 +33,7 @@ public class JPQLBuilder implements Serializable {
 	private static String LEFT_JOIN_FETCH = " LEFT JOIN FETCH ";
 	private static String RIGHT_JOIN = " RIGHT JOIN ";
 	private static String RIGHT_JOIN_FETCH = " RIGHT JOIN FETCH ";
-	private static String entityAlias;
+	private String entityAlias;
 	private StringBuilder queryString;
 	private Map<String, Object> parametros;
 
@@ -70,6 +70,13 @@ public class JPQLBuilder implements Serializable {
 	}
 	
 	public <T> PaginaDataModel<T> contruirPaginado(EntityManager em, PaginaDataModel<T> paginaRetorno, Class<T> registrosType) {
+		if(paginaRetorno.getSortOrder().equals("ASC") && paginaRetorno.getSortField()!=null){
+			this.orderBy(this.entityAlias+"."+paginaRetorno.getSortField());
+			this.asc();
+		}else if(paginaRetorno.getSortOrder().equals("DESC") && paginaRetorno.getSortField()!=null){
+			this.orderBy(this.entityAlias+"."+paginaRetorno.getSortField());
+			this.desc();
+		}
 		TypedQuery<T> query = em.createQuery(this.contruir(), registrosType);
 		colocarValorDosParametros(query);
 		query.setFirstResult(paginaRetorno.getFirstResult());
@@ -186,14 +193,18 @@ public class JPQLBuilder implements Serializable {
 	}
 
 	public JPQLBuilder groupBy(String parametro) {
-		queryString.append(GROUP_BY);
-		queryString.append(" ( " + parametro + " ) ");
+		if(parametro != null){
+			queryString.append(GROUP_BY);
+			queryString.append(" ( " + parametro + " ) ");
+		}
 		return this;
 	}
 
 	public JPQLBuilder orderBy(String parametro) {
-		queryString.append(ORDER_BY);
-		queryString.append(" ( " + parametro + " ) ");
+		if(parametro != null){
+			queryString.append(ORDER_BY);
+			queryString.append(" ( " + parametro + " ) ");
+		}
 		return this;
 	}
 

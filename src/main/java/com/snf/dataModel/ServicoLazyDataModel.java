@@ -32,6 +32,8 @@ public class ServicoLazyDataModel extends LazyDataModel<Servico> implements Seri
 		PaginaDataModel<Servico> paginaServicos = new PaginaDataModel<>();
 		paginaServicos.setFirstResult(first);
 		paginaServicos.setPageSize(pageSize);
+		paginaServicos.setSortField(sortField);
+		paginaServicos.setSortOrder(sortOrder);
 		paginaServicos = servicoService.getServicosByPeriodoAndFuncionario(filtro, paginaServicos);
 		setRowCount(paginaServicos.getTotalRegistros());
 		return paginaServicos.getRegistrosPagina();
