@@ -1,13 +1,11 @@
 package com.snf.dao;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.snf.builder.JPQLBuilder;
 import com.snf.dataModel.PaginaDataModel;
 import com.snf.genericDao.GenericDAO;
-import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.util.DataUtil;
 import com.snf.vo.FiltroConsultaServicoVO;
@@ -57,8 +55,7 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 		return pagina;
 	}
 
-	public List<RelatorioServicoVO> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal,
-			Funcionario funcionario) {
+	public List<RelatorioServicoVO> servicosByPeriodoAndFuncionario(FiltroConsultaServicoVO filtro) {
 		List<RelatorioServicoVO> servicosVO = new ArrayList<>();
 
 		try {
@@ -66,9 +63,9 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 			servicosVO = new JPQLBuilder()
 					.select("new com.snf.vo.ServicoDataValorVO(s.dataInicio ,SUM(s.valor))")
 					.from(Servico.class, "s")
-					.where("(:dataInicial=null OR DATE(s.dataInicio) >= :dataInicial)", dataInicial)
-					.and("(:dataFinal=null OR DATE(s.dataInicio) <= :dataFinal)", dataFinal)
-					.and("(s.funcionario = :Func OR null = :Func )", funcionario)
+					.where("(:dataInicial=null OR DATE(s.dataInicio) >= :dataInicial)", DataUtil.getDataHoraZerada(filtro.getDataInicial()))
+					.and("(:dataFinal=null OR DATE(s.dataInicio) <= :dataFinal)", DataUtil.getDataHoraFinalDia(filtro.getDataFinal()))
+					.and("(s.funcionario = :Func OR null = :Func )", filtro.getFuncionario())
 					.groupBy("extract(day from s.dataInicio)")
 					.orderBy("s.dataInicio").asc()
 					.contruir(getManager(), RelatorioServicoVO.class)

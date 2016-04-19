@@ -1,19 +1,15 @@
 package com.snf.dataModel;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
-
+import com.snf.abstractLazyDataModel.AbstractLazyDataModel;
 import com.snf.model.Servico;
 import com.snf.service.ServicoService;
 import com.snf.vo.FiltroConsultaServicoVO;
 
-public class ServicoLazyDataModel extends LazyDataModel<Servico> implements Serializable {
+public class ServicoLazyDataModel extends AbstractLazyDataModel<Servico> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -23,28 +19,17 @@ public class ServicoLazyDataModel extends LazyDataModel<Servico> implements Seri
 	@Inject
 	private FiltroConsultaServicoVO filtro;
 	
-	@Override
-    public Object getRowKey(Servico servico) {
-        return servico.getId();
-    }
-	
-	public List<Servico> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters){
-		PaginaDataModel<Servico> paginaServicos = new PaginaDataModel<>();
-		paginaServicos.setFirstResult(first);
-		paginaServicos.setPageSize(pageSize);
-		paginaServicos.setSortField(sortField);
-		paginaServicos.setSortOrder(sortOrder);
-		paginaServicos = servicoService.getServicosByPeriodoAndFuncionario(filtro, paginaServicos);
-		setRowCount(paginaServicos.getTotalRegistros());
-		return paginaServicos.getRegistrosPagina();
-	}
-
 	public FiltroConsultaServicoVO getFiltro() {
 		return filtro;
 	}
 
 	public void setFiltro(FiltroConsultaServicoVO filtro) {
 		this.filtro = filtro;
+	}
+
+	@Override
+	public PaginaDataModel<Servico> buscarPaginado(PaginaDataModel<Servico> pagina) {
+		return servicoService.getServicosByPeriodoAndFuncionario(filtro, pagina);
 	}
 
 }

@@ -1,51 +1,34 @@
 package com.snf.vm;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
-import com.snf.model.Funcionario;
 import com.snf.util.DataUtil;
+import com.snf.vo.FiltroConsultaServicoVO;
 
 public class RelatorioServicoVM implements Serializable {
 
 	private static final long serialVersionUID = -836588887077362085L;
 
-	private Funcionario funcionario;
-
-	private Date dataInicial;
-
-	private Date dataFinal;
+	@Inject
+	private FiltroConsultaServicoVO filtro;
 	
 	@PostConstruct
 	public void init() {
-		dataInicial = DataUtil.diminuirDias(DataUtil.getDataAtualHoraZerada(), 7);
-		dataFinal = DataUtil.getDataAtualHoraFinalDia();
+		filtro.setDataInicial(DataUtil.diminuirDias(DataUtil.getDataAtualHoraZerada(), 7));
+		filtro.setDataFinal(DataUtil.getDataAtualHoraFinalDia());
 	}
 
-	public Funcionario getFuncionario() {
-		return funcionario;
+	public FiltroConsultaServicoVO getFiltro() {
+		return filtro;
 	}
 
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
+	public void setFiltro(FiltroConsultaServicoVO filtro) {
+		this.filtro = filtro;
 	}
 
-	public Date getDataInicial() {
-		return dataInicial;
-	}
-
-	public void setDataInicial(Date dataInicial) {
-		this.dataInicial = dataInicial;
-	}
-
-	public Date getDataFinal() {
-		return dataFinal;
-	}
-
-	public void setDataFinal(Date dataFinal) {
-		this.dataFinal = dataFinal;
-	}
+	
 
 }

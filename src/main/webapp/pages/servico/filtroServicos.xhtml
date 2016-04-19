@@ -7,7 +7,7 @@
 				<p:column rendered="#{not consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}">
 					<p:outputLabel style="display:inherit" value="#{msg['label.campo.funcionario']}" for="funcionario" />
 					<p:selectOneMenu style="width:250px" id="funcionario"
-						value="#{consultaServicoController.consultaServicoVM.filtro.funcionario}" converter="funcionarioConverter">
+						value="#{consultaServicoController.consultaServicoVM.servicos.filtro.funcionario}" converter="funcionarioConverter">
 						<c:selectItem itemLabel="#{msg['label.todos']}" noSelectionOption="true" />
 						<c:selectItems value="#{consultaServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario}"
 							itemLabel="#{funcionario.nome}" />
@@ -15,11 +15,11 @@
 				</p:column>
 				<p:column>
 					<p:outputLabel style="display:inherit" value="#{msg['label.data.a.partir.de']}" for="dataInicial" />
-					<p:calendar size="10" id="dataInicial" value="#{consultaServicoController.consultaServicoVM.filtro.dataInicial}" pattern="dd/MM/yyyy" />
+					<p:calendar size="10" id="dataInicial" value="#{consultaServicoController.consultaServicoVM.servicos.filtro.dataInicial}" pattern="dd/MM/yyyy" />
 				</p:column>
 				<p:column>
 					<p:outputLabel style="display:inherit" value="#{msg['label.ate']}" for="dataFinal" />
-					<p:calendar size="10" styleClass="botoes" id="dataFinal" value="#{consultaServicoController.consultaServicoVM.filtro.dataFinal}"
+					<p:calendar size="10" styleClass="botoes" id="dataFinal" value="#{consultaServicoController.consultaServicoVM.servicos.filtro.dataFinal}"
 						pattern="dd/MM/yyyy" />
 				</p:column>
 			</p:panelGrid>

@@ -26,6 +26,7 @@ import com.snf.util.CollectionsUtils;
 import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
 import com.snf.vm.RelatorioServicoVM;
+import com.snf.vo.FiltroConsultaServicoVO;
 import com.snf.vo.RelatorioServicoVO;
 
 @Named
@@ -68,12 +69,9 @@ public class RelatorioServicoController implements Serializable {
 	}
 
 	public void pesquisar() {
-		Date dataInicialPesquisada = DataUtil.getDataHoraZerada(relatorioServicoVM.getDataInicial());
-		Date dataFinalPesquisada = DataUtil.getDataHoraFinalDia(relatorioServicoVM.getDataFinal());
-		if (periodoPesquisaValido(dataInicialPesquisada, dataFinalPesquisada)) {
-			Funcionario funcionarioPesquisado = relatorioServicoVM.getFuncionario();
-			servicos = servicoService.servicosByPeriodoAndFuncionario(dataInicialPesquisada, dataFinalPesquisada,
-					funcionarioPesquisado);
+		FiltroConsultaServicoVO filtro = relatorioServicoVM.getFiltro();
+		if (periodoPesquisaValido(filtro)) {
+			servicos = servicoService.servicosByPeriodoAndFuncionario(filtro);
 			if (CollectionsUtils.isNullOrEmpty(servicos))
 				MessagesUtils.exibirMensagemErro("mensagem.nenhum.registro.encontrado");
 			calcularValorTotalPesquisa();
@@ -103,9 +101,11 @@ public class RelatorioServicoController implements Serializable {
 		valorMaxEixoY = maiorValor + 100;
 	}
 
-	private boolean periodoPesquisaValido(Date dataInicio, Date dataFim) {
-		if (dataInicio != null && dataFim != null) {
-			return dataInicio.before(dataFim);
+	private boolean periodoPesquisaValido(FiltroConsultaServicoVO filtro) {
+		Date dataInicial = DataUtil.getDataHoraZerada(filtro.getDataInicial());
+		Date dataFinal = DataUtil.getDataHoraFinalDia(filtro.getDataFinal());
+		if (dataInicial != null && dataFinal != null) {
+			return dataInicial.before(dataFinal);
 		}
 		return true;
 	}
@@ -147,7 +147,7 @@ public class RelatorioServicoController implements Serializable {
 		if(!CollectionsUtils.isNullOrEmpty(servicos))
 			dataMaxima = DataUtil.somarDias(servicos.get(servicos.size()-1).getData(), um_dia);
 		else
-			dataMaxima = DataUtil.somarDias(relatorioServicoVM.getDataFinal(), um_dia);
+			dataMaxima = DataUtil.somarDias(relatorioServicoVM.getFiltro().getDataFinal(), um_dia);
 		xAxis.setMax(DataUtil.getDataFormatada(DataUtil.getDataHoraFinalDia(dataMaxima), formato_data_americano));
 		xAxis.setTickAngle(-30);
 		xAxis.setTickFormat("%#d/%m/%y");

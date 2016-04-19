@@ -6,7 +6,7 @@
 			<p:column>
 				<p:outputLabel style="display:inherit" value="#{msg['label.campo.funcionario']}" for="funcionario" />
 				<p:selectOneMenu style="width:250px" id="funcionario" filter="true" filterMatchMode="contains"
-					value="#{relatorioServicoController.relatorioServicoVM.funcionario}" converter="funcionarioConverter">
+					value="#{relatorioServicoController.relatorioServicoVM.filtro.funcionario}" converter="funcionarioConverter">
 					<c:selectItem itemLabel="#{msg['label.todos']}" noSelectionOption="true" />
 					<c:selectItems value="#{relatorioServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario}"
 						itemLabel="#{funcionario.nome}" />
@@ -15,12 +15,12 @@
 			<p:column>
 				<p:outputLabel style="display:inherit" value="#{msg['label.data.a.partir.de']}" for="dataInicial" />
 				<p:calendar id="dataInicial" size="10"
-					value="#{relatorioServicoController.relatorioServicoVM.dataInicial}" pattern="dd/MM/yyyy" />
+					value="#{relatorioServicoController.relatorioServicoVM.filtro.dataInicial}" pattern="dd/MM/yyyy" />
 			</p:column>
 			<p:column>
 				<p:outputLabel style="display:inherit" value="#{msg['label.ate']}" for="dataFinal" />
 				<p:calendar size="10" styleClass="botoes" id="dataFinal"
-					value="#{relatorioServicoController.relatorioServicoVM.dataFinal}" pattern="dd/MM/yyyy" />
+					value="#{relatorioServicoController.relatorioServicoVM.filtro.dataFinal}" pattern="dd/MM/yyyy" />
 			</p:column>
 			<p:column>
 				<p:commandButton icon="ui-icon-search" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" 

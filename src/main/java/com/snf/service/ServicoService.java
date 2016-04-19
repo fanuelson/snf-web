@@ -13,7 +13,6 @@ import com.snf.dataModel.PaginaDataModel;
 import com.snf.enums.StatusServico;
 import com.snf.enums.TipoTransacao;
 import com.snf.model.Caixa;
-import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.model.Transacao;
 import com.snf.vo.FiltroConsultaServicoVO;
@@ -84,9 +83,8 @@ public class ServicoService implements Serializable {
 		return servicoDAO.getServicosByPeriodoAndFuncionario(filtro);
 	}
 
-	public List<RelatorioServicoVO> servicosByPeriodoAndFuncionario(Date dataInicial, Date dataFinal,
-			Funcionario funcionario) {
-		return servicoDAO.servicosByPeriodoAndFuncionario(dataInicial, dataFinal, funcionario);
+	public List<RelatorioServicoVO> servicosByPeriodoAndFuncionario(FiltroConsultaServicoVO filtro) {
+		return servicoDAO.servicosByPeriodoAndFuncionario(filtro);
 	}
 	
 	public PaginaDataModel<Servico> getServicosByPeriodoAndFuncionario(FiltroConsultaServicoVO filtro, PaginaDataModel<Servico> pagina) {
