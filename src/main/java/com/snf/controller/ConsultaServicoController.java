@@ -1,6 +1,7 @@
 package com.snf.controller;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +11,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
+import com.snf.dataModel.ServicoLazyDataModel;
 import com.snf.enums.TipoUsuario;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
@@ -19,6 +21,7 @@ import com.snf.service.ServicoService;
 import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
 import com.snf.vm.ConsultaServicoVM;
+import com.snf.vo.FiltroConsultaServicoVO;
 
 @Named
 @ViewScoped
@@ -40,10 +43,6 @@ public class ConsultaServicoController implements Serializable {
 	@Inject
 	private CommonsController commonsController;
 
-	private List<Servico> servicos;
-
-	private List<Servico> servicosFiltered;
-
 	private List<Funcionario> funcionarios;
 
 	private double valorTotalPesquisa;
@@ -55,29 +54,18 @@ public class ConsultaServicoController implements Serializable {
 		if (userLogado.getTipo().equals(TipoUsuario.FUNCIONARIO)) {
 			consultaServicoVM.getFiltro().setFuncionario((Funcionario) userLogado);
 			consultaServicoVM.setTipoFuncionarioLogado(true);
-			servicos = servicoService.getServicosByPeriodoAndFuncionario(consultaServicoVM.getFiltro());
 			consultaServicoVM.setFuncionario((Funcionario) userLogado);
 		} else {
 			consultaServicoVM.setTipoFuncionarioLogado(false);
-			servicos = servicoService.getAll();
 			funcionarios = funcionarioService.getAll();
 		}
-		calcularValorTotalPesquisa();
+		calcularSomaTotalPesquisa();
 	}
 
-	public void calcularValorTotalPesquisa() {
-		valorTotalPesquisa = 0;
-		for (Servico servico : servicos) {
-			if(servico.getValor()!=null)
-				valorTotalPesquisa += servico.getValor();
-		}
-	}
-
-	public void pesquisar() {
+	public void calcularSomaTotalPesquisa() {
 		if (periodoPesquisaValido()) {
-			pesquisarPeriodoFuncionario();
-			calcularValorTotalPesquisa();
-			limparFiltered();
+			FiltroConsultaServicoVO filtro = ((ServicoLazyDataModel) consultaServicoVM.getServicos()).getFiltro();
+			valorTotalPesquisa = servicoService.getSomaTotalServicos(filtro);
 		} else
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
 	}
@@ -85,31 +73,22 @@ public class ConsultaServicoController implements Serializable {
 	public void remover(Servico servico) {
 		try {
 			servicoService.remover(servico);
-			servicos.remove(servico);
-			if (servicosFiltered != null)
-				servicosFiltered.remove(servico);
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.remover.registro");
-
 		} catch (Exception e) {
 			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro("mensagem.erro.remover.registro");
 		}
 	}
 
-	private void pesquisarPeriodoFuncionario() {
-		servicos = servicoService.getServicosByPeriodoAndFuncionario(consultaServicoVM.getFiltro());
-	}
-
-	private void limparFiltered() {
-		servicosFiltered = null;
-	}
-
 	private boolean periodoPesquisaValido() {
-		if (DataUtil.getDataHoraZerada(consultaServicoVM.getFiltro().getDataInicial()) != null
-				&& DataUtil.getDataHoraFinalDia(consultaServicoVM.getFiltro().getDataFinal()) != null) {
-			return DataUtil.getDataHoraZerada(consultaServicoVM.getFiltro().getDataInicial())
-					.before(DataUtil.getDataHoraFinalDia(consultaServicoVM.getFiltro().getDataFinal()));
+		Date dataInicialPesquisada = consultaServicoVM.getFiltro().getDataInicial();
+		Date dataFinalPesquisada = consultaServicoVM.getFiltro().getDataFinal();
+		if (DataUtil.getDataHoraZerada(dataInicialPesquisada) != null
+				&& DataUtil.getDataHoraFinalDia(dataFinalPesquisada) != null) {
+			return DataUtil.getDataHoraZerada(dataInicialPesquisada)
+					.before(DataUtil.getDataHoraFinalDia(dataFinalPesquisada));
 		}
+		
 		return true;
 	}
 
@@ -119,22 +98,6 @@ public class ConsultaServicoController implements Serializable {
 
 	public void setConsultaServicoVM(ConsultaServicoVM consultaServicoVM) {
 		this.consultaServicoVM = consultaServicoVM;
-	}
-
-	public List<Servico> getServicos() {
-		return servicos;
-	}
-
-	public void setServicos(List<Servico> servicos) {
-		this.servicos = servicos;
-	}
-
-	public List<Servico> getServicosFiltered() {
-		return servicosFiltered;
-	}
-
-	public void setServicosFiltered(List<Servico> servicosFiltered) {
-		this.servicosFiltered = servicosFiltered;
 	}
 
 	public List<Funcionario> getFuncionarios() {

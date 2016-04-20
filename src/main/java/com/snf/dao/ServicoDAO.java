@@ -77,5 +77,26 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 
 		return servicosVO;
 	}
+	
+	public Double getSomaTotalServicos(FiltroConsultaServicoVO filtro) {
+		Double somaTotal = 0.0;
+		try {
+			getManager().clear();
+			somaTotal = new JPQLBuilder()
+					.select("new java.lang.Double(SUM(s.valor))")
+					.from(Servico.class, "s")
+					.where("(:dataInicial=null OR DATE(s.dataInicio) >= :dataInicial)", DataUtil.getDataHoraZerada(filtro.getDataInicial()))
+					.and("(:dataFinal=null OR DATE(s.dataInicio) <= :dataFinal)", DataUtil.getDataHoraFinalDia(filtro.getDataFinal()))
+					.and("(s.funcionario = :Func OR null = :Func )", filtro.getFuncionario())
+					.and("s.valor IS NOT NULL")
+					.contruir(getManager(), Double.class)
+					.getSingleResult();
+
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+
+		return somaTotal;
+	}
 
 }

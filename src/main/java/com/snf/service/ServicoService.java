@@ -66,6 +66,10 @@ public class ServicoService implements Serializable {
 		transacao.setValor(servico.getValor());
 		return transacao;
 	}
+	
+	public Double getSomaTotalServicos(FiltroConsultaServicoVO filtro){
+		return servicoDAO.getSomaTotalServicos(filtro);
+	}
 
 	public List<Servico> getAll() {
 		return servicoDAO.getAll();
