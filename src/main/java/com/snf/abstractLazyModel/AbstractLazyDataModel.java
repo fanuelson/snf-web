@@ -1,4 +1,4 @@
-package com.snf.abstractLazyDataModel;
+package com.snf.abstractLazyModel;
 
 import java.io.Serializable;
 import java.util.List;

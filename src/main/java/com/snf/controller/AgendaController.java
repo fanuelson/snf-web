@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
@@ -28,6 +29,10 @@ import com.snf.vm.AgendaVM;
 @Named
 @ViewScoped
 public class AgendaController implements Serializable {
+
+	private static final String SCRIPT_ESCONDER_VALOR_DIALOG = "PF('valorDialog').hide()";
+
+	private static final String SCRIPT_ESCONDER_SERVICO_DIALOG = "PF('servicoDialog').hide()";
 
 	private static final String mensagem_erro = "mensagem.erro.salvar.registro";
 
@@ -89,6 +94,7 @@ public class AgendaController implements Serializable {
 			servicoService.salvar(agendaVM.getServicoSelected());
 			init();
 			MessagesUtils.exibirMensagemSucesso(mensagem_sucesso);
+			RequestContext.getCurrentInstance().execute(SCRIPT_ESCONDER_SERVICO_DIALOG);
 		} catch (Exception e) {
 			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro(mensagem_erro);
@@ -100,6 +106,8 @@ public class AgendaController implements Serializable {
 			servicoService.salvarServicoPago(agendaVM.getServicoSelected());
 			init();
 			MessagesUtils.exibirMensagemSucesso(mensagem_sucesso);
+			RequestContext.getCurrentInstance().execute(SCRIPT_ESCONDER_VALOR_DIALOG);
+			RequestContext.getCurrentInstance().execute(SCRIPT_ESCONDER_SERVICO_DIALOG);
 		} catch (Exception e) {
 			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro(mensagem_erro);
@@ -111,6 +119,7 @@ public class AgendaController implements Serializable {
 			servicoService.agendar(agendaVM.getServicoSelected());
 			init();
 			MessagesUtils.exibirMensagemSucesso(mensagem_sucesso);
+			RequestContext.getCurrentInstance().execute(SCRIPT_ESCONDER_SERVICO_DIALOG);
 		} catch (Exception e) {
 			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro(mensagem_erro);
@@ -122,6 +131,7 @@ public class AgendaController implements Serializable {
 			servicoService.cancelar(agendaVM.getServicoSelected());
 			init();
 			MessagesUtils.exibirMensagemSucesso(mensagem_sucesso);
+			RequestContext.getCurrentInstance().execute(SCRIPT_ESCONDER_SERVICO_DIALOG);
 		} catch (Exception e) {
 			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro(mensagem_erro);

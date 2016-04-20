@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
-import com.snf.abstractLazyDataModel.AbstractLazyDataModel;
+import com.snf.abstractLazyModel.AbstractLazyDataModel;
 import com.snf.model.Servico;
 import com.snf.service.ServicoService;
 import com.snf.vo.FiltroConsultaServicoVO;
