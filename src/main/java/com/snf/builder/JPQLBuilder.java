@@ -178,17 +178,23 @@ public class JPQLBuilder implements Serializable {
 		return this;
 	}
 
-	public JPQLBuilder and(String clausulaWhere, Object valor) {
+	public JPQLBuilder and(String clausulaAnd, Object valor) {
 		queryString.append(AND);
-		queryString.append(clausulaWhere);
-		inserirParametro(" " + clausulaWhere + " ", valor);
+		queryString.append(clausulaAnd);
+		inserirParametro(" " + clausulaAnd + " ", valor);
+		return this;
+	}
+	
+	public JPQLBuilder and(String clausulaAnd) {
+		queryString.append(AND);
+		queryString.append(clausulaAnd);
 		return this;
 	}
 
-	public JPQLBuilder or(String clausulaWhere, Object valor) {
+	public JPQLBuilder or(String clausulaOr, Object valor) {
 		queryString.append(OR);
-		queryString.append(clausulaWhere);
-		inserirParametro(" " + clausulaWhere + " ", valor);
+		queryString.append(clausulaOr);
+		inserirParametro(" " + clausulaOr + " ", valor);
 		return this;
 	}
 
