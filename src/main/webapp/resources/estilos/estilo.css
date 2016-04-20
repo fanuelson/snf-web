@@ -5,6 +5,17 @@ html,body{
   	font-size: 0.9em !important;
 }
 
+#myscheduler > .ui-state-highlight, .ui-widget-content .ui-state-highlight{
+	background: rgba(20, 164, 255, 0.13) !important;
+	color: black !important;
+}
+
+.ui-datepicker-today {
+	background: #68ff00 !important;
+	-webkit-box-shadow: 0px 0px 7px #000 inset ;
+	-moz-box-shadow: 0px 0px 7px #000 inset ;
+	box-shadow: 0px 0px 7px #000 inset ;
+}
 
 .ui-button.ui-state-default.btnDanger{
 	border: 1px solid #222222 !important;
