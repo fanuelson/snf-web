@@ -106,12 +106,17 @@ public class AgendaController implements Serializable {
 			servicoService.salvarServicoPago(agendaVM.getServicoSelected());
 			init();
 			MessagesUtils.exibirMensagemSucesso(mensagem_sucesso);
+			limparServicoSelected();
 			RequestContext.getCurrentInstance().execute(SCRIPT_ESCONDER_VALOR_DIALOG);
 			RequestContext.getCurrentInstance().execute(SCRIPT_ESCONDER_SERVICO_DIALOG);
 		} catch (Exception e) {
 			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro(mensagem_erro);
 		}
+	}
+	
+	private void limparServicoSelected() {
+		agendaVM.setServicoSelected(new Servico());
 	}
 	
 	public void agendarServico() {
