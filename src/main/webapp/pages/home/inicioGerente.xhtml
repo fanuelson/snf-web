@@ -6,7 +6,7 @@
 
 		<p:growl id="msgs" widgetVar="msgs" showDetail="false" />
 
-		<h:form prependId="false" id="formCalendario">
+		<h:form prependId="false" id="formCalendario" onkeypress="if(event.keyCode==13) return false;" >
 			<p:panel header="#{msg['label.header.agenda']}" style="width:98%;margin:10px auto 20px auto">
 				<p:schedule axisFormat="H:mm" timeFormat="H:mm" id="schedule" value="#{agendaController.agendaVM.agendaModel}"
 					widgetVar="myschedule" timeZone="GMT-03:00">
@@ -72,17 +72,20 @@
 								oncomplete="PF('statusDialog').hide();PF('myschedule').update();" update="msgs"
 								style="float:right;margin:10px" value="#{msg['label.agendar.servico']}"
 								action="#{agendaController.agendarServico()}" icon="ui-icon-disk" iconPos="r" />
+								
 							<p:commandButton onstart="PF('statusDialog').show()" process="detalhesServico @this"
 								oncomplete="PF('statusDialog').hide();" onsuccess="PF('myschedule').update();"
 								style="float:right;margin:10px" value="#{msg['label.salvar']}" update="msgs"
 								disabled="#{agendaController.agendaVM.naoExisteCaixaAberto}" action="#{agendaController.salvar()}"
 								icon="ui-icon-disk" iconPos="r" rendered="#{agendaController.agendaVM.servicoSelected.podeSalvar}" />
+								
 							<p:commandButton onstart="PF('statusDialog').show()" process="detalhesServico @this"
 								rendered="#{agendaController.agendaVM.servicoSelected.podeCancelar}"
 								oncomplete="PF('statusDialog').hide();PF('servicoDialog').hide();PF('myschedule').update()"
 								style="float:right;margin:10px;box-shadow:none !important;background: red !important;"
 								value="#{msg['label.cancelar.servico']}" icon="ui-icon-circle-close" iconPos="r" styleClass="btnDanger"
 								action="#{agendaController.cancelarServico()}" />
+								
 							<p:commandButton value="Pagamento" process="@this" onstart="PF('statusDialog').show()"
 								rendered="#{agendaController.agendaVM.servicoSelected.podePagar}"
 								disabled="#{agendaController.agendaVM.naoExisteCaixaAberto}" style="margin:10px"
@@ -94,7 +97,7 @@
 			</p:dialog>
 
 			<p:dialog modal="true" widgetVar="valorDialog" header="Pagamento" resizable="false" showEffect="clip" hideEffect="clip"
-			   width="300px" height="200px">
+			   width="300px" height="150px">
 				<p:messages id="valorDialogMessage" />
 				<h:panelGrid id="valorPanel" style="text-align:center">
 					<p:outputLabel style="font-size:28px" value="Valor:" />
@@ -106,7 +109,7 @@
 					</h:inputText>
 				</h:panelGrid>
 				<p:commandButton value="Pagar" action="#{agendaController.pagar()}" onstart="PF('statusDialog').show()"
-					process="valorPanel @this" style="float:right;margin:20px" update="msgs"
+					process="valorPanel @this" style="float:right;margin:20px" update="msgs valorPanel"
 					oncomplete="PF('statusDialog').hide();PF('myschedule').update();" />
 			</p:dialog>
 
