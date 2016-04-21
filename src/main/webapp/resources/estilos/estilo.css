@@ -5,16 +5,16 @@ html,body{
   	font-size: 0.9em !important;
 }
 
-#myscheduler > .ui-state-highlight, .ui-widget-content .ui-state-highlight{
+.fc td.fc-today {
 	background: rgba(20, 164, 255, 0.13) !important;
 	color: black !important;
 }
 
-.ui-datepicker-today {
+[class*=ui-datepicker-today] > a {
 	background: #68ff00 !important;
-	-webkit-box-shadow: 0px 0px 7px #000 inset ;
-	-moz-box-shadow: 0px 0px 7px #000 inset ;
-	box-shadow: 0px 0px 7px #000 inset ;
+	-webkit-box-shadow: 0px 0px 7px #000 inset !important;
+	-moz-box-shadow: 0px 0px 7px #000 inset !important;
+	box-shadow: 0px 0px 7px #000 inset !important;
 }
 
 .ui-button.ui-state-default.btnDanger{
