@@ -61,7 +61,7 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 		try {
 			getManager().clear();
 			servicosVO = new JPQLBuilder()
-					.select("new com.snf.vo.ServicoDataValorVO(s.dataInicio ,SUM(s.valor))")
+					.select("new com.snf.vo.RelatorioServicoVO(s.dataInicio ,SUM(s.valor))")
 					.from(Servico.class, "s")
 					.where("(:dataInicial=null OR DATE(s.dataInicio) >= :dataInicial)", DataUtil.getDataHoraZerada(filtro.getDataInicial()))
 					.and("(:dataFinal=null OR DATE(s.dataInicio) <= :dataFinal)", DataUtil.getDataHoraFinalDia(filtro.getDataFinal()))
