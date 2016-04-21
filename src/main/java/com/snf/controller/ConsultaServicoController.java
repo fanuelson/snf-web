@@ -11,8 +11,8 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import com.snf.dataModel.ServicoLazyDataModel;
 import com.snf.enums.TipoUsuario;
+import com.snf.lazyModel.ServicoLazyDataModel;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.model.Usuario;

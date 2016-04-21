@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.snf.builder.JPQLBuilder;
-import com.snf.dataModel.PaginaDataModel;
 import com.snf.genericDao.GenericDAO;
+import com.snf.lazyModel.PaginaDataModel;
 import com.snf.model.Servico;
 import com.snf.util.DataUtil;
 import com.snf.vo.FiltroConsultaServicoVO;

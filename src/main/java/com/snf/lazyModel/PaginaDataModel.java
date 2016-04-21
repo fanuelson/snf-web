@@ -1,4 +1,4 @@
-package com.snf.dataModel;
+package com.snf.lazyModel;
 
 import java.util.List;
 

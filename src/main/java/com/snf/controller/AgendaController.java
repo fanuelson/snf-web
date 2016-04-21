@@ -2,7 +2,6 @@ package com.snf.controller;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -15,8 +14,6 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.ScheduleModel;
 
 import com.snf.builder.ServicoBuilder;
 import com.snf.model.Servico;
@@ -56,12 +53,6 @@ public class AgendaController implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		ScheduleModel agendaModel = new DefaultScheduleModel();
-		List<Servico> servicos = servicoService.getAll();
-		for (Servico servico : servicos) {
-			agendaModel.addEvent(servico);
-		}
-		agendaVM.setAgendaModel(agendaModel);
 		agendaVM.setFuncionarios(funcionarioService.getAll());
 		agendaVM.setNaoExisteCaixaAberto(!caixaService.existeCaixaAberto());
 	}

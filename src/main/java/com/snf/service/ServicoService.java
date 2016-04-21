@@ -9,9 +9,9 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 
 import com.snf.dao.ServicoDAO;
-import com.snf.dataModel.PaginaDataModel;
 import com.snf.enums.StatusServico;
 import com.snf.enums.TipoTransacao;
+import com.snf.lazyModel.PaginaDataModel;
 import com.snf.model.Caixa;
 import com.snf.model.Servico;
 import com.snf.model.Transacao;

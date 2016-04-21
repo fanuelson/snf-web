@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
 
-import com.snf.dataModel.PaginaDataModel;
+import com.snf.lazyModel.PaginaDataModel;
 
 public class JPQLBuilder implements Serializable {
 
