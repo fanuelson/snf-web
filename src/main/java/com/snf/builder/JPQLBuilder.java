@@ -45,7 +45,6 @@ public class JPQLBuilder implements Serializable {
 
 	public JPQLBuilder select(String alias) {
 		queryString.append(SELECT + alias);
-		entityAlias = alias;
 		return this;
 	}
 	
@@ -114,6 +113,7 @@ public class JPQLBuilder implements Serializable {
 		queryString.append(FROM);
 		queryString.append(classe.getSimpleName());
 		queryString.append(" " + alias + " ");
+		entityAlias = alias;
 		return this;
 	}
 	
