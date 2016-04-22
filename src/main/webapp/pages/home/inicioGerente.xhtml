@@ -60,7 +60,10 @@
 
 					<p:outputLabel value="#{msg['label.campo.inicio']}" for="dataInicio" />
 					<p:calendar required="true" id="dataInicio" value="#{agendaController.agendaVM.servicoSelected.dataInicio}"
-						pattern="dd/MM/yyyy HH:mm" />
+						pattern="dd/MM/yyyy HH:mm" >
+						<p:ajax event="dateSelect" listener="#{agendaController.atualizarDataFim}" update="dataFim"
+						onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" />
+					</p:calendar>
 
 					<p:outputLabel value="#{msg['label.campo.fim']}" for="dataFim" />
 					<p:calendar id="dataFim" value="#{agendaController.agendaVM.servicoSelected.dataFim}" pattern="dd/MM/yyyy HH:mm" />

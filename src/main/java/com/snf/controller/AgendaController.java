@@ -20,6 +20,7 @@ import com.snf.model.Servico;
 import com.snf.service.CaixaService;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
+import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
 import com.snf.vm.AgendaVM;
 
@@ -132,6 +133,12 @@ public class AgendaController implements Serializable {
 			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro(mensagem_erro);
 		}
+	}
+	
+	public void atualizarDataFim(SelectEvent event) {
+		Date data = (Date) event.getObject();
+		Date dataFim = DataUtil.somarMinutos(data, 30);
+		agendaVM.getServicoSelected().setDataFim(dataFim);
 	}
 
 	public ServicoService getServicoService() {
