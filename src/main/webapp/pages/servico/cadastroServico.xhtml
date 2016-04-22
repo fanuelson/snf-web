@@ -44,11 +44,14 @@
 
 					<p:outputLabel value="#{msg['label.campo.inicio']}" for="dataInicio" />
 					<p:calendar required="true" id="dataInicio" value="#{cadastroServicoController.cadastroServicoVM.servico.dataInicio}"
-						pattern="dd/MM/yyyy HH:mm:ss" />
+						pattern="dd/MM/yyyy HH:mm" >
+						<p:ajax event="dateSelect" listener="#{cadastroServicoController.atualizarDataFim}" update="dataFim"
+						onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" />
+					</p:calendar>
 
 					<p:outputLabel value="#{msg['label.campo.fim']}" for="dataFim" />
 					<p:calendar id="dataFim" value="#{cadastroServicoController.cadastroServicoVM.servico.dataFim}"
-						pattern="dd/MM/yyyy HH:mm:ss" />
+						pattern="dd/MM/yyyy HH:mm" />
 
 
 					<p:row>

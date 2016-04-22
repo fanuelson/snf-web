@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
+import org.primefaces.event.SelectEvent;
 
 import com.snf.enums.TipoUsuario;
 import com.snf.model.Funcionario;
@@ -19,6 +20,7 @@ import com.snf.model.Usuario;
 import com.snf.service.CaixaService;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
+import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
 import com.snf.vm.CadastroServicoVM;
 
@@ -73,6 +75,12 @@ public class CadastroServicoController implements Serializable {
 
 	private Servico salvarServico() {
 		return servicoService.salvarServicoPago(cadastroServicoVM.getServico());
+	}
+	
+	public void atualizarDataFim(SelectEvent event){
+		Date data = (Date) event.getObject();
+		Date dataFim = DataUtil.somarMinutos(data, 30);
+		cadastroServicoVM.getServico().setDataFim(dataFim);
 	}
 
 	private void limparCampos() {

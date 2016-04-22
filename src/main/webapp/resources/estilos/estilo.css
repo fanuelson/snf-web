@@ -11,6 +11,7 @@ html,body{
 }
 
 [class*=ui-datepicker-today] > a {
+	color: black !important;
 	background: #68ff00 !important;
 	-webkit-box-shadow: 0px 0px 7px #000 inset !important;
 	-moz-box-shadow: 0px 0px 7px #000 inset !important;

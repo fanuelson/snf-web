@@ -30,6 +30,18 @@ public class DataUtil {
 			return null;
 		return new DateTime(d).plusDays(dias).toDate();
 	}
+	
+	public static Date diminuirMinutos(Date d, int minutos) {
+		if(dataIsNull(d))
+			return null;
+		return new DateTime(d).minusMinutes(minutos).toDate();
+	}
+	
+	public static Date somarMinutos(Date d, int minutos) {
+		if(dataIsNull(d))
+			return null;
+		return new DateTime(d).plusMinutes(minutos).toDate();
+	}
 
 	public static DateTime getDateTimeHoraZerada() {
 		return new DateTime(new DateTime().getYear(), new DateTime().getMonthOfYear(), new DateTime().getDayOfMonth(),
