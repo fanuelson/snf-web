@@ -22,7 +22,7 @@ public class CustomUserDAO implements Serializable {
 	
 	public CustomUserDAO() {
 		if(springManager==null) {
-			springManager = new JPAUtil().createEntityManager();
+			springManager = JPAUtil.createEntityManager();
 		}
 	}
 	
