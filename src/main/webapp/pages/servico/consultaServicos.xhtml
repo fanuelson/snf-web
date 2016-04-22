@@ -17,12 +17,6 @@
 						value="#{consultaServicoController.consultaServicoVM.servicos}" emptyMessage="Nenhum serviço cadastrado"
 						widgetVar="servicosTable" id="servicosTable"
 						paginator="true" rows="10" rowsPerPageTemplate="5,10,15,20,30">
-						<c:facet name="header">
-							<p:outputPanel style="width:100%">
-								<h:outputLabel style="margin-left:50px" value="#{msg['label.procurar']}" />
-								<p:inputText id="globalFilter" onkeyup="PF('servicosTable').filter()" />
-							</p:outputPanel>
-						</c:facet>
 
 						<p:column style="width:10%" headerText="#{msg['label.header.id']}">
 							<h:outputText value="#{servico.idServico}" />
