@@ -182,9 +182,8 @@ public class Servico implements Serializable, ScheduleEvent {
 		return null;
 	}
 
-	@Override
 	public void setId(String id) {
-
+		//MÉTODO VAZIO USADO APENAS PARA IMPLEMENTAR SCHEDULE EVENT
 	}
 
 	@Override

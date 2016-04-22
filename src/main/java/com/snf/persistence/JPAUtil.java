@@ -23,7 +23,7 @@ public class JPAUtil implements Serializable {
 	
 	@Produces
 	@RequestScoped
-	public EntityManager createEntityManager() {
+	public static EntityManager createEntityManager() {
 		if(factory==null){
 			factory = Persistence.createEntityManagerFactory("salaoBeleza");
 		}
