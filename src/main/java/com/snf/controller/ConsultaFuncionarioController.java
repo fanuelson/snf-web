@@ -48,9 +48,9 @@ public class ConsultaFuncionarioController implements Serializable {
 	public void remover(Funcionario funcionario) {
 		try {
 			funcionarioService.remover(funcionario);
-			funcionarios.remove(funcionario);
 			if (!CollectionsUtils.isNullOrEmpty(filteredFuncionarios))
 				filteredFuncionarios.remove(funcionario);
+			init();
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.remover.registro");
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -68,6 +68,7 @@ public class ConsultaFuncionarioController implements Serializable {
 			Funcionario func = edicaoUsuarioVM.getFunc();
 			preencherTipoUsuario(func);
 			edicaoUsuarioVM.setFunc(funcionarioService.salvar(func));
+			init();
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.salvar.registro");
 		} catch (Exception e) {
 			log.error(e.toString());
