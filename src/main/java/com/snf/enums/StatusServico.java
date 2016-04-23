@@ -1,22 +1,33 @@
 package com.snf.enums;
 
 public enum StatusServico {
-	CANCELADO("servicoCancelado"),
-	AGENDADO("servicoAgendado"),
-	PAGO("servicoPago");
+	CANCELADO("servicoCanceladoSchedule","servicoCanceladoRow"),
+	AGENDADO("servicoAgendadoSchedule","servicoAgendadoRow"),
+	PAGO("servicoPagoSchedule","servicoPagoRow");
 	
-	private String estiloCss;
+	private String estiloCssSchedule;
+	private String estiloCssRow;
 	
-	private StatusServico(String estilo) {
-		estiloCss = estilo;
+	private StatusServico(String estiloCssSchedule, String estiloCssRow) {
+		this.estiloCssSchedule = estiloCssSchedule;
+		this.estiloCssRow = estiloCssRow;
+		
 	}
 
-	public String getEstiloCss() {
-		return estiloCss;
+	public String getEstiloCssSchedule() {
+		return estiloCssSchedule;
 	}
 
-	public void setEstiloCss(String estiloCss) {
-		this.estiloCss = estiloCss;
+	public void setEstiloCssSchedule(String estiloCss) {
+		this.estiloCssSchedule = estiloCss;
+	}
+
+	public String getEstiloCssRow() {
+		return estiloCssRow;
+	}
+
+	public void setEstiloCssRow(String estiloCssRow) {
+		this.estiloCssRow = estiloCssRow;
 	}
  
 }

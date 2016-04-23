@@ -40,12 +40,27 @@ button.ui-button.ui-state-default span, .btnDanger{
 	background: -webkit-linear-gradient(top, rgba(171, 0, 0, 0.83) 0%,#FF0000 100%) !important;
 }
 
-.servicoCancelado {
+.servicoCanceladoSchedule {
 	background: red !important;
 }
 
-.servicoPago {
+.servicoPagoSchedule {
 	background: green !important;
+}
+
+.servicoAgendadoSchedule {
+	
+}
+.servicoCanceladoRow {
+	background: #ffb7b8!important;
+}
+
+.servicoPagoRow {
+	background: #b9ffb3!important;
+}
+
+.servicoAgendadoRow {
+	background: #95d5fe!important;
 }
 
 .linkTransacao {

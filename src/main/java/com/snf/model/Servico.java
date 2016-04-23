@@ -213,9 +213,16 @@ public class Servico implements Serializable, ScheduleEvent {
 
 	@Override
 	public String getStyleClass() {
-		if (status != null)
-			return status.getEstiloCss();
-
+		if (status != null){
+			return status.getEstiloCssSchedule();
+		}
+		return null;
+	}
+	
+	public String getStyleClassRow() {
+		if(status!=null) {
+			return status.getEstiloCssRow();
+		}
 		return null;
 	}
 

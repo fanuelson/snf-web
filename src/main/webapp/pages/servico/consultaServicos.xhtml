@@ -13,9 +13,12 @@
 				<h:panelGrid style="padding:5px">
 					<p:outputLabel rendered="#{consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}"
 						value="#{msg['label.meus.servicos']}" style="font-size:20px" />
+					<div class="servicoPagoRow" style="width:15px;height:15px;display: inline-block;" /> PAGO <br />
+					<div class="servicoAgendadoRow" style="width:15px;height:15px;display: inline-block;" /> AGENDADO <br />
+					<div class="servicoCanceladoRow" style="width:15px;height:15px;display: inline-block;" /> CANCELADO <br />
 					<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="servico" lazy="true"
 						value="#{consultaServicoController.consultaServicoVM.servicos}" emptyMessage="Nenhum serviço cadastrado"
-						widgetVar="servicosTable" id="servicosTable"
+						widgetVar="servicosTable" id="servicosTable" rowStyleClass="#{servico.styleClassRow}"
 						paginator="true" rows="10" rowsPerPageTemplate="5,10,15,20,30">
 
 						<p:column style="width:10%" headerText="#{msg['label.header.id']}">
