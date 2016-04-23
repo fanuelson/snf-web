@@ -78,6 +78,7 @@ public class RelatorioServicoController implements Serializable {
 			calcularValorMaxEixoY();
 		} else {
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
+			servicos = new ArrayList<>();
 		}
 		createAnimatedModels();
 
