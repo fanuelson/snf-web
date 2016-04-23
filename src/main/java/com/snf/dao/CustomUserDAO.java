@@ -18,22 +18,15 @@ public class CustomUserDAO implements Serializable {
 	
 	static final Logger log = Logger.getLogger(CustomUserDAO.class);
 	
-	private static EntityManager springManager;
-	
-	public CustomUserDAO() {
-		if(springManager==null) {
-			springManager = JPAUtil.createEntityManager();
-		}
-	}
-	
 	public Usuario getUsuarioByLogin(String login){
 		try {
+			EntityManager em = JPAUtil.createEntityManager();
 			return new JPQLBuilder()
 					.select("u")
 					.from(Usuario.class, "u")
 					.innerJoinFetch("u.roles", "r")
 					.where("u.login = :log", login)
-					.contruir(springManager, Usuario.class)
+					.contruir(em, Usuario.class)
 					.getSingleResult();
 			
 		} catch (NoResultException e) {
@@ -46,12 +39,13 @@ public class CustomUserDAO implements Serializable {
 	}
 
 	public Usuario atualizarUsuario(Usuario usuario) {
+		EntityManager em = JPAUtil.createEntityManager();
     	try{
-    		springManager.getTransaction().begin();
-            usuario = springManager.merge(usuario);
-            springManager.getTransaction().commit();
+    		em.getTransaction().begin();
+            usuario = em.merge(usuario);
+            em.getTransaction().commit();
     	}catch(Exception e){
-    		springManager.getTransaction().rollback();
+    		em.getTransaction().rollback();
     		log.error(e.toString());
     		throw e;    		
     	}
