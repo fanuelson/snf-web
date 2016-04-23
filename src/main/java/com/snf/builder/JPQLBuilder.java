@@ -12,6 +12,8 @@ import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
 
+import com.snf.adapter.SortAdapter;
+import com.snf.enums.Order;
 import com.snf.lazyModel.PaginaDataModel;
 
 public class JPQLBuilder implements Serializable {
@@ -69,12 +71,14 @@ public class JPQLBuilder implements Serializable {
 	}
 	
 	public <T> PaginaDataModel<T> contruirPaginado(EntityManager em, PaginaDataModel<T> paginaRetorno, Class<T> registrosType) {
-		if(paginaRetorno.getSortOrder().equals("ASC") && paginaRetorno.getSortField()!=null){
-			this.orderBy(this.entityAlias+"."+paginaRetorno.getSortField());
-			this.asc();
-		}else if(paginaRetorno.getSortOrder().equals("DESC") && paginaRetorno.getSortField()!=null){
-			this.orderBy(this.entityAlias+"."+paginaRetorno.getSortField());
-			this.desc();
+		if(paginaRetorno.getSortAdapter().isFieldPreenchido()){
+			SortAdapter sortAdapter = paginaRetorno.getSortAdapter();
+			this.orderBy(this.entityAlias+"."+sortAdapter.getSortField());
+			if(sortAdapter.getSortOrder().equals(Order.ASC)) {
+				this.asc();
+			}else if(sortAdapter.getSortOrder().equals(Order.DESC)) {
+				this.desc();
+			}
 		}
 		TypedQuery<T> query = em.createQuery(this.contruir(), registrosType);
 		colocarValorDosParametros(query);

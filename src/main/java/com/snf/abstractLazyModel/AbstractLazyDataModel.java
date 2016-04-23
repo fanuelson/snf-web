@@ -7,6 +7,7 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.snf.adapter.SortAdapter;
 import com.snf.lazyModel.PaginaDataModel;
 
 public abstract class AbstractLazyDataModel<T> extends LazyDataModel<T> implements Serializable {
@@ -17,8 +18,7 @@ public abstract class AbstractLazyDataModel<T> extends LazyDataModel<T> implemen
 		PaginaDataModel<T> paginaServicos = new PaginaDataModel<>();
 		paginaServicos.setFirstResult(first);
 		paginaServicos.setPageSize(pageSize);
-		paginaServicos.setSortField(sortField);
-		paginaServicos.setSortOrder(sortOrder);
+		paginaServicos.setSortAdapter(new SortAdapter(sortOrder, sortField));
 		paginaServicos = buscarPaginado(paginaServicos);
 		setRowCount(paginaServicos.getTotalRegistros());
 		return paginaServicos.getRegistrosPagina();

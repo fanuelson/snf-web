@@ -2,7 +2,7 @@ package com.snf.lazyModel;
 
 import java.util.List;
 
-import org.primefaces.model.SortOrder;
+import com.snf.adapter.SortAdapter;
 
 public class PaginaDataModel<T> {
 
@@ -10,8 +10,7 @@ public class PaginaDataModel<T> {
 	private int totalRegistros;
 	private int firstResult;
 	private int pageSize;
-	private String sortField;
-	private String sortOrder;
+	private SortAdapter sortAdapter;
 
 	public List<T> getRegistrosPagina() {
 		return registrosPagina;
@@ -45,32 +44,12 @@ public class PaginaDataModel<T> {
 		this.pageSize = pageSize;
 	}
 
-	public String getSortField() {
-		return sortField;
+	public SortAdapter getSortAdapter() {
+		return sortAdapter;
 	}
 
-	public void setSortField(String sortField) {
-		this.sortField = sortField;
+	public void setSortAdapter(SortAdapter sortAdapter) {
+		this.sortAdapter = sortAdapter;
 	}
-
-	public String getSortOrder() {
-		return sortOrder;
-	}
-
-	public void setSortOrder(SortOrder sortOrder) {
-		switch (sortOrder) {
-		case ASCENDING:
-			this.sortOrder = "ASC" ;
-			break;
-		case DESCENDING:
-			this.sortOrder = "DESC" ;
-			break;
-		default:
-			this.sortOrder = "";
-			break;
-		}
-	}
-	
-	
 
 }
