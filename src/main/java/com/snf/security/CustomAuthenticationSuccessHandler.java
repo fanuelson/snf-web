@@ -19,8 +19,8 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 	static final Logger log = Logger.getLogger(CustomAuthenticationSuccessHandler.class);
 
-	private static final String PATH_PAGINA_INICIAL_CAIXA = "/pages/home/inicio.xhtml";
-	private static final String PATH_PAGINA_INICIAL_GERENTE = "/pages/home/inicioGerente.xhtml";
+	private static final String PATH_PAGINA_INICIAL_CAIXA = "/pages/home/agenda.xhtml";
+	private static final String PATH_PAGINA_INICIAL_GERENTE = "/pages/home/agenda.xhtml";
 	private static final String PATH_PAGINA_LOGIN = "/login.xhtml";
 
 	@Override
