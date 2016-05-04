@@ -87,7 +87,9 @@
 								oncomplete="PF('statusDialog').hide();PF('servicoDialog').hide();PF('myschedule').update()"
 								style="float:right;margin:10px;box-shadow:none !important;background: red !important;"
 								value="#{msg['label.cancelar.servico']}" icon="ui-icon-circle-close" iconPos="r" styleClass="btnDanger"
-								action="#{agendaController.cancelarServico()}" />
+								action="#{agendaController.cancelarServico()}" >
+								<p:confirm />	
+							</p:commandButton>
 								
 							<p:commandButton value="Pagamento" process="@this" onstart="PF('statusDialog').show()"
 								rendered="#{agendaController.agendaVM.servicoSelected.podePagar}"
@@ -116,6 +118,10 @@
 					oncomplete="PF('statusDialog').hide();PF('myschedule').update();" />
 			</p:dialog>
 
+
+			<ui:include src="/pages/dialogs/confirmaExclusaoDialog.xhtml">
+				<ui:param name="mensagem" value="#{msg['mensagem.cancelamento.servico']}" />
+			</ui:include>
 
 		</h:form>
 	</ui:define>
