@@ -1,8 +1,10 @@
 package com.snf.vm;
 
 import java.io.Serializable;
-import java.util.List;
 
+import javax.inject.Inject;
+
+import com.snf.abstractLazyModel.AbstractLazyDataModel;
 import com.snf.model.Caixa;
 
 public class AberturaCaixaVM implements Serializable {
@@ -11,7 +13,8 @@ public class AberturaCaixaVM implements Serializable {
 	
 	private Caixa caixaAberto;
 	
-	private List<Caixa> caixas;
+	@Inject
+	private AbstractLazyDataModel<Caixa> caixas;
 	
 	private boolean existeCaixaAberto;
 	
@@ -31,11 +34,11 @@ public class AberturaCaixaVM implements Serializable {
 		this.existeCaixaAberto = existeCaixaAberto;
 	}
 
-	public List<Caixa> getCaixas() {
+	public AbstractLazyDataModel<Caixa> getCaixas() {
 		return caixas;
 	}
 
-	public void setCaixas(List<Caixa> caixas) {
+	public void setCaixas(AbstractLazyDataModel<Caixa> caixas) {
 		this.caixas = caixas;
 	}
 	

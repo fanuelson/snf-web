@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 
 import com.snf.dao.CaixaDAO;
+import com.snf.lazyModel.PaginaDataModel;
 import com.snf.model.Caixa;
 
 public class CaixaService implements Serializable {
@@ -49,6 +50,10 @@ public class CaixaService implements Serializable {
 	
 	public List<Caixa> getAllOrderByDataAbertura() {
 		return caixaDAO.getAllOrderByDataAbertura();
+	}
+	
+	public PaginaDataModel<Caixa> getAllOrderByDataAbertura(PaginaDataModel<Caixa> paginaCaixas){
+		return caixaDAO.getAllOrderByDataAbertura(paginaCaixas);
 	}
 	
 	public List<Caixa> getAllOrderByDataAberturaFetchTransacoes() {

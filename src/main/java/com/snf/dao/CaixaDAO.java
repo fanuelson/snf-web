@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.snf.builder.JPQLBuilder;
 import com.snf.genericDao.GenericDAO;
+import com.snf.lazyModel.PaginaDataModel;
 import com.snf.model.Caixa;
 
 public class CaixaDAO extends GenericDAO<Caixa, Long> {
@@ -28,6 +29,24 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 		}
 
 		return caixas;
+	}
+	
+	public PaginaDataModel<Caixa> getAllOrderByDataAbertura(PaginaDataModel<Caixa> paginaCaixas) {
+		
+		try {
+			getManager().clear();
+			paginaCaixas = new JPQLBuilder()
+					.select("c")
+					.from(Caixa.class, "c")
+					.orderBy("c.dataAbertura")
+					.desc()
+					.contruirPaginado(getManager(), paginaCaixas, Caixa.class);
+			
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+		
+		return paginaCaixas;
 	}
 	
 	public List<Caixa> getAllOrderByDataAberturaFetchTransacoes() {

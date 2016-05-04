@@ -11,7 +11,7 @@
 				<div class="ui-grid ui-grid-responsive">
 					<div class="ui-grid-col-8">
 						<h3 style="padding: 20px 0 0 50px;">#{msg['label.historico.caixas']}</h3>
-						<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="caixa"
+						<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="caixa" lazy="true"
 							value="#{gerenciaCaixaController.aberturaCaixaVM.caixas}" emptyMessage="Nenhum caixa cadastrado"
 							widgetVar="servicosTable" id="caixaTable" paginator="true" rows="10" rowExpandMode="false"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"

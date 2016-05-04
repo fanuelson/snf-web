@@ -30,7 +30,6 @@ public class GerenciaCaixaController implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		aberturaCaixaVM.setCaixas(caixaService.getAllOrderByDataAbertura());
 		if(caixaService.getCaixaAberto()!=null){
 			aberturaCaixaVM.setCaixaAberto(caixaService.getCaixaAberto());
 			aberturaCaixaVM.setExisteCaixaAberto(true);
