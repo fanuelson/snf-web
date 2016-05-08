@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
 
@@ -16,7 +17,7 @@ public abstract class GenericDAO<T , ID> implements Serializable {
 	
 	protected static final Logger log = Logger.getLogger(GenericDAO.class);
 	
-	@Inject
+	@PersistenceContext
 	private EntityManager manager;
 	
     public T getById(ID id) {
