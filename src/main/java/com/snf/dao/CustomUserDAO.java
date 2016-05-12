@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 
 import org.apache.log4j.Logger;
 
 import com.snf.builder.JPQLBuilder;
 import com.snf.model.Usuario;
-import com.snf.persistence.JPAUtil;
 
 public class CustomUserDAO implements Serializable {
 
@@ -18,9 +18,11 @@ public class CustomUserDAO implements Serializable {
 	
 	static final Logger log = Logger.getLogger(CustomUserDAO.class);
 	
+	@PersistenceContext
+	private EntityManager em; 
+	
 	public Usuario getUsuarioByLogin(String login){
 		try {
-			EntityManager em = JPAUtil.createEntityManager();
 			return new JPQLBuilder()
 					.select("u")
 					.from(Usuario.class, "u")
@@ -39,7 +41,6 @@ public class CustomUserDAO implements Serializable {
 	}
 
 	public Usuario atualizarUsuario(Usuario usuario) {
-		EntityManager em = JPAUtil.createEntityManager();
     	try{
     		em.getTransaction().begin();
             usuario = em.merge(usuario);

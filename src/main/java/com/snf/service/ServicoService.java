@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -18,6 +19,7 @@ import com.snf.model.Transacao;
 import com.snf.vo.FiltroConsultaServicoVO;
 import com.snf.vo.RelatorioServicoVO;
 
+@Stateless
 public class ServicoService implements Serializable {
 
 	private static final long serialVersionUID = -3854194992056453807L;

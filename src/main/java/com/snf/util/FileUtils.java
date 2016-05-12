@@ -7,8 +7,6 @@ import java.io.Serializable;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
 
-import com.google.common.io.Files;
-
 public class FileUtils implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,7 +31,7 @@ public class FileUtils implements Serializable {
 			return null;
 		}
 		
-		return Files.getFileExtension(fileName);
+		return FilenameUtils.getExtension(fileName);
 	}
 	
 	public static boolean isNullOrDontExist(File file) {

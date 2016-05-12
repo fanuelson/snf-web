@@ -24,7 +24,6 @@
 		<sec:intercept-url pattern="/login.xhtml" access="permitAll" />
 		<sec:intercept-url pattern="/publico/**" access="permitAll" />
 		<sec:intercept-url pattern="/javax.faces.resource/**" access="permitAll" />
-		<sec:intercept-url pattern="/pages/home/inicioGerente.xhtml" access="hasRole('GERENTE')" />
 		<sec:intercept-url pattern="/pages/funcionario/cadastroFuncionario.xhtml" access="hasRole('GERENTE')" />
 		<sec:intercept-url pattern="/pages/servico/cadastroServico.xhtml" access="hasAnyRole('GERENTE','CAIXA','FUNCIONARIO')" />
 		<sec:intercept-url pattern="/pages/funcionario/consultaFuncionarios.xhtml" access="hasRole('GERENTE')" />
@@ -33,7 +32,7 @@
 		<sec:intercept-url pattern="/pages/transacao/cadastroTransacao.xhtml" access="hasRole('GERENTE')" />
 		<sec:intercept-url pattern="/pages/transacao/consultaTransacoes.xhtml" access="hasRole('GERENTE')" />
 		<sec:intercept-url pattern="/pages/caixa/gerenciarCaixa.xhtml" access="hasRole('GERENTE')" />
-		<sec:intercept-url pattern="/pages/home/agenda.xhtml" access="isAuthenticated()" />
+		<sec:intercept-url pattern="/pages/home/agenda.xhtml" access="permitAll" />
 		
 
 		<sec:intercept-url pattern="/pages/dialogs/**" access="isAuthenticated()" />
@@ -61,6 +60,10 @@
 		<beans:property name="defaultTargetUrl" value="/pages/home/inicioGerente.xhtml" />
 	</beans:bean>
 	
+	<beans:bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> 
+	       <beans:property name="persistenceXmlLocation" value="classpath*:META-INF/persistence.xml"/> 
+	       <!-- other definitions -->
+	</beans:bean>
 	<!-- 	AUTHENTICATION CONFIG -->
 	
 	<sec:authentication-manager alias="authenticationManager"  >

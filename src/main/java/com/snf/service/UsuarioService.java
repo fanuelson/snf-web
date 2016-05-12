@@ -3,11 +3,14 @@ package com.snf.service;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ejb.Stateless;
+
 import org.apache.log4j.Logger;
 
 import com.snf.dao.UsuarioDAO;
 import com.snf.model.Usuario;
 
+@Stateless
 public class UsuarioService implements Serializable {
 
 	private static final long serialVersionUID = -6071998648651080305L;

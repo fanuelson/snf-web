@@ -3,11 +3,13 @@ package com.snf.service;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.snf.dao.TransacaoDAO;
 import com.snf.model.Transacao;
 
+@Stateless
 public class TransacaoService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
