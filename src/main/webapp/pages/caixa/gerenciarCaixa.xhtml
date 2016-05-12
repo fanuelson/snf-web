@@ -23,25 +23,25 @@
 									<p:dataExporter type="pdf" target="caixaTable" fileName="Relatório de Caixa" />
 								</h:commandLink>
 							</c:facet>
-							<p:column width="10%" headerText="#{msg['label.header.id']}" sortBy="#{caixa.id}">
+							<p:column width="10%" headerText="#{msg['label.header.id']}" >
 								<h:outputText value="#{caixa.id}" />
 							</p:column>
-							<p:column width="20%" headerText="#{msg['label.header.data.abertura']}" sortBy="#{caixa.dataAbertura}">
+							<p:column width="20%" headerText="#{msg['label.header.data.abertura']}" >
 								<h:outputText value="#{caixa.dataAberturaFormatada}">
 									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 								</h:outputText>
 							</p:column>
-							<p:column width="20%" headerText="#{msg['label.header.data.fechamento']}" sortBy="#{caixa.dataFechamento}">
+							<p:column width="20%" headerText="#{msg['label.header.data.fechamento']}" >
 								<h:outputText value="#{caixa.dataFechamentoFormatado}">
 									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
 								</h:outputText>
 							</p:column>
-							<p:column width="15%" headerText="#{msg['label.header.valor.inicial']}" sortBy="#{caixa.valorInicial}">
+							<p:column width="15%" headerText="#{msg['label.header.valor.inicial']}" >
 								<h:outputText value="#{caixa.valorInicial}">
 									<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 								</h:outputText>
 							</p:column>
-							<p:column width="15%" headerText="#{msg['label.header.valor.final']}" sortBy="#{caixa.valorAtual}">
+							<p:column width="15%" headerText="#{msg['label.header.valor.final']}" >
 								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual}">
 									<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 								</h:outputText>

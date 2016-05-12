@@ -12,8 +12,6 @@ import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
 
-import com.snf.adapter.SortAdapter;
-import com.snf.enums.Order;
 import com.snf.lazyModel.PaginaDataModel;
 
 public class JPQLBuilder implements Serializable {
@@ -71,15 +69,6 @@ public class JPQLBuilder implements Serializable {
 	}
 	
 	public <T> PaginaDataModel<T> contruirPaginado(EntityManager em, PaginaDataModel<T> paginaRetorno, Class<T> registrosType) {
-		if(paginaRetorno.getSortAdapter().isFieldPreenchido()){
-			SortAdapter sortAdapter = paginaRetorno.getSortAdapter();
-			this.orderBy(this.entityAlias+"."+sortAdapter.getSortField());
-			if(sortAdapter.getSortOrder().equals(Order.ASC)) {
-				this.asc();
-			}else if(sortAdapter.getSortOrder().equals(Order.DESC)) {
-				this.desc();
-			}
-		}
 		TypedQuery<T> query = em.createQuery(this.contruir(), registrosType);
 		colocarValorDosParametros(query);
 		query.setFirstResult(paginaRetorno.getFirstResult());
@@ -97,14 +86,32 @@ public class JPQLBuilder implements Serializable {
 	
 	public Integer getTotalRegistros(EntityManager em) {
 		String queryString = this.contruir();
-		String queryCount = queryString.replaceFirst(" "+entityAlias+" ", getCountAlias());
+		boolean contemDistinct = queryString.contains("DISTINCT");
+		queryString = removerFetchs(queryString);
+		queryString = removerFirstDistinct(queryString);
+		String queryCount = queryString.replaceFirst(" "+entityAlias+" ", getCountAlias(contemDistinct));
 		TypedQuery<Long> query = em.createQuery(queryCount, Long.class);
 		colocarValorDosParametros(query);
 		return query.getSingleResult().intValue();
 	}
 	
-	private String getCountAlias(){
-		return String.format(" count(%s) ", entityAlias);
+	private String getCountAlias(boolean contemDistinct){
+		if(contemDistinct){
+			return String.format(" count(DISTINCT %s) ", entityAlias);
+		}else {
+			return String.format(" count(%s) ", entityAlias);
+			
+		}
+	}
+	
+	public String removerFetchs(String query) {
+		query = query.replaceAll("FETCH", "");
+		return query;
+	}
+	
+	public String removerFirstDistinct(String query) {
+		query = query.replaceFirst("DISTINCT", "");
+		return query;
 	}
 
 	private void colocarValorDosParametros(Query query) {
