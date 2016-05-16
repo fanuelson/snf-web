@@ -236,4 +236,12 @@ public class Servico implements Serializable, ScheduleEvent {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "Servico [idServico=" + idServico + ", nome=" + nome + ", descricao=" + descricao + ", funcionario="
+				+ funcionario + ", valor=" + valor + ", nomeCliente=" + nomeCliente + ", dataInicio=" + dataInicio
+				+ ", dataFim=" + dataFim + ", status=" + status + "]";
+	}
+
+	
 }
