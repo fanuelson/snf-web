@@ -1,5 +1,7 @@
 package com.snf.service;
 
+import java.io.Serializable;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +13,9 @@ import com.snf.dao.CustomUserDAO;
 import com.snf.model.Usuario;
 
 @Service
-public class CustomUserService implements UserDetailsService {
+public class CustomUserService implements UserDetailsService, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	static final Logger log = Logger.getLogger(CustomUserService.class);
 
