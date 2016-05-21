@@ -334,6 +334,13 @@
 		<version>3.0.5.Final</version>
 		<scope>provided</scope>
 	</dependency>
+	<!-- http://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl -->
+	<dependency>
+	    <groupId>org.codehaus.jackson</groupId>
+	    <artifactId>jackson-mapper-asl</artifactId>
+	    <version>1.9.12</version>
+	</dependency>
+	
 
 
 	</dependencies>

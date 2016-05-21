@@ -14,6 +14,7 @@ import com.snf.library.Encripta;
 import com.snf.model.Funcionario;
 import com.snf.model.Role;
 import com.snf.model.TipoUsuario;
+import com.snf.rest.RestClient;
 import com.snf.service.FuncionarioService;
 import com.snf.service.TipoUsuarioService;
 import com.snf.util.MessagesUtils;
@@ -43,7 +44,8 @@ public class CadastroFuncionarioController implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		tiposUsuario = tipoUsuarioService.getAll();
+		//tiposUsuario = tipoUsuarioService.getAll();
+		tiposUsuario = RestClient.httpGetJsonCollection("/tiposUsuario", TipoUsuario.class);
 	}
 	
 	public void salvar(){
