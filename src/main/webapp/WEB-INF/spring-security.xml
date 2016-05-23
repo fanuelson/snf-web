@@ -24,7 +24,7 @@
 		<sec:intercept-url pattern="/login.xhtml" access="permitAll" />
 		<sec:intercept-url pattern="/publico/**" access="permitAll" />
 		<sec:intercept-url pattern="/javax.faces.resource/**" access="permitAll" />
-		<sec:intercept-url pattern="/pages/funcionario/cadastroFuncionario.xhtml" access="hasRole('GERENTE')" />
+		<sec:intercept-url pattern="/pages/funcionario/cadastroFuncionario.xhtml" access="permitAll" />
 		<sec:intercept-url pattern="/pages/servico/cadastroServico.xhtml" access="hasAnyRole('GERENTE','CAIXA','FUNCIONARIO')" />
 		<sec:intercept-url pattern="/pages/funcionario/consultaFuncionarios.xhtml" access="hasRole('GERENTE')" />
 		<sec:intercept-url pattern="/pages/servico/consultaServicos.xhtml" access="hasAnyRole('GERENTE','FUNCIONARIO')" />
