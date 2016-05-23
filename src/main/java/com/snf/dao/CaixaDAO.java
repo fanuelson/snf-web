@@ -69,6 +69,24 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 		return caixas;
 	}
 	
+	public PaginaDataModel<Caixa> getAllOrderByDataAberturaFetchTransacoes(PaginaDataModel<Caixa> paginaCaixas) {
+
+		try {
+			getManager().clear();
+			paginaCaixas = new JPQLBuilder()
+					.select("DISTINCT c")
+					.from(Caixa.class, "c")
+					.leftJoinFetch("c.transacoes", "t")
+					.orderBy("c.dataAbertura")
+					.desc()
+					.contruirPaginado(getManager(), paginaCaixas, Caixa.class);
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+
+		return paginaCaixas;
+	}
+	
 	public Caixa getCaixaAberto() {
 		Caixa caixa = null;
 
@@ -87,6 +105,21 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 		}
 
 		return caixa;
+	}
+	
+	public Double getSomaTotal(){
+		Double somaTotal = 0.0;
+		try{
+			somaTotal = new JPQLBuilder()
+					.select("SUM(c.valorAtual - c.valorInicial)")
+					.from(Caixa.class,"c")
+					.contruir(getManager(), Double.class)
+					.getSingleResult();
+		} catch (Exception e) {
+			log.error(e.toString());
+			return null;
+		}
+		return somaTotal;
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.snf.controller;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -14,7 +13,6 @@ import org.primefaces.event.SelectEvent;
 import com.snf.model.Caixa;
 import com.snf.model.Transacao;
 import com.snf.service.CaixaService;
-import com.snf.util.CollectionsUtils;
 import com.snf.vm.ConsultaTransacaoVM;
 
 @Named
@@ -33,11 +31,7 @@ public class ConsultaTransacaoController implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		List<Caixa> caixas = caixaService.getAllOrderByDataAberturaFetchTransacoes();
-		consultaTransacaoVM.setCaixas(caixas);
-		if (!CollectionsUtils.isNullOrEmpty(caixas)) {
-			consultaTransacaoVM.setCaixaSelecionado(caixas.get(0));
-		}
+		consultaTransacaoVM.setValorTotalCaixas(caixaService.getSomaTotal());
 	}
 
 	public void selecionarCaixa(SelectEvent event) {
@@ -48,14 +42,6 @@ public class ConsultaTransacaoController implements Serializable {
 	public void selecionarTransacao(SelectEvent event) {
 		Transacao transacaoSelecionada = (Transacao) event.getObject();
 		consultaTransacaoVM.setTransacaoSelecionada(transacaoSelecionada);
-	}
-
-	public Double getValorTotalCaixas() {
-		Double valorTotal = 0.0;
-		for (Caixa caixa : consultaTransacaoVM.getCaixas()) {
-			valorTotal += (caixa.getValorAtual() - caixa.getValorInicial());
-		}
-		return valorTotal;
 	}
 
 	public Double getValorTotalTransacoes() {

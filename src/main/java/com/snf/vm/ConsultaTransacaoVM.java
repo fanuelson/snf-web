@@ -1,12 +1,11 @@
 package com.snf.vm;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.inject.Inject;
 
+import com.snf.abstractLazyModel.AbstractLazyDataModel;
 import com.snf.model.Caixa;
 import com.snf.model.Transacao;
 
@@ -18,9 +17,10 @@ public class ConsultaTransacaoVM implements Serializable {
 
 	private Date dataFim;
 
-	private List<Caixa> caixas = new ArrayList<>();
-
-	private List<Caixa> caixasFiltered = new ArrayList<>();
+	private Double valorTotalCaixas = 0.0;
+	
+	@Inject
+	private AbstractLazyDataModel<Caixa> caixas2;
 
 	@Inject
 	private Caixa caixaSelecionado;
@@ -43,28 +43,12 @@ public class ConsultaTransacaoVM implements Serializable {
 		this.dataFim = dataFim;
 	}
 
-	public List<Caixa> getCaixas() {
-		return caixas;
-	}
-
-	public void setCaixas(List<Caixa> caixas) {
-		this.caixas = caixas;
-	}
-
 	public Caixa getCaixaSelecionado() {
 		return caixaSelecionado;
 	}
 
 	public void setCaixaSelecionado(Caixa caixaSelecionado) {
 		this.caixaSelecionado = caixaSelecionado;
-	}
-
-	public List<Caixa> getCaixasFiltered() {
-		return caixasFiltered;
-	}
-
-	public void setCaixasFiltered(List<Caixa> caixasFiltered) {
-		this.caixasFiltered = caixasFiltered;
 	}
 
 	public Transacao getTransacaoSelecionada() {
@@ -75,4 +59,20 @@ public class ConsultaTransacaoVM implements Serializable {
 		this.transacaoSelecionada = transacaoSelecionada;
 	}
 
+	public AbstractLazyDataModel<Caixa> getCaixas2() {
+		return caixas2;
+	}
+
+	public void setCaixas2(AbstractLazyDataModel<Caixa> caixas2) {
+		this.caixas2 = caixas2;
+	}
+
+	public Double getValorTotalCaixas() {
+		return valorTotalCaixas;
+	}
+
+	public void setValorTotalCaixas(Double valorTotalCaixas) {
+		this.valorTotalCaixas = valorTotalCaixas;
+	}
+	
 }
