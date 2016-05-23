@@ -78,6 +78,31 @@ public class DataUtil {
 		return new DateTime(data).toString(formato);
 	}
 	
+	public static boolean isDentroDoPeriodoAberto(Date data, Date dataInicio, Date dataFim) {
+		if(dataIsNull(data)
+				|| dataIsNull(dataInicio)
+				|| dataIsNull(dataFim)){
+			return false;
+		}
+		DateTime dataDT = new DateTime(data);
+		DateTime dataInicioDT = new DateTime(dataInicio);
+		DateTime dataFimDT = new DateTime(dataFim);
+		return dataDT.isAfter(dataInicioDT) && dataDT.isBefore(dataFimDT);
+	}
+	
+	public static boolean isDentroDoPeriodoFechado(Date data, Date dataInicio, Date dataFim) {
+		if(dataIsNull(data)
+				|| dataIsNull(dataInicio)
+				|| dataIsNull(dataFim)){
+			return false;
+		}
+		DateTime dataDT = new DateTime(data);
+		DateTime dataInicioDT = new DateTime(dataInicio);
+		DateTime dataFimDT = new DateTime(dataFim);
+		return (dataDT.isEqual(dataInicioDT) || dataDT.isAfter(dataInicioDT)) 
+				&& (dataDT.isEqual(dataFimDT) || dataDT.isBefore(dataFimDT));
+	}
+	
 	private static boolean dataIsNull(Date data) {
 		return data==null;
 	}
