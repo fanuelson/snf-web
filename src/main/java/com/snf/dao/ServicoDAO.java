@@ -3,6 +3,8 @@ package com.snf.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.snf.builder.JPQLBuilder;
 import com.snf.genericDao.GenericDAO;
 import com.snf.lazyModel.PaginaDataModel;
@@ -15,6 +17,8 @@ import com.snf.vo.RelatorioServicoVO;
 public class ServicoDAO extends GenericDAO<Servico, Long> {
 
 	private static final long serialVersionUID = 8644808566924847383L;
+	
+	private static final Logger log = Logger.getLogger(ServicoDAO.class);
 
 	public List<Servico> getServicosByPeriodoAndFuncionario(FiltroConsultaServicoVO filtro) {
 		List<Servico> servicos = null;

@@ -14,7 +14,7 @@ public abstract class GenericDAO<T , ID> implements Serializable {
 
 	private static final long serialVersionUID = 3836419209780168990L;
 	
-	protected static final Logger log = Logger.getLogger(GenericDAO.class);
+	private static final Logger log = Logger.getLogger(GenericDAO.class);
 	
 	@Inject
 	private EntityManager manager;

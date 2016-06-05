@@ -2,6 +2,8 @@ package com.snf.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.snf.builder.JPQLBuilder;
 import com.snf.genericDao.GenericDAO;
 import com.snf.lazyModel.PaginaDataModel;
@@ -10,6 +12,8 @@ import com.snf.model.Caixa;
 public class CaixaDAO extends GenericDAO<Caixa, Long> {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger log = Logger.getLogger(CaixaDAO.class);
 
 	public List<Caixa> getAllOrderByDataAbertura() {
 		List<Caixa> caixas = null;
@@ -25,7 +29,7 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 					.getResultList();
 
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 
 		return caixas;
@@ -43,7 +47,7 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 					.contruirPaginado(getManager(), paginaCaixas, Caixa.class);
 			
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 		
 		return paginaCaixas;
@@ -63,7 +67,7 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 					.contruir(getManager(), Caixa.class)
 					.getResultList();
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 
 		return caixas;
@@ -81,7 +85,7 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 					.desc()
 					.contruirPaginado(getManager(), paginaCaixas, Caixa.class);
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 
 		return paginaCaixas;
@@ -100,7 +104,7 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 					.getSingleResult();
 
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 			return null;
 		}
 
@@ -116,7 +120,7 @@ public class CaixaDAO extends GenericDAO<Caixa, Long> {
 					.contruir(getManager(), Double.class)
 					.getSingleResult();
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 			return null;
 		}
 		return somaTotal;

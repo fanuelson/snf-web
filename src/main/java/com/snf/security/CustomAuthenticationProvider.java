@@ -58,10 +58,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			}
 			
 		}catch(NoResultException e){
-			log.error(e.toString());
+			log.error(e);
 			throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.nenhum.registro.encontrado"));
 		}catch(PersistenceException persistenceException){
-			log.error(persistenceException.toString());
+			log.error(persistenceException);
 			throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.conexao.login"));
 		}
 		
