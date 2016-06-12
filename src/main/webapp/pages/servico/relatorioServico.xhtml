@@ -1,0 +1,16 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
+	<ui:define name="corpoLayout">
+
+		<p:growl id="msgs" autoUpdate="true" showDetail="false" />
+		<p:panel header="#{msg['label.relatorio.servicos']}" style="width:80%;margin:10px auto 10px auto">
+			<ui:include src="filtroRelatorioServico.xhtml" />
+			<hr width="50%" />
+			<br />
+			<p:chart id="grafico" type="line" model="#{relatorioServicoController.animatedModel1}"
+				style="margin:auto;margin-top:20px;width:80%" responsive="true" />
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

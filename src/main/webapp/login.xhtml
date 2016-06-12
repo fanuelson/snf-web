@@ -3,38 +3,33 @@
 	template="/template/layout.xhtml">
 	<ui:define name="corpoLayout">
 
-		<h:form>
-			<p:panel style="margin:auto;width:35%;margin-top:40px">
-				<h:panelGrid id="cadastroMesaPanel" columns="1" style="font-size:16px;width:100%;text-align:center;margin:auto;">
+		<form action="#{request.contextPath}/j_spring_security_check" method="post">
+			<p:panel style="margin:auto;width:300px;margin-top:20px;box-shadow: 10px 10px 5px #888888;">
+				<h:panelGrid id="cadastroMesaPanel" columns="1" style="font-size:14px;text-align:center;margin:auto;">
+					<h:form prependId="false">
+						<h3 style="text-align: left; margin-bottom: 2px">Login</h3>
+						<hr />
+						<h:panelGrid style="margin: auto;" columns="2">
+							<p:outputLabel style="float:left" for="j_username" value="#{msg['label.login']}" />
+							<p:inputText style="float:right;padding:0px;" required="true" id="j_username" size="15" />
 
-					<h3 style="text-align: left; margin-bottom: 2px">Login</h3>
-					<hr />
-					<p:messages style="font-size:12px;text-align:left" id="messages2" showDetail="false" closable="true" />
-					<h:panelGrid style="margin: auto;width: 55%;" columns="2">
-						<p:outputLabel style="float:left" for="login" value="#{msg['label.login']}" />
-						<p:inputText style="float:right;padding:0px;" required="true" id="login" size="15"
-							value="#{loginController.loginVM.usuario.login}" />
+							<p:outputLabel style="float:left" for="j_password" value="#{msg['label.senha']}" />
+							<p:inputText style="float:right;padding:0px;" type="password" required="true" id="j_password" size="15" />
+						</h:panelGrid>
 
-						<p:outputLabel style="float:left" for="senha" value="#{msg['label.senha']}" />
-						<p:inputText style="float:right;padding:0px;" type="password" required="true" id="senha" size="15"
-							value="#{loginController.loginVM.usuario.senha}" />
-					</h:panelGrid>
-
-					<p:commandButton styleClass="botoes" style="width:200px;height:30px;margin:5px" value="#{msg['label.entrar']}"
-						action="#{loginController.logar}" update="cadastroMesaPanel" />
+						<p:commandButton icon="ui-icon-key" ajax="false"
+							style="width:100px;height:30px;margin:5px" onclick="PF('statusDialog').show()" value="#{msg['label.entrar']}"
+							type="submit" />
+					</h:form>
 				</h:panelGrid>
+				<div style="text-align: center">
+					<p:outputLabel value="#{SPRING_SECURITY_LAST_EXCEPTION.message}" style="text-align:center" rendered="#{param.erro}"
+						styleClass="erro" />
+				</div>
 			</p:panel>
-		</h:form>
+		</form>
 
-		<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
-		<p:dialog style="text-align:center;padding:10px" widgetVar="statusDialog" modal="true" draggable="false"
-			closable="false" resizable="false" showHeader="false">
-			<p:outputLabel value="#{msg['label.aguarde']}" style="font-weight:bold" />
-			<br />
-
-			<p:graphicImage style="margin:10px" library="imagens" name="ajax-loader.GIF" />
-		</p:dialog>
 
 	</ui:define>
 </ui:composition>

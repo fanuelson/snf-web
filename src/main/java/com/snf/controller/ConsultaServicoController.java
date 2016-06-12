@@ -1,6 +1,7 @@
 package com.snf.controller;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,12 +9,19 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.snf.VM.ConsultaServicoVM;
+import org.apache.log4j.Logger;
+
+import com.snf.enums.TipoUsuario;
+import com.snf.lazyModel.ServicoLazyDataModel;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
+import com.snf.model.Usuario;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
+import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
+import com.snf.vm.ConsultaServicoVM;
+import com.snf.vo.FiltroConsultaServicoVO;
 
 @Named
 @ViewScoped
@@ -21,77 +29,67 @@ public class ConsultaServicoController implements Serializable {
 
 	private static final long serialVersionUID = -8784362664957105320L;
 
+	static final Logger log = Logger.getLogger(ConsultaServicoController.class);
+
 	@Inject
 	private ServicoService servicoService;
-	
+
 	@Inject
 	private FuncionarioService funcionarioService;
-	
+
 	@Inject
 	private ConsultaServicoVM consultaServicoVM;
-	
-	private List<Servico> servicos;
-	
-	private List<Servico> servicosFiltered;
-	
+
+	@Inject
+	private CommonsController commonsController;
+
 	private List<Funcionario> funcionarios;
-	
+
 	private double valorTotalPesquisa;
-	
+
 	@PostConstruct
-	public void init(){
+	public void init() {
 		valorTotalPesquisa = 0;
-		servicos = servicoService.getAll();
-		funcionarios = funcionarioService.getAll();
-		calcularValorTotalPesquisa();
-	}
-	
-	public void calcularValorTotalPesquisa(){
-		valorTotalPesquisa = 0;
-		for (Servico servico : servicos) {
-			valorTotalPesquisa+=servico.getValor();
+		Usuario userLogado = commonsController.getUsuarioLogado();
+		if (userLogado.getTipo().equals(TipoUsuario.FUNCIONARIO)) {
+			consultaServicoVM.getFiltro().setFuncionario((Funcionario) userLogado);
+			consultaServicoVM.setTipoFuncionarioLogado(true);
+			consultaServicoVM.setFuncionario((Funcionario) userLogado);
+		} else {
+			consultaServicoVM.setTipoFuncionarioLogado(false);
+			funcionarios = funcionarioService.getAll();
 		}
+		calcularSomaTotalPesquisa();
 	}
-	
-	public void pesquisar(){
-		if(periodoPesquisaValido()){
-			pesquisarPeriodoFuncionario();
-			calcularValorTotalPesquisa();
-			limparFiltered();
-		}else
+
+	public void calcularSomaTotalPesquisa() {
+		if (periodoPesquisaValido()) {
+			FiltroConsultaServicoVO filtro = ((ServicoLazyDataModel) consultaServicoVM.getServicos()).getFiltro();
+			valorTotalPesquisa = servicoService.getSomaTotalServicos(filtro);
+		} else
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
 	}
-	
-	public void remover(Servico servico){
-		try{
+
+	public void remover(Servico servico) {
+		try {
 			servicoService.remover(servico);
-			servicos.remove(servico);
-			if(servicosFiltered!=null)
-				servicosFiltered.remove(servico);
 			MessagesUtils.exibirMensagemSucesso("mensagem.sucesso.remover.registro");
-			
-		}catch(Exception e){
-			e.printStackTrace();
+		} catch (Exception e) {
+			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro("mensagem.erro.remover.registro");
 		}
 	}
-	
-	private void pesquisarPeriodoFuncionario(){
-		servicos = servicoService.getServicosByPeriodoAndFuncionario(consultaServicoVM.getDataInicio(), consultaServicoVM.getDataFim(), consultaServicoVM.getFuncionario());
-	}
-	
-	private void limparFiltered(){
-		servicosFiltered = null;
-	}
-	
-	private boolean periodoPesquisaValido(){
-		 if(consultaServicoVM.getDataInicio()!=null && consultaServicoVM.getDataFim()!=null){
-			 if(consultaServicoVM.getDataInicio().before(consultaServicoVM.getDataFim()))
-				return true;
-			 else
-				return false; 
-		 }
-		 return true;
+
+	private boolean periodoPesquisaValido() {
+		Date dataInicialPesquisada = consultaServicoVM.getFiltro().getDataInicial();
+		Date dataFinalPesquisada = consultaServicoVM.getFiltro().getDataFinal();
+		if (DataUtil.getDataHoraZerada(dataInicialPesquisada) != null
+				&& DataUtil.getDataHoraFinalDia(dataFinalPesquisada) != null) {
+			return DataUtil.getDataHoraZerada(dataInicialPesquisada)
+					.before(DataUtil.getDataHoraFinalDia(dataFinalPesquisada));
+		}
+		
+		return true;
 	}
 
 	public ConsultaServicoVM getConsultaServicoVM() {
@@ -100,22 +98,6 @@ public class ConsultaServicoController implements Serializable {
 
 	public void setConsultaServicoVM(ConsultaServicoVM consultaServicoVM) {
 		this.consultaServicoVM = consultaServicoVM;
-	}
-
-	public List<Servico> getServicos() {
-		return servicos;
-	}
-
-	public void setServicos(List<Servico> servicos) {
-		this.servicos = servicos;
-	}
-
-	public List<Servico> getServicosFiltered() {
-		return servicosFiltered;
-	}
-
-	public void setServicosFiltered(List<Servico> servicosFiltered) {
-		this.servicosFiltered = servicosFiltered;
 	}
 
 	public List<Funcionario> getFuncionarios() {
@@ -133,5 +115,5 @@ public class ConsultaServicoController implements Serializable {
 	public void setValorTotalPesquisa(double valorTotalPesquisa) {
 		this.valorTotalPesquisa = valorTotalPesquisa;
 	}
-	
+
 }

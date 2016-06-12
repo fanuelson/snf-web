@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="filtroPesquisaServico">
+		<p:panelGrid styleClass="botoes" style="margin:auto;margin-top:10px">
+			<p:column>
+				<p:outputLabel style="display:inherit" value="#{msg['label.campo.funcionario']}" for="funcionario" />
+				<p:selectOneMenu style="width:250px" id="funcionario" filter="true" filterMatchMode="contains"
+					value="#{relatorioServicoController.relatorioServicoVM.filtro.funcionario}" converter="funcionarioConverter">
+					<c:selectItem itemLabel="#{msg['label.todos']}" noSelectionOption="true" />
+					<c:selectItems value="#{relatorioServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario}"
+						itemLabel="#{funcionario.nome}" />
+				</p:selectOneMenu>
+			</p:column>
+			<p:column>
+				<p:outputLabel style="display:inherit" value="#{msg['label.data.a.partir.de']}" for="dataInicial" />
+				<p:calendar id="dataInicial" size="10"
+					value="#{relatorioServicoController.relatorioServicoVM.filtro.dataInicial}" pattern="dd/MM/yyyy" />
+			</p:column>
+			<p:column>
+				<p:outputLabel style="display:inherit" value="#{msg['label.ate']}" for="dataFinal" />
+				<p:calendar size="10" styleClass="botoes" id="dataFinal"
+					value="#{relatorioServicoController.relatorioServicoVM.filtro.dataFinal}" pattern="dd/MM/yyyy" />
+			</p:column>
+			<p:column>
+				<p:commandButton icon="ui-icon-search" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" 
+				style="padding:8px" value="#{msg['label.pesquisar']}" process="@this filtroPesquisaServico"
+					action="#{relatorioServicoController.pesquisar()}" update="grafico painelCalculo" />
+			</p:column>
+		</p:panelGrid>
+
+		<h:panelGrid id="painelCalculo" styleClass="botoes" columns="3" style="margin:auto;margin-top:15px">
+			<p:outputLabel value="#{msg['label.soma.total.pesquisa']}" />
+			<h:outputLabel id="calculo" value="#{relatorioServicoController.valorTotalPesquisa}">
+				<c:convertNumber locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+			</h:outputLabel>
+			
+		</h:panelGrid>
+
+	</h:form>
+
+</ui:composition>

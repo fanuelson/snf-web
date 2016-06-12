@@ -1,26 +1,43 @@
 package com.snf.library;
 
-import java.security.NoSuchAlgorithmException;
+import java.io.Serializable;
 
-import jonelo.jacksum.JacksumAPI;
-import jonelo.jacksum.algorithm.AbstractChecksum;
+import org.apache.log4j.Logger;
+import org.jasypt.util.password.ConfigurablePasswordEncryptor;
+import org.springframework.stereotype.Component;
 
-public class Encripta {
-	
-	public String encripta(String senha, String crypt) {
+@Component
+public class Encripta implements Serializable, Encriptador {
+
+	private static final long serialVersionUID = 1L;
+
+	static final Logger log = Logger.getLogger(Encripta.class);
+
+	private static final String ALGORITHM_ENCRYPTOR = "SHA-1";
+
+	public String encriptar(String senha) {
 		try {
-			AbstractChecksum checksum = null;
-			checksum = JacksumAPI.getChecksumInstance(crypt);
-			checksum.update(senha.getBytes());
-			return checksum.getFormattedValue();
-		} catch (NoSuchAlgorithmException ns) {
-			ns.printStackTrace();
+			ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
+			passwordEncryptor.setAlgorithm(ALGORITHM_ENCRYPTOR);
+			passwordEncryptor.setPlainDigest(true);
+			return passwordEncryptor.encryptPassword(senha);
+		} catch (Exception e) {
+			log.error(e.toString());
 			return null;
 		}
 	}
 
-	public String encripta(String senha) {
-		return encripta(senha, "whirlpool-1");
+	@Override
+	public boolean checkPassword(String plainPass, String encryptPass) {
+		try {
+			ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
+			passwordEncryptor.setAlgorithm(ALGORITHM_ENCRYPTOR);
+			passwordEncryptor.setPlainDigest(true);
+			return passwordEncryptor.checkPassword(plainPass, encryptPass);
+		} catch (Exception e) {
+			log.error(e.toString());
+			return false;
+		}
 	}
 
 }

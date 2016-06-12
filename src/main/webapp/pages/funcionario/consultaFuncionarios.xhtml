@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
+	<ui:define name="corpoLayout">
+
+		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
+
+		<h:form prependId="false" id="consultaFuncionarioForm">
+
+			<p:panel style="width:80%;margin:10px auto 20px auto" header="#{msg['label.lista.funcionarios.cadastrados']}">
+				<h:panelGrid style="padding:10px">
+					<p:messages closable="true" severity="error" />
+					<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="funcionario"
+						value="#{consultaFuncionarioController.funcionarios}" emptyMessage="Nenhum Funcionario cadastrado"
+						filteredValue="#{consultaFuncionarioController.filteredFuncionarios}" widgetVar="funcionariosTable"
+						id="funcionariosTable" paginator="true" rows="10" rowExpandMode="false">
+						<c:facet name="header">
+							<p:outputPanel style="width:100%">
+								<h:outputLabel style="margin-left:50px" value="#{msg['label.menu.funcionarios']}" />
+							</p:outputPanel>
+						</c:facet>
+
+						<p:column style="width:40% " filterBy="#{funcionario.nome}" headerText="#{msg['label.nome']}"
+							filterMatchMode="contains">
+							<h:outputText value="#{funcionario.nome}" />
+						</p:column>
+
+						<p:column style="width:30% " filterBy="#{funcionario.login}" headerText="#{msg['label.header.login']}"
+							filterMatchMode="contains">
+							<h:outputText value="#{funcionario.login}" />
+						</p:column>
+
+						<p:column style="width:15% " filterBy="#{funcionario.tipo}" headerText="#{msg['label.tipo']}"
+							filterMatchMode="contains">
+							<h:outputText value="#{funcionario.tipo}" />
+						</p:column>
+
+						<p:column headerText="#{msg['label.editar.excluir']}" style="width:15%;text-align:center">
+
+							<p:commandLink style="margin-right:30px" action="#{consultaFuncionarioController.prepararEdicao(funcionario)}"
+								process="@this" update="edicaoUsuarioForm" onstart="PF('statusDialog').show()"
+								onclick="PF('edicaoUsuarioDialog').show()" oncomplete="PF('statusDialog').hide()">
+								<p:graphicImage width="25px" library="imagens" name="editIcon.png" />
+							</p:commandLink>
+
+
+							<p:commandLink style="margin-left:5px" icon="ui-icon-close"
+								action="#{consultaFuncionarioController.remover(funcionario)}" process="@this" update="consultaFuncionarioForm">
+								<p:graphicImage width="25px" library="imagens" name="deleteIcon.png" />
+								<p:confirm />
+							</p:commandLink>
+
+						</p:column>
+
+					</p:dataTable>
+
+				</h:panelGrid>
+			</p:panel>
+			<ui:include src="/pages/dialogs/confirmaExclusaoDialog.xhtml">
+				<ui:param name="mensagem" value="#{msg['label.confirmacao.exclusao.registro']}" />
+			</ui:include>
+		</h:form>
+
+		<ui:include src="/pages/dialogs/edicaoUsuarioDialog.xhtml" />
+
+	</ui:define>
+</ui:composition>

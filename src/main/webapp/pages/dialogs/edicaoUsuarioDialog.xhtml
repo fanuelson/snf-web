@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog header="Edição de Usuário" resizable="false" id="edicaoUsuarioDialog" modal="true"
+		widgetVar="edicaoUsuarioDialog" width="30%" height="300px">
+		<h:form prependId="false" id="edicaoUsuarioForm">
+			<p:messages severity="error" />
+			<p:panel styleClass="ui-grid ui-grid-responsive" style="height:95%">
+				<div class="ui-grid-row">
+				
+					<div class="ui-grid-col-5">
+						<p:graphicImage library="imagens" name="editUserIcon.png" />
+					</div>
+					
+					<div class="ui-grid-col-6">
+
+						<h:panelGrid style="margin:5px">
+							<p:outputLabel for="nomeUsuario" value="#{msg['label.login']}" />
+							<p:inputText required="true" id="nomeUsuario" value="#{consultaFuncionarioController.edicaoUsuarioVM.func.nome}" />
+							
+							<p:outputLabel for="loginUsuario" value="#{msg['label.login']}" />
+							<p:inputText id="loginUsuario" value="#{consultaFuncionarioController.edicaoUsuarioVM.func.login}" />
+							
+							<p:outputLabel for="tipoUsuario" value="#{msg['label.tipo']}" />
+							<p:selectOneMenu id="tipoUsuario" style="width:100px" converter="tipoUsuarioConverter" required="true"
+								value="#{consultaFuncionarioController.edicaoUsuarioVM.tipoFuncionarioEmEdicao}" filter="true"
+								filterMatchMode="contains">
+								<c:selectItem itemLabel="#{msg['label.selecione']}"
+									itemValue="#{consultaFuncionarioController.edicaoUsuarioVM.tipoFuncionarioEmEdicao}" />
+								<c:selectItems value="#{consultaFuncionarioController.edicaoUsuarioVM.tiposUsuario}" var="tipoUsuario"
+									itemValue="#{tipoUsuario}" itemLabel="#{tipoUsuario.permissao}" />
+							</p:selectOneMenu>
+							
+						</h:panelGrid>
+						
+						<p:commandButton process="edicaoUsuarioDialog @this" action="#{consultaFuncionarioController.salvar()}"
+							style="float:right;margin-top:30px" value="#{msg['label.salvar']}" onclick="PF('statusDialog').show()"
+							onsuccess="PF('statusDialog').hide();PF('edicaoUsuarioDialog').hide()" update="consultaFuncionarioForm" />
+					</div>
+				</div>
+			</p:panel>
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

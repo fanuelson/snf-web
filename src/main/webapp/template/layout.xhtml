@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<f:facet name="first">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,24 +11,30 @@
 	<f:facet name="first">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	</f:facet>
-	<h:outputStylesheet library="estilos" name="estilo.css" />
+	<link rel="shortcut icon" href="#{request.contextPath}/resources/imagens/tesoura.ico" type="image/x-icon" />
+	
 </h:head>
-<h:body style="background-image:url('#{request.contextPath}/resources/imagens/imgFundo.jpg');" >
+<h:body style="background-image:url('#{request.contextPath}/resources/imagens/imgFundo.jpg');">
+	<f:facet name="last">
+		<h:outputStylesheet library="estilos" name="estilo.css" />
+	</f:facet>
+	<div id="container" class="wrapper" style="height: 100%">
 
-	<div id="container" class="wrapper" style="height:100%">
-			
-			<ui:include src="topo.xhtml" />
-			<ui:insert name="corpoLayout" />
-			
-			<div class="push"></div>
+		<ui:include src="topo.xhtml" />
+		<ui:insert name="corpoLayout" />
+
+		<div class="push"></div>
 	</div>
-	
-	<p:dialog style="text-align:center;padding:10px" widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-			<p:outputLabel value="Aguarde..." style="font-weight:bold" />
-			<br/>
-			<p:graphicImage style="margin:10px" library="imagens" name="ajax-loader.GIF" />
+
+	<p:dialog style="text-align:center;padding:10px" width="200px" widgetVar="statusDialog" modal="true" draggable="false"
+		closable="false" resizable="false" showHeader="false">
+		<p:outputLabel value="Aguarde..." style="font-weight:bold" />
+		<br />
+		<p:graphicImage style="margin:10px" library="imagens" name="load.gif" width="40px" height="40px" />
 	</p:dialog>
-	
+
 	<ui:include src="rodape.xhtml" />
+	
+	<h:outputScript library="js" name="global.js" />
 </h:body>
 </html>

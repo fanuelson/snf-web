@@ -3,12 +3,16 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
-	<persistence-unit name="restauranteCDI">
+	<persistence-unit name="salaoBeleza">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
 		<class>com.snf.model.Usuario</class>
 		<class>com.snf.model.Servico</class>
 		<class>com.snf.model.Funcionario</class>
+		<class>com.snf.model.Caixa</class>
+		<class>com.snf.model.TipoUsuario</class>
+		<class>com.snf.model.Role</class>
+		<class>com.snf.model.Transacao</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/salaoBeleza" />
@@ -16,11 +20,12 @@
 			<property name="javax.persistence.jdbc.password" value="fanuelson" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="none" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="false" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+			<property name="hibernate.transaction.flush_before_completion" value="true" />
 		</properties>
 	</persistence-unit>
-
+	
 </persistence>

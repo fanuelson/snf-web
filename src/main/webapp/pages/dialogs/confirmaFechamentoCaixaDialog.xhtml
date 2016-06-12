@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<p:confirmDialog style="padding-left: 13px;" width="500" styleClass="botoes" global="true"
+		header="#{msg['label.confirmacao']}" showEffect="fade" hideEffect="fade">
+		<div style="padding: 15px;">
+			<div style="position: relative; left: 44px; top: 7px;">
+				<p:graphicImage library="imagens" name="danger.png" width="40px" />
+			</div>
+			<div style="position: relative; left: 100px; bottom: 20px; width: 350px;">
+				<p:outputLabel value="#{mensagem}" />
+			</div>
+		</div>
+
+		<div>
+			<p:commandButton onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"
+				value="#{msg['label.sim']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" process="@this" />
+			<p:commandButton style="align:right;float:right" value="#{msg['label.nao']}" process="@this"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</div>
+	</p:confirmDialog>
+
+
+</ui:composition>

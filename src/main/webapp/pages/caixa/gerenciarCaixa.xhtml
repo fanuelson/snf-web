@@ -1,0 +1,156 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
+
+	<ui:define name="corpoLayout">
+
+		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
+
+		<h:form prependId="false" id="formAbrirCaixa">
+			<p:panel header="#{msg['label.caixas']}" style="width:98%;margin:10px auto 20px auto">
+				<div class="ui-grid ui-grid-responsive">
+					<div class="ui-grid-col-8">
+						<h3 style="padding: 20px 0 0 50px;">#{msg['label.historico.caixas']}</h3>
+						<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="caixa" lazy="true"
+							value="#{gerenciaCaixaController.aberturaCaixaVM.caixas}" emptyMessage="Nenhum caixa cadastrado"
+							widgetVar="servicosTable" id="caixaTable" paginator="true" rows="10" rowExpandMode="false"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+							currentPageReportTemplate="Quantidade: {totalRecords} - Página {currentPage} de {totalPages}"
+							rowsPerPageTemplate="5,10,15,20,30" paginatorPosition="bottom">
+							<c:facet name="{Exporters}">
+								<h:commandLink style="float:right" immediate="true" title="Baixar como PDF">
+									<p:graphicImage library="imagens" name="pdfIcon.png" width="24" />
+									<p:dataExporter type="pdf" target="caixaTable" fileName="Relatório de Caixa" />
+								</h:commandLink>
+							</c:facet>
+							<p:column width="10%" headerText="#{msg['label.header.id']}" >
+								<h:outputText value="#{caixa.id}" />
+							</p:column>
+							<p:column width="20%" headerText="#{msg['label.header.data.abertura']}" >
+								<h:outputText value="#{caixa.dataAberturaFormatada}">
+									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
+								</h:outputText>
+							</p:column>
+							<p:column width="20%" headerText="#{msg['label.header.data.fechamento']}" >
+								<h:outputText value="#{caixa.dataFechamentoFormatado}">
+									<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-02:00" />
+								</h:outputText>
+							</p:column>
+							<p:column width="15%" headerText="#{msg['label.header.valor.inicial']}" >
+								<h:outputText value="#{caixa.valorInicial}">
+									<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+								</h:outputText>
+							</p:column>
+							<p:column width="15%" headerText="#{msg['label.header.valor.final']}" >
+								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.valorAtual}">
+									<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+								</h:outputText>
+							</p:column>
+							<p:column width="20%" headerText="#{msg['label.header.receita']}">
+								<h:outputText rendered="#{not caixa.aberto}" value="#{caixa.receita}">
+									<c:convertNumber currencySymbol="R$" type="currency" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+								</h:outputText>
+								<p:graphicImage rendered="#{caixa.receita gt 0.0}"
+									style="margin-left:10px;float:right" library="imagens" name="upIcon.png" />
+								<p:graphicImage rendered="#{caixa.receita lt 0.0}"
+									style="margin-left:10px;float:right" library="imagens" name="downIcon.png" />
+								<p:graphicImage rendered="#{caixa.receita eq 0.0}"
+									style="margin-left:10px;float:right" library="imagens" name="boxBlue.png" />
+							</p:column>
+
+						</p:dataTable>
+
+					</div>
+					<div class="ui-grid-col-4">
+						<p:panel header="#{msg['label.ABRIR.CAIXA']}" style="margin:auto;width:55%"
+							rendered="#{not gerenciaCaixaController.aberturaCaixaVM.existeCaixaAberto}">
+
+							<h:panelGrid style="margin:5px 0 5px 0;">
+
+								<p:outputLabel for="valorInicial" value="#{msg['label.valor.inicial']}" />
+
+								<h:inputText required="true" id="valorInicial"
+									value="#{gerenciaCaixaController.aberturaCaixaVM.caixaAberto.valorInicial}">
+									<c:convertNumber locale="pt_br" minFractionDigits="2" maxFractionDigits="2" />
+									<c:validateDoubleRange minimum="0.1" />
+								</h:inputText>
+
+							</h:panelGrid>
+
+							<p:commandButton value="#{msg['label.abrir.caixa']}" process="valorInicial @this"
+								onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"
+								action="#{gerenciaCaixaController.salvarCaixa()}" update="formAbrirCaixa" icon="ui-icon-unlocked" />
+
+						</p:panel>
+
+						<p:panel style="margin:10px auto 20px auto;width:90%" styleClass="ui-grid ui-grid-responsive"
+							header="#{msg['label.CAIXA.ABERTO']}" rendered="#{gerenciaCaixaController.aberturaCaixaVM.existeCaixaAberto}">
+
+							<div class="ui-grid-row">
+
+								<div class="ui-grid-col-5">
+									<p:graphicImage library="imagens" name="caixa-reg.jpg" height="100px" width="100px" />
+									<p:commandButton value="#{msg['label.fechar.caixa']}" action="#{gerenciaCaixaController.fecharCaixa()}"
+										update="formAbrirCaixa" icon="ui-icon-locked" onstart="PF('statusDialog').show()"
+										oncomplete="PF('statusDialog').hide()">
+										<p:confirm />
+									</p:commandButton>
+								</div>
+
+								<h:panelGrid style="margin-left:10px" columns="2">
+									<p:outputLabel for="idCaixa" value="#{msg['label.header.id']}" />
+									<p:outputLabel />
+									<p:inputText style="opacity:0.8" disabled="true" id="idCaixa"
+										value="#{gerenciaCaixaController.aberturaCaixaVM.caixaAberto.id}">
+									</p:inputText>
+									<p:outputLabel />
+									<p:outputLabel for="dataInicialCaixa" value="#{msg['label.data.abertura']}" />
+									<p:outputLabel />
+									<p:inputText style="opacity:0.8" disabled="true" id="dataInicialCaixa"
+										value="#{gerenciaCaixaController.aberturaCaixaVM.caixaAberto.dataAberturaFormatada}">
+									</p:inputText>
+									<p:outputLabel />
+
+									<p:outputLabel for="valorInicialCaixa" value="#{msg['label.valor.inicial']}" />
+									<p:outputLabel />
+									<p:inputText style="opacity:0.8" disabled="true" id="valorInicialCaixa"
+										value="#{gerenciaCaixaController.aberturaCaixaVM.caixaAberto.valorInicial}">
+										<c:convertNumber pattern="R$ #0" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+										<c:validateDoubleRange minimum="0.1" />
+									</p:inputText>
+									<p:outputLabel />
+
+									<p:outputLabel for="valorAtual" value="#{msg['label.valor.atual']}" />
+									<p:outputLabel />
+									<p:inputText style="opacity:0.8" disabled="true" id="valorAtual"
+										value="#{gerenciaCaixaController.aberturaCaixaVM.caixaAberto.valorAtual}">
+										<c:convertNumber pattern="R$ #0" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+										<c:validateDoubleRange minimum="0.1" />
+									</p:inputText>
+									<p:outputLabel />
+
+									<p:outputLabel for="receitaCorrente" value="#{msg['label.receita.corrente']}" />
+									<p:outputLabel />
+									<p:inputText style="opacity:0.8" disabled="true" id="receitaCorrente"
+										value="#{gerenciaCaixaController.aberturaCaixaVM.caixaAberto.receita}">
+										<c:convertNumber pattern="R$ #0" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+										<c:validateDoubleRange minimum="0.1" />
+									</p:inputText>
+									<p:graphicImage library="imagens" name="money.png" width="20px" />
+
+								</h:panelGrid>
+
+							</div>
+
+						</p:panel>
+					</div>
+				</div>
+			</p:panel>
+
+			<ui:include src="/pages/dialogs/confirmaFechamentoCaixaDialog.xhtml">
+				<ui:param name="mensagem" value="#{msg['mensagem.confirmacao.fechamento.caixa']}" />
+			</ui:include>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

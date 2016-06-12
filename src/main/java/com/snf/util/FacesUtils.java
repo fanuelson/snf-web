@@ -8,6 +8,9 @@ import javax.faces.context.FacesContext;
 
 public class FacesUtils {
 
+	private FacesUtils() {
+	}
+
 	public static ExternalContext getExternalContext() {
 		return FacesContext.getCurrentInstance().getExternalContext();
 	}
@@ -27,16 +30,16 @@ public class FacesUtils {
 	public static void removeSessionMap(String key) {
 		getSessionMap().remove(key);
 	}
-	
+
 	public static Object getValueSessionMap(String key) {
-    	return getSessionMap().get(key);
-    }
-	
+		return getSessionMap().get(key);
+	}
+
 	public static void redirect(String retorno) throws IOException {
-        getExternalContext().redirect(retorno);
-    }
-	
-	public static void invalidateSession(){
+		getExternalContext().redirect(retorno);
+	}
+
+	public static void invalidateSession() {
 		getExternalContext().invalidateSession();
 	}
 }

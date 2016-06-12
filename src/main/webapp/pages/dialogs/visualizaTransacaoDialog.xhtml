@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog header="#{msg['label.header.transacao']}" resizable="false" id="visualizaTransacaoDialog" modal="true"
+		widgetVar="visualizaTransacaoDialog" >
+		<h:form prependId="false" id="visualizaTransacaoForm">
+			<p:messages severity="error" />
+			<p:panel id="visualizaTransacaoPanel" style="margin:5px auto 10px auto;">
+					<div class="ui-grid ui-grid-responsive">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-4">
+								<p:graphicImage library="imagens" name="carteiraIcon.jpg" width="150px" />
+							</div>
+							<div class="ui-grid-col-8">
+								<div class="ui-grid ui-grid-responsive">
+									<div class="ui-grid-row">
+										<p:graphicImage rendered="#{consultaTransacaoController.consultaTransacaoVM.transacaoSelecionada.saidaCaixa}"
+											library="imagens" name="downIcon.png" width="16px" height="16px" />
+										<p:graphicImage rendered="#{not consultaTransacaoController.consultaTransacaoVM.transacaoSelecionada.saidaCaixa}"
+											library="imagens" name="upIcon.png" width="16px" height="16px" />
+										<h3 style="margin: 0 auto 25px 5px;">#{consultaTransacaoController.consultaTransacaoVM.transacaoSelecionada.tipo}</h3>
+									</div>
+
+									<h:panelGrid id="visualizaTransacaoPanelGrid">
+										<p:outputLabel for="caixaAberto" value="#{msg['label.caixa.aberto']}" />
+										<p:inputText size="10" style="opacity:0.8" disabled="true" id="caixaAberto"
+											value="Id: #{consultaTransacaoController.consultaTransacaoVM.caixaSelecionado.id}">
+										</p:inputText>
+
+										<p:outputLabel for="tipo" value="#{msg['label.campo.tipo']}" />
+										<p:inputText size="10" style="opacity:0.8" disabled="true" id="tipo"
+											value="#{consultaTransacaoController.consultaTransacaoVM.transacaoSelecionada.tipo}">
+										</p:inputText>
+
+										<p:outputLabel for="descricao" value="#{msg['label.campo.descricao']}" />
+										<p:inputTextarea id="descricao" value="#{consultaTransacaoController.consultaTransacaoVM.transacaoSelecionada.descricao}"
+											maxlength="100" cols="40" rows="5" style="opacity:0.8" disabled="true" />
+
+										<p:outputLabel style="font-size:32px" value="#{msg['label.campo.valor']}" for="valor" />
+										<h:inputText id="valor" value="#{consultaTransacaoController.consultaTransacaoVM.transacaoSelecionada.valor}" size="10"
+											 type="number" converterMessage="Preço inválido." style="opacity:0.9;font-size:32px;font-weight:bold" disabled="true"
+											>
+											<c:convertNumber pattern=" R$ #0" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
+											<c:validateDoubleRange minimum="0.1" />
+										</h:inputText>
+
+									</h:panelGrid>
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+		</h:form>
+	</p:dialog>
+
+</ui:composition>
