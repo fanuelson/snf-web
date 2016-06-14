@@ -17,7 +17,7 @@
 						<H4 style="margin: 20px auto 10px 15px;">#{msg['mensagem.info.selecione.caixa']}</H4>
 						<h:panelGrid style="padding:5px;width:100%">
 							<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="caixa"
-								value="#{consultaTransacaoController.consultaTransacaoVM.caixas2}" emptyMessage="Nenhum caixa cadastrado"
+								value="#{consultaTransacaoController.consultaTransacaoVM.caixas}" emptyMessage="Nenhum caixa cadastrado"
 								selectionMode="single" rowKey="#{caixa.id}" widgetVar="servicosTable" id="caixaTable" paginator="true" rows="30"
 								rowExpandMode="false" lazy="true"
 								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
