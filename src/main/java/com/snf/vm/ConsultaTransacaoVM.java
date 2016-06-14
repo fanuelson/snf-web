@@ -20,7 +20,7 @@ public class ConsultaTransacaoVM implements Serializable {
 	private Double valorTotalCaixas = 0.0;
 	
 	@Inject
-	private AbstractLazyDataModel<Caixa> caixas2;
+	private AbstractLazyDataModel<Caixa> caixas;
 
 	@Inject
 	private Caixa caixaSelecionado;
@@ -59,12 +59,12 @@ public class ConsultaTransacaoVM implements Serializable {
 		this.transacaoSelecionada = transacaoSelecionada;
 	}
 
-	public AbstractLazyDataModel<Caixa> getCaixas2() {
-		return caixas2;
+	public AbstractLazyDataModel<Caixa> getCaixas() {
+		return caixas;
 	}
 
-	public void setCaixas2(AbstractLazyDataModel<Caixa> caixas2) {
-		this.caixas2 = caixas2;
+	public void setCaixas(AbstractLazyDataModel<Caixa> caixas2) {
+		this.caixas = caixas2;
 	}
 
 	public Double getValorTotalCaixas() {
