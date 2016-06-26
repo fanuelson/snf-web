@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.snf.dao.UsuarioDAO;
 import com.snf.model.Usuario;
@@ -17,6 +19,7 @@ public class UsuarioService implements Serializable {
 
 	static final Logger log = Logger.getLogger(UsuarioService.class);
 
+	@Inject
 	private UsuarioDAO usuarioDAO;
 
 	public void salvar(Usuario usuario) {
@@ -33,5 +36,9 @@ public class UsuarioService implements Serializable {
 
 	public void remover(Usuario usuario) {
 		usuarioDAO.delete(usuario.getIdUsuario());
+	}
+	
+	public Usuario loadUserByUsername(String username) throws UsernameNotFoundException {
+		return usuarioDAO.getUsuarioByLogin(username);
 	}
 }

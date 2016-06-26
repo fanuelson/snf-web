@@ -341,6 +341,12 @@
 	    <version>1.9.12</version>
 	</dependency>
 	
+	<dependency>
+	    <groupId>com.ffnunes</groupId>
+	    <artifactId>snf-model</artifactId>
+	    <version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	
 
 
 	</dependencies>

@@ -3,6 +3,8 @@ package com.snf.security;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
@@ -18,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 import com.snf.library.Encriptador;
 import com.snf.model.Usuario;
-import com.snf.service.CustomUserService;
+import com.snf.service.UsuarioService;
 import com.snf.util.MessagesUtils;
 
 @Component
@@ -28,9 +30,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	@Autowired
 	private Encriptador enc;
-	
-	@Autowired
-	private CustomUserService customUserService;
 	
 	public CustomAuthenticationProvider() {
 		super();
@@ -42,17 +41,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String password = (String) auth.getCredentials();
 		
 		try{
-			Usuario usuario = (Usuario) customUserService.loadUserByUsername(username);
+			UsuarioService us = (UsuarioService) new InitialContext().lookup("java:global/snf-web/UsuarioService");
+			Usuario usuario = (Usuario) us.loadUserByUsername(username);
 			
 			if(enc.checkPassword(password, usuario.getSenha())){
 				Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
 				grantedAuths.addAll(usuario.getAuthorities());
 				auth = getAuth(usuario);
 				usuario.zerarTentativas();
-				customUserService.atualizar(usuario);
+				us.salvar(usuario);
 			}else{
 				usuario.incrementarTentativas();
-				customUserService.atualizar(usuario);
+				us.salvar(usuario);
 				log.error(new BadCredentialsException("SENHA ERRADA").toString());
 				throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.login"));
 			}
@@ -63,6 +63,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		}catch(PersistenceException persistenceException){
 			log.error(persistenceException.toString());
 			throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.conexao.login"));
+		} catch (NamingException e) {
+			log.error(e.toString());
 		}
 		
 		return auth ;

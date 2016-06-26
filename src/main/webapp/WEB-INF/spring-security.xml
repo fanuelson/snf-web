@@ -52,18 +52,11 @@
 	<beans:bean id="customAuthenticationProvider"  scope="prototype"
    	class="com.snf.security.CustomAuthenticationProvider" />
 	<beans:bean id="encripta" class="com.snf.library.Encripta" />
-	<beans:bean id="commons" class="com.snf.controller.CommonsController" />
-	<beans:bean id="customUserService" class="com.snf.service.CustomUserService" />
-	<beans:bean id="usuarioDao" class="com.snf.dao.CustomUserDAO" />
 	<beans:bean id="defaultRedirect" class="org.springframework.security.web.DefaultRedirectStrategy" />
 	<beans:bean id="customAuthenticationSuccessHandler" class="com.snf.security.CustomAuthenticationSuccessHandler" >
 		<beans:property name="defaultTargetUrl" value="/pages/home/inicioGerente.xhtml" />
 	</beans:bean>
 	
-	<beans:bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> 
-	       <beans:property name="persistenceXmlLocation" value="classpath*:META-INF/persistence.xml"/> 
-	       <!-- other definitions -->
-	</beans:bean>
 	<!-- 	AUTHENTICATION CONFIG -->
 	
 	<sec:authentication-manager alias="authenticationManager"  >
