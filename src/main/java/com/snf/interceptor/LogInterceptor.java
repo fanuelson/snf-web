@@ -1,5 +1,7 @@
 package com.snf.interceptor;
 
+import java.io.Serializable;
+
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
@@ -10,17 +12,18 @@ import com.snf.annotation.LogApp;
 
 @LogApp
 @Interceptor
-public class LogInterceptor {
+public class LogInterceptor implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@AroundInvoke
-	public Object logError(InvocationContext ctx) {
+	public Object logError(InvocationContext ctx) throws Exception {
 		Logger log = Logger.getLogger(ctx.getTarget().getClass());
-		Object retorno = null ;
 		try{
-			retorno = ctx.proceed();
+			return ctx.proceed();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw e;
 		}
-		return retorno;
 	}
 }

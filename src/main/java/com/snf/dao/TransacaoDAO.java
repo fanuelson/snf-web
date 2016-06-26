@@ -9,6 +9,7 @@ public class TransacaoDAO extends GenericDAO<Transacao, Long> {
 
 	private static final long serialVersionUID = 1L;
 	
+	@SuppressWarnings("unused")
 	private static final Logger log = Logger.getLogger(TransacaoDAO.class);
 
 }

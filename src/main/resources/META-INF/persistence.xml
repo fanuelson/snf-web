@@ -12,8 +12,8 @@
 		<class>com.snf.model.Transacao</class>
 		<class>com.snf.model.Caixa</class>
 		<class>com.snf.model.Servico</class>
-		<class>com.snf.model.Funcionario</class>
 		<class>com.snf.model.Role</class>
+		<class>com.snf.model.Funcionario</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/salaoBeleza" />
@@ -21,7 +21,6 @@
 			<property name="javax.persistence.jdbc.password" value="fanuelson" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 
-			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="false" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
