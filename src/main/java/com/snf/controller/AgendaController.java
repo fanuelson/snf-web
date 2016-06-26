@@ -14,6 +14,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.ScheduleEvent;
 
 import com.snf.builder.ServicoBuilder;
 import com.snf.model.Servico;
@@ -113,7 +114,12 @@ public class AgendaController implements Serializable {
 	
 	public void agendarServico() {
 		try {
-			servicoService.agendar(agendaVM.getServicoSelected());
+			if(validarAgendamentoServico()){
+				servicoService.agendar(agendaVM.getServicoSelected());
+			}else{
+				MessagesUtils.exibirMensagemErro("mensagem.erro.servico.colide");
+				return;
+			}
 			init();
 			MessagesUtils.exibirMensagemSucesso(mensagem_sucesso);
 			RequestContext.getCurrentInstance().execute(SCRIPT_ESCONDER_SERVICO_DIALOG);
@@ -121,6 +127,29 @@ public class AgendaController implements Serializable {
 			log.error(e.toString());
 			MessagesUtils.exibirMensagemErro(mensagem_erro);
 		}
+	}
+
+	private boolean validarAgendamentoServico(){
+		Servico servicoSelecionado = agendaVM.getServicoSelected();
+		for (ScheduleEvent evento : agendaVM.getAgendaModel().getEvents()) {
+			Servico servico = (Servico) evento;
+			if(servico.getFuncionario().equals(servicoSelecionado.getFuncionario())){
+				if(datasAgendamentosColidem(servicoSelecionado, servico)){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean datasAgendamentosColidem(Servico servicoSelecionado, Servico servico){
+		if(DataUtil.isDentroDoPeriodoFechado(servicoSelecionado.getDataInicio(), servico.getDataInicio(), servico.getDataFim())){
+			return true;
+		}
+		if(DataUtil.isDentroDoPeriodoFechado(servicoSelecionado.getDataFim(), servico.getDataInicio(), servico.getDataFim())){
+			return true;
+		}
+		return false;
 	}
 
 	public void cancelarServico() {

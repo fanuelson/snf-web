@@ -4,12 +4,16 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
 import com.snf.builder.JPQLBuilder;
+import org.apache.log4j.Logger;
+
 import com.snf.genericDao.GenericDAO;
 import com.snf.model.Usuario;
 
 public class UsuarioDAO extends GenericDAO<Usuario, Long> {
 
 	private static final long serialVersionUID = 5201746283603277625L;
+	
+	private static final Logger log = Logger.getLogger(UsuarioDAO.class);
 	
 	public Usuario getUsuarioByLogin(String login){
 		try {
@@ -29,5 +33,6 @@ public class UsuarioDAO extends GenericDAO<Usuario, Long> {
 			throw persistenceException;
 		}
 	}
+	
 
 }
