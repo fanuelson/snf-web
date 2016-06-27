@@ -4,11 +4,8 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
-import org.primefaces.model.LazyDataModel;
-
+import com.snf.lazyModel.ServicoLazyDataModel;
 import com.snf.model.Funcionario;
-import com.snf.model.Servico;
-import com.snf.vo.FiltroConsultaServicoVO;
 
 public class ConsultaServicoVM implements Serializable {
 
@@ -19,10 +16,7 @@ public class ConsultaServicoVM implements Serializable {
 	private boolean isTipoFuncionarioLogado;
 	
 	@Inject
-	private LazyDataModel<Servico> servicos;
-
-	@Inject
-	private FiltroConsultaServicoVO filtro;
+	private ServicoLazyDataModel servicos;
 
 	public Funcionario getFuncionario() {
 		return funcionario;
@@ -40,19 +34,11 @@ public class ConsultaServicoVM implements Serializable {
 		this.isTipoFuncionarioLogado = isTipoFuncionarioLogado;
 	}
 
-	public FiltroConsultaServicoVO getFiltro() {
-		return filtro;
-	}
-
-	public void setFiltro(FiltroConsultaServicoVO filtro) {
-		this.filtro = filtro;
-	}
-
-	public LazyDataModel<Servico> getServicos() {
+	public ServicoLazyDataModel getServicos() {
 		return servicos;
 	}
 
-	public void setServicos(LazyDataModel<Servico> servicos) {
+	public void setServicos(ServicoLazyDataModel servicos) {
 		this.servicos = servicos;
 	}
 	

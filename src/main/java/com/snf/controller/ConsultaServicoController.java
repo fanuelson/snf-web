@@ -52,8 +52,8 @@ public class ConsultaServicoController implements Serializable {
 		valorTotalPesquisa = 0;
 		Usuario userLogado = commonsController.getUsuarioLogado();
 		if (userLogado.getTipo().equals(TipoUsuario.FUNCIONARIO)) {
-			consultaServicoVM.getFiltro().setFuncionario((Funcionario) userLogado);
 			consultaServicoVM.setTipoFuncionarioLogado(true);
+			consultaServicoVM.getServicos().getFiltro().setFuncionario((Funcionario) userLogado);
 			consultaServicoVM.setFuncionario((Funcionario) userLogado);
 		} else {
 			consultaServicoVM.setTipoFuncionarioLogado(false);
@@ -81,8 +81,8 @@ public class ConsultaServicoController implements Serializable {
 	}
 
 	private boolean periodoPesquisaValido() {
-		Date dataInicialPesquisada = consultaServicoVM.getFiltro().getDataInicial();
-		Date dataFinalPesquisada = consultaServicoVM.getFiltro().getDataFinal();
+		Date dataInicialPesquisada = consultaServicoVM.getServicos().getFiltro().getDataInicial();
+		Date dataFinalPesquisada = consultaServicoVM.getServicos().getFiltro().getDataFinal();
 		if (DataUtil.getDataHoraZerada(dataInicialPesquisada) != null
 				&& DataUtil.getDataHoraFinalDia(dataFinalPesquisada) != null) {
 			return DataUtil.getDataHoraZerada(dataInicialPesquisada)
