@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 import org.apache.log4j.Logger;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.snf.dao.UsuarioDAO;
 import com.snf.model.Usuario;
@@ -38,7 +38,7 @@ public class UsuarioService implements Serializable {
 		usuarioDAO.delete(usuario.getIdUsuario());
 	}
 	
-	public Usuario loadUserByUsername(String username) throws UsernameNotFoundException {
+	public Usuario loadUserByUsername(String username) throws NoResultException {
 		return usuarioDAO.getUsuarioByLogin(username);
 	}
 }

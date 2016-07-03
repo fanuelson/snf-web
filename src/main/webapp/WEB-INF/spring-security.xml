@@ -20,7 +20,7 @@
 	
 	<!-- 	SECURITY CONFIG -->
 	
-	<sec:http auto-config='true' use-expressions="true" >
+	<sec:http auto-config='true' use-expressions="true" disable-url-rewriting="true" >
 		<sec:intercept-url pattern="/login.xhtml" access="permitAll" />
 		<sec:intercept-url pattern="/publico/**" access="permitAll" />
 		<sec:intercept-url pattern="/javax.faces.resource/**" access="permitAll" />

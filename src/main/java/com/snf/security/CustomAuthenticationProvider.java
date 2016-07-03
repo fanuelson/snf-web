@@ -3,11 +3,6 @@ package com.snf.security;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceException;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.snf.library.Encriptador;
 import com.snf.model.Usuario;
-import com.snf.service.UsuarioService;
+import com.snf.rest.RestClient;
 import com.snf.util.MessagesUtils;
 
 @Component
@@ -41,30 +36,20 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String password = (String) auth.getCredentials();
 		
 		try{
-			UsuarioService us = (UsuarioService) new InitialContext().lookup("java:global/snf-web/UsuarioService");
-			Usuario usuario = (Usuario) us.loadUserByUsername(username);
+			Usuario usuario = RestClient.httpGetJson("/usuarios/"+username, Usuario.class);
 			
 			if(enc.checkPassword(password, usuario.getSenha())){
 				Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
 				grantedAuths.addAll(usuario.getAuthorities());
 				auth = getAuth(usuario);
-				usuario.zerarTentativas();
-				us.salvar(usuario);
 			}else{
-				usuario.incrementarTentativas();
-				us.salvar(usuario);
 				log.error(new BadCredentialsException("SENHA ERRADA").toString());
 				throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.login"));
 			}
 			
-		}catch(NoResultException e){
+		} catch (Exception e) {
 			log.error(e);
-			throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.nenhum.registro.encontrado"));
-		}catch(PersistenceException persistenceException){
-			log.error(persistenceException);
-			throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.conexao.login"));
-		} catch (NamingException e) {
-			log.error(e.toString());
+			throw new BadCredentialsException(e.getMessage());
 		}
 		
 		return auth ;

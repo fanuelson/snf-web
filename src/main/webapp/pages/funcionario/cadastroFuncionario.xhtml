@@ -26,11 +26,11 @@
 						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.senhaNovamente}" />
 
 					<p:outputLabel value="#{msg['label.campo.tipo']}" for="tipoUsuario" />
-					<p:selectOneMenu style="width:100px" id="tipoUsuario" converter="tipoUsuarioConverter" required="true"
-						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.role.tipoUsuario}" >
+					<p:selectOneMenu style="width:100px" id="tipoUsuario" required="true"
+						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.role.permissao}" >
 						<c:selectItem itemLabel="#{msg['label.selecione']}" itemValue="#{null}" noSelectionOption="true" />
-						<c:selectItems value="#{cadastroFuncionarioController.tiposUsuario}" var="tipoUsuario" itemValue="#{tipoUsuario}"
-							itemLabel="#{tipoUsuario.permissao}" />
+						<c:selectItems value="#{cadastroFuncionarioController.cadastroFuncionarioVM.permissoes}" var="permissao" itemValue="#{permissao}"
+							itemLabel="#{permissao}" />
 					</p:selectOneMenu>
 
 				</h:panelGrid>

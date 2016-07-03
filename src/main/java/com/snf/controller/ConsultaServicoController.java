@@ -11,7 +11,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import com.snf.enums.TipoUsuario;
+import com.snf.enums.Permissao;
 import com.snf.lazyModel.ServicoLazyDataModel;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
@@ -51,7 +51,7 @@ public class ConsultaServicoController implements Serializable {
 	public void init() {
 		valorTotalPesquisa = 0;
 		Usuario userLogado = commonsController.getUsuarioLogado();
-		if (userLogado.getTipo().equals(TipoUsuario.FUNCIONARIO)) {
+		if (userLogado.possuiPermissao(Permissao.FUNCIONARIO)) {
 			consultaServicoVM.setTipoFuncionarioLogado(true);
 			consultaServicoVM.getServicos().getFiltro().setFuncionario((Funcionario) userLogado);
 			consultaServicoVM.setFuncionario((Funcionario) userLogado);

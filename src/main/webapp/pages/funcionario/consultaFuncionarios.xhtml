@@ -30,9 +30,9 @@
 							<h:outputText value="#{funcionario.login}" />
 						</p:column>
 
-						<p:column style="width:15% " filterBy="#{funcionario.tipo}" headerText="#{msg['label.tipo']}"
+						<p:column style="width:15% " headerText="#{msg['label.tipo']}"
 							filterMatchMode="contains">
-							<h:outputText value="#{funcionario.tipo}" />
+							<h:outputText value="#{funcionario.roles.get(0).permissao}" />
 						</p:column>
 
 						<p:column headerText="#{msg['label.editar.excluir']}" style="width:15%;text-align:center">

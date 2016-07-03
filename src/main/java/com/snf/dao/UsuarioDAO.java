@@ -15,7 +15,7 @@ public class UsuarioDAO extends GenericDAO<Usuario, Long> {
 	
 	private static final Logger log = Logger.getLogger(UsuarioDAO.class);
 	
-	public Usuario getUsuarioByLogin(String login){
+	public Usuario getUsuarioByLogin(String login) throws NoResultException {
 		try {
 			return new JPQLBuilder()
 					.select("u")

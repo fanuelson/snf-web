@@ -8,7 +8,9 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
+import com.snf.exception.RestException;
 import com.snf.util.JsonUtils;
 
 public class RestClient implements Serializable {
@@ -20,27 +22,31 @@ public class RestClient implements Serializable {
 	static final String REST_PATTERN = "/rest";
 	static final String APPLICATION_JSON = "application/json";
 	static final String JSON_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+	
+	private RestClient() { }
 
 	private static String montarUrlResource(String serviceResource) {
 		return String.format("%s%s%s%s", URL_BASE, REST_APP, REST_PATTERN, serviceResource);
 	}
-
-	public static <T> T httpGetJson(String serviceResource, Class<T> returnType) {
+	
+	private static WebTarget getWebTarget(String serviceResource) {
 		Client client = ClientBuilder.newClient();
-		WebTarget webResource = client.target(montarUrlResource(serviceResource));
-		String responseJson = webResource.request(APPLICATION_JSON).get(String.class);
-		T retorno = null;
-		try {
-			retorno = JsonUtils.fromJson(responseJson, returnType);
-		} catch (Exception e) {
-			e.printStackTrace();
+		return client.target(montarUrlResource(serviceResource));
+	}
+
+	public static <T> T httpGetJson(String serviceResource, Class<T> returnType) throws Exception {
+		WebTarget wt = getWebTarget(serviceResource);
+		Response response = wt.request(APPLICATION_JSON).get();
+		if(response.getStatus() == Status.OK.getStatusCode()) {
+			return response.readEntity(returnType);
+		}else{
+			RestException re = response.readEntity(RestException.class);
+			throw new Exception(re.getMessage());
 		}
-		return retorno;
 	}
 
 	public static <T> List<T> httpGetJsonCollection(String serviceResource, Class<T> returnType) {
-		Client client = ClientBuilder.newClient();
-		WebTarget webResource = client.target(montarUrlResource(serviceResource));
+		WebTarget webResource = getWebTarget(serviceResource);
 		String responseJson = webResource.request(APPLICATION_JSON).get(String.class);
 		List<T> tp = null;
 		try {
@@ -64,17 +70,22 @@ public class RestClient implements Serializable {
 		return registros;
 	}
 
-	public static <T> T httpPostJson(String serviceResource, Class<T> returnType, Object param) {
-		Client client = ClientBuilder.newClient();
-		WebTarget webResource = client.target(montarUrlResource(serviceResource));
+	public static <T> T httpPostJson(String serviceResource, Object param) throws Exception {
+		return httpPostJson(serviceResource, null, param);
+	}
+	
+	public static <T> T httpPostJson(String serviceResource, Class<T> returnType, Object param) throws Exception {
+		WebTarget webResource = getWebTarget(serviceResource);
 		Response response = webResource.request(APPLICATION_JSON).accept(APPLICATION_JSON).post(Entity.json(param));
-		T retorno = null;
-		try {
-			retorno = JsonUtils.fromJson(response.readEntity(String.class), returnType);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(response.getStatus() == Status.OK.getStatusCode()) {
+			if(response.hasEntity())
+				return response.readEntity(returnType);
+			else
+				return null;
+		}else{
+			RestException re = response.readEntity(RestException.class);
+			throw new Exception(re.getMessage());
 		}
-		return retorno;
 	}
 
 }
