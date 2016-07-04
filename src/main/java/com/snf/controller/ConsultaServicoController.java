@@ -16,6 +16,7 @@ import com.snf.lazyModel.ServicoLazyDataModel;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.model.Usuario;
+import com.snf.rest.RestClient;
 import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
 import com.snf.util.DataUtil;
@@ -53,8 +54,9 @@ public class ConsultaServicoController implements Serializable {
 		Usuario userLogado = commonsController.getUsuarioLogado();
 		if (userLogado.possuiPermissao(Permissao.FUNCIONARIO)) {
 			consultaServicoVM.setTipoFuncionarioLogado(true);
-			consultaServicoVM.getServicos().getFiltro().setFuncionario((Funcionario) userLogado);
-			consultaServicoVM.setFuncionario((Funcionario) userLogado);
+			consultaServicoVM.getServicos().getFiltro().setIdFuncionario(userLogado.getIdUsuario());
+			Funcionario func = RestClient.httpGetJson("/funcionarios/"+userLogado.getIdUsuario(), Funcionario.class);
+			consultaServicoVM.setFuncionario(func);
 		} else {
 			consultaServicoVM.setTipoFuncionarioLogado(false);
 			funcionarios = funcionarioService.getAll();
@@ -65,7 +67,7 @@ public class ConsultaServicoController implements Serializable {
 	public void calcularSomaTotalPesquisa() {
 		if (periodoPesquisaValido()) {
 			FiltroConsultaServicoVO filtro = ((ServicoLazyDataModel) consultaServicoVM.getServicos()).getFiltro();
-			valorTotalPesquisa = servicoService.getSomaTotalServicos(filtro);
+			valorTotalPesquisa = RestClient.httpPostJson("/servicos/somaTotal", Double.class, filtro);
 		} else
 			MessagesUtils.exibirMensagemErro("mensagem.erro.pesquisa.periodo");
 	}

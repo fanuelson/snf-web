@@ -5,16 +5,14 @@ import java.io.Serializable;
 import javax.inject.Inject;
 
 import com.snf.abstractLazyModel.AbstractLazyDataModel;
+import com.snf.dto.ConsultaServicoDTO;
 import com.snf.model.Servico;
-import com.snf.service.ServicoService;
+import com.snf.rest.RestClient;
 import com.snf.vo.FiltroConsultaServicoVO;
 
 public class ServicoLazyDataModel extends AbstractLazyDataModel<Servico> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	@Inject
-	private ServicoService servicoService;
 	
 	@Inject
 	private FiltroConsultaServicoVO filtro;
@@ -29,7 +27,9 @@ public class ServicoLazyDataModel extends AbstractLazyDataModel<Servico> impleme
 
 	@Override
 	public PaginaDataModel<Servico> buscarPaginado(PaginaDataModel<Servico> pagina) {
-		return servicoService.getServicosByPeriodoAndFuncionario(filtro, pagina);
+		ConsultaServicoDTO dto = new ConsultaServicoDTO(pagina, filtro);
+		dto = RestClient.httpPostJson("/servicos/consultarPaginado", ConsultaServicoDTO.class, dto);
+		return dto.getPagina();
 	}
 
 }

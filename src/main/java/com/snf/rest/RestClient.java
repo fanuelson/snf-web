@@ -34,14 +34,14 @@ public class RestClient implements Serializable {
 		return client.target(montarUrlResource(serviceResource));
 	}
 
-	public static <T> T httpGetJson(String serviceResource, Class<T> returnType) throws Exception {
+	public static <T> T httpGetJson(String serviceResource, Class<T> returnType) throws RuntimeException {
 		WebTarget wt = getWebTarget(serviceResource);
 		Response response = wt.request(APPLICATION_JSON).get();
 		if(response.getStatus() == Status.OK.getStatusCode()) {
 			return response.readEntity(returnType);
 		}else{
 			RestException re = response.readEntity(RestException.class);
-			throw new Exception(re.getMessage());
+			throw new RuntimeException(re.getMessage());
 		}
 	}
 
@@ -70,11 +70,11 @@ public class RestClient implements Serializable {
 		return registros;
 	}
 
-	public static <T> T httpPostJson(String serviceResource, Object param) throws Exception {
+	public static <T> T httpPostJson(String serviceResource, Object param) throws RuntimeException {
 		return httpPostJson(serviceResource, null, param);
 	}
 	
-	public static <T> T httpPostJson(String serviceResource, Class<T> returnType, Object param) throws Exception {
+	public static <T> T httpPostJson(String serviceResource, Class<T> returnType, Object param) throws RuntimeException {
 		WebTarget webResource = getWebTarget(serviceResource);
 		Response response = webResource.request(APPLICATION_JSON).accept(APPLICATION_JSON).post(Entity.json(param));
 		if(response.getStatus() == Status.OK.getStatusCode()) {
@@ -84,7 +84,7 @@ public class RestClient implements Serializable {
 				return null;
 		}else{
 			RestException re = response.readEntity(RestException.class);
-			throw new Exception(re.getMessage());
+			throw new RuntimeException(re.getMessage());
 		}
 	}
 

@@ -30,7 +30,7 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 					.from(Servico.class, "s")
 					.where("(:dataInicial IS NULL OR  s.dataInicio >= :dataInicial)", DataUtil.getDataHoraZerada(filtro.getDataInicial()))
 					.and("(:dataFinal IS NULL OR s.dataInicio <= :dataFinal)", DataUtil.getDataHoraFinalDia(filtro.getDataFinal()))
-					.and("(:func = null OR s.funcionario = :func)", filtro.getFuncionario())
+					.and("(:func = null OR s.funcionario.idUsuario = :func)", filtro.getIdFuncionario())
 					.contruir(getManager())
 					.getResultList();
 
@@ -49,7 +49,7 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 					.from(Servico.class, "s")
 					.where("(:dataInicial IS NULL OR  s.dataInicio >= :dataInicial)", DataUtil.getDataHoraZerada(filtro.getDataInicial()))
 					.and("(:dataFinal IS NULL OR s.dataInicio <= :dataFinal)", DataUtil.getDataHoraFinalDia(filtro.getDataFinal()))
-					.and("(:func = null OR s.funcionario = :func)", filtro.getFuncionario())
+					.and("(:func = null OR s.funcionario.idUsuario = :func)", filtro.getIdFuncionario())
 					.contruirPaginado(getManager(), pagina, Servico.class);
 
 		} catch (Exception e) {
@@ -69,7 +69,7 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 					.from(Servico.class, "s")
 					.where("(:dataInicial=null OR DATE(s.dataInicio) >= :dataInicial)", DataUtil.getDataHoraZerada(filtro.getDataInicial()))
 					.and("(:dataFinal=null OR DATE(s.dataInicio) <= :dataFinal)", DataUtil.getDataHoraFinalDia(filtro.getDataFinal()))
-					.and("(s.funcionario = :Func OR null = :Func )", filtro.getFuncionario())
+					.and("(:func = null OR s.funcionario.idUsuario = :func)", filtro.getIdFuncionario())
 					.groupBy("extract(day from s.dataInicio)")
 					.orderBy("s.dataInicio").asc()
 					.contruir(getManager(), RelatorioServicoVO.class)
@@ -91,7 +91,7 @@ public class ServicoDAO extends GenericDAO<Servico, Long> {
 					.from(Servico.class, "s")
 					.where("(:dataInicial=null OR DATE(s.dataInicio) >= :dataInicial)", DataUtil.getDataHoraZerada(filtro.getDataInicial()))
 					.and("(:dataFinal=null OR DATE(s.dataInicio) <= :dataFinal)", DataUtil.getDataHoraFinalDia(filtro.getDataFinal()))
-					.and("(s.funcionario = :Func OR null = :Func )", filtro.getFuncionario())
+					.and("(:func = null OR s.funcionario.idUsuario = :func)", filtro.getIdFuncionario())
 					.and("s.valor IS NOT NULL")
 					.contruir(getManager(), Double.class)
 					.getSingleResult();

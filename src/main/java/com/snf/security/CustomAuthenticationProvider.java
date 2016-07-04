@@ -2,6 +2,7 @@ package com.snf.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.snf.library.Encriptador;
+import com.snf.model.Role;
 import com.snf.model.Usuario;
 import com.snf.rest.RestClient;
 import com.snf.util.MessagesUtils;
@@ -40,6 +42,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			
 			if(enc.checkPassword(password, usuario.getSenha())){
 				Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
+				List<Role> roles = RestClient.httpGetJsonCollection("/usuarios/"+username+"/roles", Role.class);
+				usuario.setRoles(roles);
 				grantedAuths.addAll(usuario.getAuthorities());
 				auth = getAuth(usuario);
 			}else{
@@ -47,7 +51,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 				throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.login"));
 			}
 			
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			log.error(e);
 			throw new BadCredentialsException(e.getMessage());
 		}

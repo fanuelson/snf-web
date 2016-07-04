@@ -9,9 +9,9 @@
 				<p:column style="margin:auto">
 					<p:outputLabel value="#{msg['label.campo.funcionario']}" for="funcionario" />
 					<p:selectOneMenu id="funcionario" filter="true" filterMatchMode="contains" converter="funcionarioConverter"
-						value="#{relatorioServicoController.relatorioServicoVM.filtro.funcionario}">
+						value="#{relatorioServicoController.relatorioServicoVM.filtro.idFuncionario}">
 						<c:selectItem itemLabel="#{msg['label.todos']}" noSelectionOption="true" />
-						<c:selectItems value="#{relatorioServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario}"
+						<c:selectItems value="#{relatorioServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario.idUsuario}"
 							itemLabel="#{funcionario.nome}" />
 					</p:selectOneMenu>
 				</p:column>

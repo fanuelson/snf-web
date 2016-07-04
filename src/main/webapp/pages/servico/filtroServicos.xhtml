@@ -7,9 +7,9 @@
 				<p:column rendered="#{not consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}">
 					<p:outputLabel style="display:inherit" value="#{msg['label.campo.funcionario']}" for="funcionario" />
 					<p:selectOneMenu style="width:250px" id="funcionario"
-						value="#{consultaServicoController.consultaServicoVM.servicos.filtro.funcionario}" converter="funcionarioConverter">
+						value="#{consultaServicoController.consultaServicoVM.servicos.filtro.idFuncionario}">
 						<c:selectItem itemLabel="#{msg['label.todos']}" noSelectionOption="true" />
-						<c:selectItems value="#{consultaServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario}"
+						<c:selectItems value="#{consultaServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario.idUsuario}"
 							itemLabel="#{funcionario.nome}" />
 					</p:selectOneMenu>
 				</p:column>

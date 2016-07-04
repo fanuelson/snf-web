@@ -3,16 +3,13 @@ package com.snf.vo;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.snf.model.Funcionario;
-
 public class FiltroConsultaServicoVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Date dataInicial;
 	private Date dataFinal;
-
-	private Funcionario funcionario;
+	private Long idFuncionario;
 
 	public Date getDataInicial() {
 		return dataInicial;
@@ -30,12 +27,12 @@ public class FiltroConsultaServicoVO implements Serializable {
 		this.dataFinal = dataFinal;
 	}
 
-	public Funcionario getFuncionario() {
-		return funcionario;
+	public Long getIdFuncionario() {
+		return idFuncionario;
 	}
 
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
+	public void setIdFuncionario(Long idFuncionario) {
+		this.idFuncionario = idFuncionario;
 	}
 
 }
