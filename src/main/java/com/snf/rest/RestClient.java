@@ -10,6 +10,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.codehaus.jackson.map.ObjectMapper;
+
 import com.snf.exception.RestException;
 import com.snf.util.JsonUtils;
 
@@ -76,7 +78,13 @@ public class RestClient implements Serializable {
 	
 	public static <T> T httpPostJson(String serviceResource, Class<T> returnType, Object param) throws RuntimeException {
 		WebTarget webResource = getWebTarget(serviceResource);
-		Response response = webResource.request(APPLICATION_JSON).accept(APPLICATION_JSON).post(Entity.json(param));
+		String om = "";
+		try{
+			om = new ObjectMapper().writeValueAsString(param);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		Response response = webResource.request(APPLICATION_JSON).accept(APPLICATION_JSON).post(Entity.json(om));
 		if(response.getStatus() == Status.OK.getStatusCode()) {
 			if(response.hasEntity())
 				return response.readEntity(returnType);
