@@ -4,8 +4,8 @@
 	<ui:define name="corpoLayout">
 
 		<form action="#{request.contextPath}/j_spring_security_check" method="post">
-			<p:panel style="margin:auto;width:300px;margin-top:20px;box-shadow: 10px 10px 5px #888888;">
-				<h:panelGrid id="cadastroMesaPanel" columns="1" style="font-size:14px;text-align:center;margin:auto;">
+			<p:panel  style="margin:auto;width:300px;margin-top:20px;box-shadow: 10px 10px 5px #888888;">
+				<p:panelGrid styleClass="semBorda" id="cadastroMesaPanel" columns="1" style="font-size:14px;text-align:center;margin:auto;">
 					<h:form prependId="false">
 						<h3 style="text-align: left; margin-bottom: 2px">Login</h3>
 						<hr />
@@ -21,7 +21,7 @@
 							style="width:100px;height:30px;margin:5px" onclick="PF('statusDialog').show()" value="#{msg['label.entrar']}"
 							type="submit" />
 					</h:form>
-				</h:panelGrid>
+				</p:panelGrid>
 				<div style="text-align: center">
 					<p:outputLabel value="#{SPRING_SECURITY_LAST_EXCEPTION.message}" style="text-align:center" rendered="#{param.erro}"
 						styleClass="erro" />
