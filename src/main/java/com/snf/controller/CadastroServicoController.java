@@ -17,8 +17,8 @@ import com.snf.enums.Permissao;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.model.Usuario;
-import com.snf.rest.RestClient;
 import com.snf.service.CaixaService;
+import com.snf.service.FuncionarioService;
 import com.snf.service.ServicoService;
 import com.snf.util.DataUtil;
 import com.snf.util.MessagesUtils;
@@ -37,6 +37,9 @@ public class CadastroServicoController implements Serializable {
 
 	@Inject
 	private CaixaService caixaService;
+	
+	@Inject
+	private FuncionarioService funcionarioService;
 
 	@Inject
 	private CadastroServicoVM cadastroServicoVM;
@@ -50,13 +53,12 @@ public class CadastroServicoController implements Serializable {
 	public void init() {
 		Usuario usuarioLogado = commons.getUsuarioLogado();
 		if (usuarioLogado.possuiPermissao(Permissao.FUNCIONARIO)) {
-			Funcionario func = RestClient.httpGetJson("/funcionarios/"+usuarioLogado.getIdUsuario(), Funcionario.class);
-			cadastroServicoVM.getServico().setFuncionario(func);
+			cadastroServicoVM.getServico().setFuncionario((Funcionario) usuarioLogado);
 			cadastroServicoVM.setTipoFuncionarioLogado(true);
 			
 		} else {
 			cadastroServicoVM.setTipoFuncionarioLogado(false);
-			funcionarios = RestClient.httpGetJsonCollection("/funcionarios", Funcionario.class);
+			funcionarios = funcionarioService.getAll();
 		}
 		cadastroServicoVM.setNaoExisteCaixaAberto(!caixaService.existeCaixaAberto());
 	}

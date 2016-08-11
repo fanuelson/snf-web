@@ -8,7 +8,7 @@
 				layout="grid" style="margin-top:10px">
 				<p:column style="margin:auto">
 					<p:outputLabel value="#{msg['label.campo.funcionario']}" for="funcionario" />
-					<p:selectOneMenu id="funcionario" filter="true" filterMatchMode="contains" converter="funcionarioConverter"
+					<p:selectOneMenu id="funcionario" filter="true" filterMatchMode="contains"
 						value="#{relatorioServicoController.relatorioServicoVM.filtro.idFuncionario}">
 						<c:selectItem itemLabel="#{msg['label.todos']}" noSelectionOption="true" />
 						<c:selectItems value="#{relatorioServicoController.funcionarios}" var="funcionario" itemValue="#{funcionario.idUsuario}"

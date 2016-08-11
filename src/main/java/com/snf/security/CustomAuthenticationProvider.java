@@ -2,7 +2,10 @@ package com.snf.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+
+import javax.ejb.EJBException;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +18,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.snf.library.Encriptador;
-import com.snf.model.Role;
 import com.snf.model.Usuario;
-import com.snf.rest.RestClient;
+import com.snf.service.UsuarioService;
 import com.snf.util.MessagesUtils;
 
 @Component
@@ -38,22 +40,23 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String password = (String) auth.getCredentials();
 		
 		try{
-			Usuario usuario = RestClient.httpGetJson("/usuarios/"+username, Usuario.class);
+			UsuarioService us = (UsuarioService) new InitialContext().lookup("java:global/snf-web/UsuarioService");
+			Usuario usuario = (Usuario) us.getUsuario(username);
 			
 			if(enc.checkPassword(password, usuario.getSenha())){
 				Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
-				List<Role> roles = RestClient.httpGetJsonCollection("/usuarios/"+username+"/roles", Role.class);
-				usuario.setRoles(roles);
 				grantedAuths.addAll(usuario.getAuthorities());
 				auth = getAuth(usuario);
 			}else{
 				log.error(new BadCredentialsException("SENHA ERRADA").toString());
-				throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.login"));
+				throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.login.dados.invalidos"));
 			}
 			
-		} catch (RuntimeException e) {
-			log.error(e);
-			throw new BadCredentialsException(e.getMessage());
+		} catch (EJBException persistenceException){
+  			log.error(persistenceException.toString());
+  			throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.nenhum.registro.encontrado")); 
+		} catch (NamingException e) {
+			throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.conexao.login"));
 		}
 		
 		return auth ;

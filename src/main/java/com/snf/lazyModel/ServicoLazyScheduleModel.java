@@ -9,12 +9,15 @@ import javax.inject.Inject;
 import org.primefaces.model.LazyScheduleModel;
 
 import com.snf.model.Servico;
-import com.snf.rest.RestClient;
+import com.snf.service.ServicoService;
 import com.snf.vo.FiltroConsultaServicoVO;
 
 public class ServicoLazyScheduleModel extends LazyScheduleModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private ServicoService servicoService;
 	
 	@Inject
 	private FiltroConsultaServicoVO filtro;
@@ -23,7 +26,7 @@ public class ServicoLazyScheduleModel extends LazyScheduleModel implements Seria
 	public void loadEvents(Date start, Date end) {
 		filtro.setDataInicial(start);
 		filtro.setDataFinal(end);
-		List<Servico> servicos = RestClient.httpPostJsonCollection("/servicos/consultar", Servico.class, filtro);
+		List<Servico> servicos = servicoService.getServicosByPeriodoAndFuncionario(filtro);
 		for (Servico servico : servicos) {
 			addEvent(servico);
 		}
