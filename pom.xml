@@ -343,12 +343,6 @@
 
 		<dependency>
 			<groupId>com.ffnunes</groupId>
-			<artifactId>snf-model</artifactId>
-			<version>v1.0.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.ffnunes</groupId>
 			<artifactId>snf-util</artifactId>
 			<version>v1.0.0</version>
 		</dependency>

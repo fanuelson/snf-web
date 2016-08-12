@@ -7,13 +7,6 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/salaoDS</jta-data-source>
 		
-		<class>com.snf.model.Usuario</class>
-		<class>com.snf.model.Transacao</class>
-		<class>com.snf.model.Caixa</class>
-		<class>com.snf.model.Servico</class>
-		<class>com.snf.model.Role</class>
-		<class>com.snf.model.Funcionario</class>
-		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/salaoBeleza" />
 			<property name="javax.persistence.jdbc.user" value="root" />
