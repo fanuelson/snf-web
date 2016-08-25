@@ -1,6 +1,5 @@
 package com.snf.builder;
 
-import com.snf.enums.TipoUsuario;
 import com.snf.model.Usuario;
 
 public class UsuarioBuilder {
@@ -22,10 +21,6 @@ public class UsuarioBuilder {
 	}
 	public UsuarioBuilder comSenha(String senha) {
 		usuario.setSenha(senha);
-		return this;
-	}
-	public UsuarioBuilder doTipo(TipoUsuario tipo) {
-		usuario.setTipo(tipo);
 		return this;
 	}
 	

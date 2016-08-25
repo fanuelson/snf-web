@@ -22,13 +22,13 @@
 							<p:inputText id="loginUsuario" value="#{consultaFuncionarioController.edicaoUsuarioVM.func.login}" />
 							
 							<p:outputLabel for="tipoUsuario" value="#{msg['label.tipo']}" />
-							<p:selectOneMenu id="tipoUsuario" style="width:100px" converter="tipoUsuarioConverter" required="true"
+							<p:selectOneMenu id="tipoUsuario" style="width:100px" required="true"
 								value="#{consultaFuncionarioController.edicaoUsuarioVM.tipoFuncionarioEmEdicao}" filter="true"
 								filterMatchMode="contains">
 								<c:selectItem itemLabel="#{msg['label.selecione']}"
 									itemValue="#{consultaFuncionarioController.edicaoUsuarioVM.tipoFuncionarioEmEdicao}" />
-								<c:selectItems value="#{consultaFuncionarioController.edicaoUsuarioVM.tiposUsuario}" var="tipoUsuario"
-									itemValue="#{tipoUsuario}" itemLabel="#{tipoUsuario.permissao}" />
+								<c:selectItems value="#{consultaFuncionarioController.edicaoUsuarioVM.permissoes}" var="permissao"
+									itemValue="#{permissao}" itemLabel="#{permissao}" />
 							</p:selectOneMenu>
 							
 						</h:panelGrid>

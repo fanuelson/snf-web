@@ -10,10 +10,8 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import com.snf.enums.TipoUsuario;
 import com.snf.model.Funcionario;
 import com.snf.service.FuncionarioService;
-import com.snf.service.TipoUsuarioService;
 import com.snf.util.CollectionsUtils;
 import com.snf.util.MessagesUtils;
 import com.snf.vm.EdicaoUsuarioVM;
@@ -30,9 +28,6 @@ public class ConsultaFuncionarioController implements Serializable {
 	private FuncionarioService funcionarioService;
 	
 	@Inject
-	private TipoUsuarioService tipoUsuarioService;
-
-	@Inject
 	private EdicaoUsuarioVM edicaoUsuarioVM;
 
 	private List<Funcionario> funcionarios;
@@ -42,7 +37,6 @@ public class ConsultaFuncionarioController implements Serializable {
 	@PostConstruct
 	public void init() {
 		funcionarios = funcionarioService.getAllFetchRoles();
-		edicaoUsuarioVM.setTiposUsuario(tipoUsuarioService.getAll());
 	}
 
 	public void remover(Funcionario funcionario) {
@@ -59,7 +53,7 @@ public class ConsultaFuncionarioController implements Serializable {
 	}
 
 	public void prepararEdicao(Funcionario func) {
-		edicaoUsuarioVM.setTipoFuncionarioEmEdicao(func.getRoles().get(0).getTipoUsuario());
+		edicaoUsuarioVM.setTipoFuncionarioEmEdicao(func.getRoles().get(0).getPermissao());
 		edicaoUsuarioVM.setFunc(func);
 	}
 
@@ -77,8 +71,7 @@ public class ConsultaFuncionarioController implements Serializable {
 	}
 	
 	private void preencherTipoUsuario(Funcionario func) {
-		func.getRoles().get(0).setTipoUsuario(edicaoUsuarioVM.getTipoFuncionarioEmEdicao());
-		func.setTipo(TipoUsuario.getTipoByRoles(func.getRoles()));
+		func.getRoles().get(0).setPermissao(edicaoUsuarioVM.getTipoFuncionarioEmEdicao());
 	}
 
 	public List<Funcionario> getFuncionarios() {

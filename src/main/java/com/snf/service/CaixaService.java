@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -12,6 +13,7 @@ import com.snf.dao.CaixaDAO;
 import com.snf.lazyModel.PaginaDataModel;
 import com.snf.model.Caixa;
 
+@Stateless
 public class CaixaService implements Serializable {
 
 	private static final long serialVersionUID = 1L;

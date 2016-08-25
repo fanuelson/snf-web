@@ -1,7 +1,6 @@
 package com.snf.controller;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -13,9 +12,7 @@ import org.apache.log4j.Logger;
 import com.snf.library.Encripta;
 import com.snf.model.Funcionario;
 import com.snf.model.Role;
-import com.snf.model.TipoUsuario;
 import com.snf.service.FuncionarioService;
-import com.snf.service.TipoUsuarioService;
 import com.snf.util.MessagesUtils;
 import com.snf.vm.CadastroFuncionarioVM;
 
@@ -34,16 +31,10 @@ public class CadastroFuncionarioController implements Serializable {
 	private CadastroFuncionarioVM cadastroFuncionarioVM;
 	
 	@Inject
-	private TipoUsuarioService tipoUsuarioService;
-	
-	@Inject
 	private Encripta encriptador;
-	
-	private List<TipoUsuario> tiposUsuario;
 	
 	@PostConstruct
 	public void init() {
-		tiposUsuario = tipoUsuarioService.getAll();
 	}
 	
 	public void salvar(){
@@ -69,7 +60,6 @@ public class CadastroFuncionarioController implements Serializable {
 		role.setUsuario(func);
 		String senha = cadastroFuncionarioVM.getSenha();
 		func.getRoles().add(role);
-		func.setTipo(com.snf.enums.TipoUsuario.getTipoByRoles(func.getRoles()));
 		func.setSenha(encriptador.encriptar(senha));
 	}
 
@@ -96,12 +86,4 @@ public class CadastroFuncionarioController implements Serializable {
 		return senha.equals(senhaNovamente);
 	}
 
-	public List<TipoUsuario> getTiposUsuario() {
-		return tiposUsuario;
-	}
-
-	public void setTiposUsuario(List<TipoUsuario> tiposUsuario) {
-		this.tiposUsuario = tiposUsuario;
-	}
-	
 }

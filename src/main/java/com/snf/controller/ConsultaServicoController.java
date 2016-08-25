@@ -11,7 +11,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import com.snf.enums.TipoUsuario;
+import com.snf.enums.Permissao;
 import com.snf.lazyModel.ServicoLazyDataModel;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
@@ -51,9 +51,9 @@ public class ConsultaServicoController implements Serializable {
 	public void init() {
 		valorTotalPesquisa = 0;
 		Usuario userLogado = commonsController.getUsuarioLogado();
-		if (userLogado.getTipo().equals(TipoUsuario.FUNCIONARIO)) {
-			consultaServicoVM.getFiltro().setFuncionario((Funcionario) userLogado);
+		if (userLogado.possuiPermissao(Permissao.FUNCIONARIO)) {
 			consultaServicoVM.setTipoFuncionarioLogado(true);
+			consultaServicoVM.getServicos().getFiltro().setIdFuncionario(((Funcionario) userLogado).getIdUsuario());
 			consultaServicoVM.setFuncionario((Funcionario) userLogado);
 		} else {
 			consultaServicoVM.setTipoFuncionarioLogado(false);
@@ -81,8 +81,8 @@ public class ConsultaServicoController implements Serializable {
 	}
 
 	private boolean periodoPesquisaValido() {
-		Date dataInicialPesquisada = consultaServicoVM.getFiltro().getDataInicial();
-		Date dataFinalPesquisada = consultaServicoVM.getFiltro().getDataFinal();
+		Date dataInicialPesquisada = consultaServicoVM.getServicos().getFiltro().getDataInicial();
+		Date dataFinalPesquisada = consultaServicoVM.getServicos().getFiltro().getDataFinal();
 		if (DataUtil.getDataHoraZerada(dataInicialPesquisada) != null
 				&& DataUtil.getDataHoraFinalDia(dataFinalPesquisada) != null) {
 			return DataUtil.getDataHoraZerada(dataInicialPesquisada)

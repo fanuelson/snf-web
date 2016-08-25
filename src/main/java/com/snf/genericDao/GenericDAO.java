@@ -4,19 +4,20 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
 
 @SuppressWarnings("unchecked")
+
 public abstract class GenericDAO<T , ID> implements Serializable {
 
 	private static final long serialVersionUID = 3836419209780168990L;
 	
 	private static final Logger log = Logger.getLogger(GenericDAO.class);
 	
-	@Inject
+	@PersistenceContext
 	private EntityManager manager;
 	
     public T getById(ID id) {
@@ -24,17 +25,8 @@ public abstract class GenericDAO<T , ID> implements Serializable {
     }
  
     public T save(T entity) {
-    	try{
-    		manager.getTransaction().begin();
-            entity = manager.merge(entity);
-            manager.getTransaction().commit();
-    	}catch(Exception e){
-    		manager.getTransaction().rollback();
-    		log.error(e.toString());
-    		throw e;    		
-    	}
+        entity = manager.merge(entity);
     	return entity;
-    	
     }
 	
 	public boolean delete(T entity) {

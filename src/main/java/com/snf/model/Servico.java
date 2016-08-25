@@ -175,6 +175,7 @@ public class Servico implements Serializable, ScheduleEvent {
 		return status != null && status.equals(StatusServico.AGENDADO);
 	}
 
+	
 	@Override
 	public String getId() {
 		if (this.idServico != null)
@@ -182,35 +183,42 @@ public class Servico implements Serializable, ScheduleEvent {
 		return null;
 	}
 
+	
 	public void setId(String id) {
 		//MÉTODO VAZIO USADO APENAS PARA IMPLEMENTAR SCHEDULE EVENT
 	}
 
+	
 	@Override
 	public Object getData() {
 		return null;
 	}
 
+	
 	@Override
 	public String getTitle() {
 		return this.nome + "-" + funcionario.getNome();
 	}
 
+	
 	@Override
 	public Date getStartDate() {
 		return this.dataInicio;
 	}
 
+	
 	@Override
 	public Date getEndDate() {
 		return this.dataFim;
 	}
 
+	
 	@Override
 	public boolean isAllDay() {
 		return false;
 	}
 
+	
 	@Override
 	public String getStyleClass() {
 		if (status != null){
@@ -219,6 +227,7 @@ public class Servico implements Serializable, ScheduleEvent {
 		return null;
 	}
 	
+	
 	public String getStyleClassRow() {
 		if(status!=null) {
 			return status.getEstiloCssRow();
@@ -226,14 +235,24 @@ public class Servico implements Serializable, ScheduleEvent {
 		return null;
 	}
 
+	
 	@Override
 	public boolean isEditable() {
 		return true;
 	}
 
+	
 	@Override
 	public String getDescription() {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "Servico [idServico=" + idServico + ", nome=" + nome + ", descricao=" + descricao + ", funcionario="
+				+ funcionario + ", valor=" + valor + ", nomeCliente=" + nomeCliente + ", dataInicio=" + dataInicio
+				+ ", dataFim=" + dataFim + ", status=" + status + "]";
+	}
+
+	
 }

@@ -3,8 +3,9 @@ package com.snf.security;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceException;
+import javax.ejb.EJBException;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 import com.snf.library.Encriptador;
 import com.snf.model.Usuario;
-import com.snf.service.CustomUserService;
+import com.snf.service.UsuarioService;
 import com.snf.util.MessagesUtils;
 
 @Component
@@ -28,9 +29,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	@Autowired
 	private Encriptador enc;
-	
-	@Autowired
-	private CustomUserService customUserService;
 	
 	public CustomAuthenticationProvider() {
 		super();
@@ -42,26 +40,21 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String password = (String) auth.getCredentials();
 		
 		try{
-			Usuario usuario = (Usuario) customUserService.loadUserByUsername(username);
+			UsuarioService us = (UsuarioService) new InitialContext().lookup("java:global/snf-web/UsuarioService");
+			Usuario usuario = (Usuario) us.getUsuario(username);
 			
 			if(enc.checkPassword(password, usuario.getSenha())){
 				Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
 				grantedAuths.addAll(usuario.getAuthorities());
 				auth = getAuth(usuario);
-				usuario.zerarTentativas();
-				customUserService.atualizar(usuario);
 			}else{
-				usuario.incrementarTentativas();
-				customUserService.atualizar(usuario);
-				log.error(new BadCredentialsException("SENHA ERRADA").toString());
-				throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.login"));
+				throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.login.dados.invalidos"));
 			}
 			
-		}catch(NoResultException e){
-			log.error(e);
-			throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.nenhum.registro.encontrado"));
-		}catch(PersistenceException persistenceException){
-			log.error(persistenceException);
+		} catch (EJBException persistenceException){
+  			log.error(persistenceException.toString());
+  			throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.nenhum.registro.encontrado")); 
+		} catch (NamingException e) {
 			throw new BadCredentialsException(MessagesUtils.getMessage("mensagem.erro.conexao.login"));
 		}
 		

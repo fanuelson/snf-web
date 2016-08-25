@@ -1,14 +1,17 @@
 package com.snf.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.springframework.security.core.GrantedAuthority;
+
+import com.snf.enums.Permissao;
 
 @Entity
 public class Role implements GrantedAuthority {
@@ -20,17 +23,17 @@ public class Role implements GrantedAuthority {
 	@Column(name = "idRole")
 	private Long idRole;
 
-	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@Enumerated(EnumType.STRING)
+	@Column(name = "permissao", nullable = true)
+	private Permissao permissao;
+	
+	@ManyToOne
 	@JoinColumn(name = "idUsuario", nullable = true)
 	private Usuario usuario;
 
-	@ManyToOne
-	@JoinColumn(name = "idTipoUsuario", nullable = true)
-	private TipoUsuario tipoUsuario;
-
 	@Override
 	public String getAuthority() {
-		return this.tipoUsuario.getPermissao().name();
+		return getPermissao().name();
 	}
 
 	public Long getId() {
@@ -40,6 +43,14 @@ public class Role implements GrantedAuthority {
 	public void setId(Long id) {
 		this.idRole = id;
 	}
+	
+	public Permissao getPermissao() {
+		return permissao;
+	}
+
+	public void setPermissao(Permissao permissao) {
+		this.permissao = permissao;
+	}
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -47,14 +58,6 @@ public class Role implements GrantedAuthority {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public TipoUsuario getTipoUsuario() {
-		return tipoUsuario;
-	}
-
-	public void setTipoUsuario(TipoUsuario tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
 	}
 
 	@Override

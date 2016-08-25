@@ -1,10 +1,9 @@
 package com.snf.vm;
 
 import java.io.Serializable;
-import java.util.List;
 
+import com.snf.enums.Permissao;
 import com.snf.model.Funcionario;
-import com.snf.model.TipoUsuario;
 
 public class EdicaoUsuarioVM implements Serializable {
 
@@ -12,9 +11,12 @@ public class EdicaoUsuarioVM implements Serializable {
 	
 	private Funcionario func;
 	
-	private List<TipoUsuario> tiposUsuario;
 	
-	private TipoUsuario tipoFuncionarioEmEdicao;
+	private Permissao tipoFuncionarioEmEdicao;
+	
+	public Permissao[] getPermissoes() {
+		return Permissao.values();
+	}
 
 	public Funcionario getFunc() {
 		return func;
@@ -24,19 +26,11 @@ public class EdicaoUsuarioVM implements Serializable {
 		this.func = func;
 	}
 
-	public List<TipoUsuario> getTiposUsuario() {
-		return tiposUsuario;
-	}
-
-	public void setTiposUsuario(List<TipoUsuario> tiposUsuario) {
-		this.tiposUsuario = tiposUsuario;
-	}
-
-	public TipoUsuario getTipoFuncionarioEmEdicao() {
+	public Permissao getTipoFuncionarioEmEdicao() {
 		return tipoFuncionarioEmEdicao;
 	}
 
-	public void setTipoFuncionarioEmEdicao(TipoUsuario tipoFuncionarioEmEdicao) {
+	public void setTipoFuncionarioEmEdicao(Permissao tipoFuncionarioEmEdicao) {
 		this.tipoFuncionarioEmEdicao = tipoFuncionarioEmEdicao;
 	}
 	

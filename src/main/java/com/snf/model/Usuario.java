@@ -7,8 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -18,7 +16,7 @@ import javax.persistence.OneToMany;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.snf.enums.TipoUsuario;
+import com.snf.enums.Permissao;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -43,15 +41,20 @@ public class Usuario implements UserDetails {
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<Role> roles = new ArrayList<>();
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo")
-	private TipoUsuario tipo;
-
 	@Column(name = "tentativas")
 	private Integer tentativas = 0;
-
+	
 	public void incrementarTentativas() {
 		this.tentativas += 1;
+	}
+	
+	public boolean possuiPermissao(Permissao p) {
+		for (Role role : roles) {
+			if(role.getPermissao().equals(p)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void zerarTentativas() {
@@ -93,17 +96,9 @@ public class Usuario implements UserDetails {
 	public List<Role> getRoles() {
 		return roles;
 	}
-
+	
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
-	}
-
-	public TipoUsuario getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoUsuario tipo) {
-		this.tipo = tipo;
 	}
 
 	public Integer getTentativas() {
@@ -139,36 +134,37 @@ public class Usuario implements UserDetails {
 		return true;
 	}
 
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.getRoles();
 	}
-
+	
 	@Override
 	public String getPassword() {
 		return senha;
 	}
-
+	
 	@Override
 	public String getUsername() {
 		return login;
 	}
-
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isAccountNonLocked() {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isEnabled() {
 		return false;

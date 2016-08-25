@@ -3,6 +3,7 @@ package com.snf.service;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -10,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.snf.dao.FuncionarioDAO;
 import com.snf.model.Funcionario;
 
+@Stateless
 public class FuncionarioService implements Serializable {
 
 	private static final long serialVersionUID = 2470118587391107194L;

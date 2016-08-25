@@ -13,7 +13,7 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 
-import com.snf.enums.TipoUsuario;
+import com.snf.enums.Permissao;
 import com.snf.model.Funcionario;
 import com.snf.model.Servico;
 import com.snf.model.Usuario;
@@ -33,13 +33,13 @@ public class CadastroServicoController implements Serializable {
 	static final Logger log = Logger.getLogger(CadastroServicoController.class);
 
 	@Inject
-	private FuncionarioService funcionarioService;
-
-	@Inject
 	private ServicoService servicoService;
 
 	@Inject
 	private CaixaService caixaService;
+	
+	@Inject
+	private FuncionarioService funcionarioService;
 
 	@Inject
 	private CadastroServicoVM cadastroServicoVM;
@@ -52,9 +52,10 @@ public class CadastroServicoController implements Serializable {
 	@PostConstruct
 	public void init() {
 		Usuario usuarioLogado = commons.getUsuarioLogado();
-		if (usuarioLogado.getTipo().equals(TipoUsuario.FUNCIONARIO)) {
+		if (usuarioLogado.possuiPermissao(Permissao.FUNCIONARIO)) {
 			cadastroServicoVM.getServico().setFuncionario((Funcionario) usuarioLogado);
 			cadastroServicoVM.setTipoFuncionarioLogado(true);
+			
 		} else {
 			cadastroServicoVM.setTipoFuncionarioLogado(false);
 			funcionarios = funcionarioService.getAll();
