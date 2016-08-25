@@ -2,7 +2,7 @@
 	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
 	template="/template/layout.xhtml">
 	<ui:define name="corpoLayout">
-
+	<c:view renderKitId="PRIMEFACES_MOBILE" />
 		<form action="#{request.contextPath}/j_spring_security_check" method="post">
 			<p:panel styleClass="semBorda"  style="border-radius: 25px;margin:auto;width:300px;margin-top:20px;box-shadow: 10px 10px 5px #888888;">
 				<h:panelGrid styleClass="semBorda" id="cadastroMesaPanel" columns="1" style="font-size:14px;text-align:center;margin:auto;">
@@ -17,7 +17,7 @@
 							<p:inputText style="float:right;padding:0px;" type="password" required="true" id="j_password" size="15" />
 						</h:panelGrid>
 
-						<p:commandButton icon="ui-icon-key" ajax="false"
+						<p:commandButton styleClass="btn-login-entrar" icon="ui-icon-key" ajax="false"
 							style="width:100px;height:30px;margin:5px" onclick="PF('statusDialog').show()" value="#{msg['label.entrar']}"
 							type="submit" />
 					</h:form>

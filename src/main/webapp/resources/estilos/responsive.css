@@ -1,0 +1,15 @@
+@media only screen and (max-width: 768px) {
+	
+	.labelTopo {
+		display: none;
+	}
+	
+	.btn-login-entrar{
+		width: 100% !important;
+		height: auto !important;
+	}
+	
+	.push {
+		height: 150px;
+	}
+}
