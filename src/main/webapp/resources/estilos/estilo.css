@@ -1,8 +1,28 @@
 html,body{
-	height:100%;
-	margin:0;	
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif !important;
   	font-size: 0.9em !important;
+  	width: 100%;
+    height: auto;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.statusDialogModal {
+	top: 200px !important;
+}
+
+.ui-page {
+	
+		background-size:contain;
+		background-position:center;
+		background:none;
+		background-size: cover;
+		background-repeat: no-repeat;
+}
+
+.ui-mobile {
+	height: auto;
+	position: inherit;
 }
 
 .styleCenter {
@@ -13,6 +33,11 @@ html,body{
 	background: rgba(20, 164, 255, 0.13) !important;
 	color: black !important;
 }
+
+.btn-login-entrar{
+		width: 100% !important;
+		height: auto !important;
+	}
 
 [class*=ui-datepicker-today] > a {
 	color: black !important;

@@ -1,15 +1,12 @@
 @media only screen and (max-width: 768px) {
 	
-	.labelTopo {
-		display: none;
+	body {
+		    background-position: center center;
+		    background-repeat: no-repeat;
+		    background-attachment: fixed;
+		    background-size: cover;
+		    background-color: #464646;
 	}
 	
-	.btn-login-entrar{
-		width: 100% !important;
-		height: auto !important;
-	}
 	
-	.push {
-		height: 150px;
-	}
 }

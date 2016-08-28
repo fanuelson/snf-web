@@ -1,35 +1,87 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:c="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-	template="/template/layout.xhtml">
-	<ui:define name="corpoLayout">
-	<c:view renderKitId="PRIMEFACES_MOBILE" />
-		<form action="#{request.contextPath}/j_spring_security_check" method="post">
-			<p:panel styleClass="semBorda"  style="border-radius: 25px;margin:auto;width:300px;margin-top:20px;box-shadow: 10px 10px 5px #888888;">
-				<h:panelGrid styleClass="semBorda" id="cadastroMesaPanel" columns="1" style="font-size:14px;text-align:center;margin:auto;">
-					<h:form prependId="false">
-						<h3 style="text-align: left; margin-bottom: 2px">Login</h3>
-						<hr />
-						<h:panelGrid style="margin: auto;" columns="2">
-							<p:outputLabel style="float:left" for="j_username" value="#{msg['label.login']}" />
-							<p:inputText style="float:right;padding:0px;" required="true" id="j_username" size="15" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	</f:facet>
+	<title>#{msg['label.nome.sistema']}</title>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	</f:facet>
 
-							<p:outputLabel style="float:left" for="j_password" value="#{msg['label.senha']}" />
-							<p:inputText style="float:right;padding:0px;" type="password" required="true" id="j_password" size="15" />
-						</h:panelGrid>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css" />
 
-						<p:commandButton styleClass="btn-login-entrar" icon="ui-icon-key" ajax="false"
-							style="width:100px;height:30px;margin:5px" onclick="PF('statusDialog').show()" value="#{msg['label.entrar']}"
-							type="submit" />
-					</h:form>
-				</h:panelGrid>
-				<div style="text-align: center">
-					<p:outputLabel value="#{SPRING_SECURITY_LAST_EXCEPTION.message}" style="text-align:center" rendered="#{param.erro}"
-						styleClass="erro" />
+
+</h:head>
+<h:body styleClass="container"
+	style="background-image:url('#{request.contextPath}/resources/imagens/backgroundCerto.jpg') !important;">
+	<f:facet name="last">
+		<h:outputStylesheet library="estilos" name="estilo.css" />
+		<h:outputStylesheet library="estilos" name="responsive.css" />
+	</f:facet>
+
+	<form action="#{request.contextPath}/j_spring_security_check" method="post">
+		<div class="row">
+			<div class="col s12 m4 l4 offset-m7 offset-l7">
+				<div class="card-panel">
+					<div class="card-content center-align">
+						<div class="row">
+							<div class="input-field col s12">
+								<p:outputLabel for="j_username" value="#{msg['label.login']}" />
+								<p:inputText required="true" id="j_username" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<p:outputLabel for="j_password" value="#{msg['label.senha']}" />
+								<p:inputText required="true" type="password" id="j_password" />
+							</div>
+						</div>
+						<div class="row">
+							<h:form prependId="false">
+								<p:commandButton styleClass="btn waves-effect waves-light  blue" style="float: right" ajax="false"
+									onclick="PF('statusDialog').show()" value="#{msg['label.entrar']}" type="submit" />
+							</h:form>
+						</div>
+						<div class="row" style="text-align: center">
+							<p:outputLabel value="#{SPRING_SECURITY_LAST_EXCEPTION.message}" style="text-align:center"
+								rendered="#{param.erro}" styleClass="erro" />
+						</div>
+					</div>
 				</div>
-			</p:panel>
-		</form>
+			</div>
+		</div>
+	</form>
 
 
+	<p:dialog styleClass="modal statusDialogModal" style="text-align:center;" width="200px" widgetVar="statusDialog" modal="true"
+		draggable="false" closable="false" resizable="false" showHeader="false">
+		<p:outputLabel value="Aguarde..." style="font-weight:bold" />
+		<div class="modal-content">
+			<div class="preloader-wrapper small active">
+				<div class="spinner-layer spinner-blue-only">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</p:dialog>
 
-	</ui:define>
-</ui:composition>
+	<h:outputScript library="js" name="global.js" />
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
+</h:body>
+</html>

@@ -77,7 +77,7 @@
 	</context-param>
     <context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>delta</param-value>
+		<param-value>none</param-value>
 	</context-param>
     
         <!-- Spring Security filter -->
