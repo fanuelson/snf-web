@@ -11,6 +11,19 @@ html,body{
 	top: 200px !important;
 }
 
+.card-panel.loginPanel{
+	margin-top: 100px !important;
+	background-color: rgba(255,255,255,0.7);
+}
+
+footer.page-footer {
+	background-color: #0fa2ff !important;
+}
+
+.ui-panelmenu-panel h3 {
+	background: #00d5ff;
+}
+
 .ui-page {
 	
 		background-size:contain;
