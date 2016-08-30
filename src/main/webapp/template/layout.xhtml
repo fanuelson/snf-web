@@ -11,31 +11,65 @@
 	<f:facet name="first">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	</f:facet>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="shortcut icon" href="#{request.contextPath}/resources/imagens/tesoura.ico" type="image/x-icon" />
 	
 </h:head>
-<h:body style="background-image:url('#{request.contextPath}/resources/imagens/imgFundo.jpg');">
+<h:body style="background: white; margin: 0px">
 	<f:facet name="last">
 		<h:outputStylesheet library="estilos" name="estilo.css" />
 		<h:outputStylesheet library="estilos" name="responsive.css" />
 	</f:facet>
-	<div id="container" class="wrapper" style="height: 100%">
+	
+	
+	 <!-- Navbar goes here -->
+     <div >
+       <ui:include src="topo.xhtml" />
+     </div>
+     <main>
+       <div class="row">
+         <div class="col s12 m10 l10" style="padding: 0" > <!-- Note that "m8 l9" was added -->
+              <ui:insert name="corpoLayout" />
+         </div>
+       </div>
+     </main>
+     <footer class="page-footer">
+          <div class="container"  >
+            <div class="row" style="padding: 20px">
+              <div class="col l6 s12">
+              	<img src="https://fanuelson.github.io/favicon.png"  style="width: 30px; height: 30px" />
+              	© 2014 Copyright FANUEL
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <ul>
+                  <li>
+                  	<img src="https://github.com/favicon.ico"  style="width: 15px; height: 15px" />
+                  	<a class="grey-text text-lighten-3" target="_blank" href="https://fanuelson.github.io/">FANUEL github.io</a>
+                  </li>
+                  <li>
+                  	<img src="https://github.com/favicon.ico"  style="width: 15px; height: 15px" />
+                  	<a class="grey-text text-lighten-3" target="_blank" href="https://github.com/fanuelson/snf-web">Project Source</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            
+            </div>
+          </div>
+        </footer>
 
-		<ui:include src="topo.xhtml" />
-		<ui:insert name="corpoLayout" />
 
-		<div class="push"></div>
-	</div>
-
-	<p:dialog style="text-align:center;padding:10px" width="200px" widgetVar="statusDialog" modal="true" draggable="false"
-		closable="false" resizable="false" showHeader="false">
+	<p:dialog styleClass="modal statusDialogModal" style="text-align:center;" width="200px" widgetVar="statusDialog" modal="true"
+		draggable="false" closable="false" resizable="false" showHeader="false">
 		<p:outputLabel value="Aguarde..." style="font-weight:bold" />
 		<br />
 		<p:graphicImage style="margin:10px" library="imagens" name="load.gif" width="40px" height="40px" />
 	</p:dialog>
 
-	<ui:include src="rodape.xhtml" />
-	
 	<h:outputScript library="js" name="global.js" />
 </h:body>
 </html>

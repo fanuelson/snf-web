@@ -18,6 +18,9 @@ html,body{
 
 footer.page-footer {
 	background-color: #0fa2ff !important;
+	position: relative;
+	top: 100px;
+	bottom: 0px;
 }
 
 .ui-panelmenu-panel h3 {
