@@ -4,13 +4,13 @@
 	<ui:define name="corpoLayout">
 
 		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
-
 		<h:form id="cadastroFuncionarioForm">
-			<p:panel header="#{msg['label.cadastro.funcionario']}" style="width:50%;margin:auto;margin:20px auto 30px auto">
+		<div style="height: 250px; margin: 0 auto !important" >
+			<p:panel styleClass="ui-g-12 ui-md-4 ui-l-4" header="#{msg['label.cadastro.funcionario']}" style="margin:0 auto;margin:10px auto 10px auto !important">
 				<p:messages severity="error" />
-				<h:panelGrid columns="2" style="margin:50px">
+				<h:panelGrid columns="2" cellspacing="10" >
 					<p:outputLabel for="nomeFuncionario" value="#{msg['label.campo.nome']}" />
-					<p:inputText size="30" required="true" id="nomeFuncionario"
+					<p:inputText size="25" required="true" id="nomeFuncionario"
 						value="#{cadastroFuncionarioController.cadastroFuncionarioVM.funcionario.nome}" />
 
 					<p:outputLabel for="loginFuncionario" value="#{msg['label.login']}" />
@@ -45,8 +45,8 @@
 					</div>
 				</p:row>
 			</p:panel>
+	</div>
 		</h:form>
-
 	</ui:define>
 
 </ui:composition>
