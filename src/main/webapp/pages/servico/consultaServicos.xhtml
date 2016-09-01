@@ -4,59 +4,59 @@
 	<ui:define name="corpoLayout">
 
 		<p:growl id="msgs" showDetail="false" autoUpdate="true" />
-
-		<p:panel header="#{msg['label.header.consulta.servicos']}" style="margin: 20px auto 20px auto;width:95%;padding:0 !important">
+	<div style="height: 600px" >
+		<p:panel  header="#{msg['label.header.consulta.servicos']}" style="margin: 20px auto 20px auto;padding:0 !important">
 
 			<ui:include src="filtroServicos.xhtml" />
 
 			<h:form id="consultaServicosForm">
-				<h:panelGrid style="padding:5px">
+				<h:panelGrid styleClass="ui-g-12 ui-md-12 ui-l-12" style="padding:5px">
 					<p:outputLabel rendered="#{consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}"
 						value="#{msg['label.meus.servicos']}" style="font-size:20px" />
 					<div class="servicoPagoRow" style="width:15px;height:15px;display: inline-block;" /> PAGO <br />
 					<div class="servicoAgendadoRow" style="width:15px;height:15px;display: inline-block;" /> AGENDADO <br />
 					<div class="servicoCanceladoRow" style="width:15px;height:15px;display: inline-block;" /> CANCELADO <br />
-					<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="servico" lazy="true"
+					<p:dataTable reflow="true" styleClass="botoes" style="font-size:12px;margin:auto" var="servico" lazy="true"
 						value="#{consultaServicoController.consultaServicoVM.servicos}" emptyMessage="Nenhum serviço cadastrado"
 						widgetVar="servicosTable" id="servicosTable" rowStyleClass="#{servico.styleClassRow}"
 						paginator="true" rows="10" rowsPerPageTemplate="5,10,15,20,30">
 
-						<p:column style="width:10%" headerText="#{msg['label.header.id']}">
+						<p:column width="10" headerText="#{msg['label.header.id']}">
 							<h:outputText value="#{servico.idServico}" />
 						</p:column>
 
-						<p:column style="width:10%" headerText="#{msg['label.inicio']}" sortBy="#{servico.dataInicio}">
+						<p:column width="10" headerText="#{msg['label.inicio']}" sortBy="#{servico.dataInicio}">
 							<h:outputText value="#{servico.dataInicio}">
 								<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-03:00" />
 							</h:outputText>
 						</p:column>
 						
-						<p:column style="width:10%" headerText="#{msg['label.fim']}" sortBy="#{servico.dataFim}">
+						<p:column width="10" headerText="#{msg['label.fim']}" sortBy="#{servico.dataFim}">
 							<h:outputText value="#{servico.dataFim}">
 								<c:convertDateTime locale="pt-br" pattern="dd/MM/yyyy HH:mm" timeZone="GMT-03:00" />
 							</h:outputText>
 						</p:column>
 
-						<p:column style="width:15%" headerText="#{msg['label.nome']}">
+						<p:column width="15" headerText="#{msg['label.nome']}">
 							<h:outputText value="#{servico.nome}" />
 						</p:column>
 
-						<p:column style="width:12% " headerText="#{msg['label.funcionario']}">
+						<p:column width="12" headerText="#{msg['label.funcionario']}">
 							<h:outputText value="#{servico.funcionario.nome}" />
 						</p:column>
 
-						<p:column style="width:10% " headerText="#{msg['label.valor']}" sortBy="#{servico.valor}">
+						<p:column width="12" headerText="#{msg['label.valor']}" sortBy="#{servico.valor}">
 							<h:outputText value="#{servico.valor}">
 								<c:convertNumber type="currency" currencySymbol="R$" locale="pt-br" minFractionDigits="2" maxFractionDigits="2" />
 							</h:outputText>
 						</p:column>
 
-						<p:column style="width:15% " headerText="#{msg['label.nome.cliente']}" >
+						<p:column width="15" headerText="#{msg['label.nome.cliente']}" >
 							<h:outputText value="#{servico.nomeCliente}" />
 						</p:column>
 
-						<p:column rendered="#{not consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}"
-							headerText="#{msg['label.editar.excluir']}" style="width:9%;text-align:center">
+						<p:column width="9" rendered="#{not consultaServicoController.consultaServicoVM.tipoFuncionarioLogado}"
+							headerText="#{msg['label.editar.excluir']}" style="text-align:center">
 
 							<p:commandLink style="margin-right:20px" process="@this" update="consultaServicosForm">
 								<p:graphicImage width="25px" library="imagens" name="editIcon.png" />
@@ -81,7 +81,7 @@
 
 			</h:form>
 		</p:panel>
-		
+		</div>
 		<p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" />
 	</ui:define>
 </ui:composition>

@@ -7,10 +7,10 @@
 
 		<h:form prependId="false" id="consultaFuncionarioForm">
 
-			<p:panel style="width:80%;margin:10px auto 20px auto" header="#{msg['label.lista.funcionarios.cadastrados']}">
+			<p:panel style="margin:10px auto 20px auto" header="#{msg['label.lista.funcionarios.cadastrados']}">
 				<h:panelGrid style="padding:10px">
 					<p:messages closable="true" severity="error" />
-					<p:dataTable styleClass="botoes" style="font-size:12px;margin:auto" var="funcionario"
+					<p:dataTable reflow="true" styleClass="botoes" style="font-size:12px;margin:auto" var="funcionario"
 						value="#{consultaFuncionarioController.funcionarios}" emptyMessage="Nenhum Funcionario cadastrado"
 						filteredValue="#{consultaFuncionarioController.filteredFuncionarios}" widgetVar="funcionariosTable"
 						id="funcionariosTable" paginator="true" rows="10" rowExpandMode="false">
@@ -20,22 +20,22 @@
 							</p:outputPanel>
 						</c:facet>
 
-						<p:column style="width:40% " filterBy="#{funcionario.nome}" headerText="#{msg['label.nome']}"
+						<p:column width="45"  filterBy="#{funcionario.nome}" headerText="#{msg['label.nome']}"
 							filterMatchMode="contains">
 							<h:outputText value="#{funcionario.nome}" />
 						</p:column>
 
-						<p:column style="width:30% " filterBy="#{funcionario.login}" headerText="#{msg['label.header.login']}"
+						<p:column width="35"  filterBy="#{funcionario.login}" headerText="#{msg['label.header.login']}"
 							filterMatchMode="contains">
 							<h:outputText value="#{funcionario.login}" />
 						</p:column>
 
-						<p:column style="width:15% " headerText="#{msg['label.tipo']}"
+						<p:column width="10" headerText="#{msg['label.tipo']}"
 							filterMatchMode="contains">
 							<h:outputText value="#{funcionario.roles.get(0).permissao}" />
 						</p:column>
 
-						<p:column headerText="#{msg['label.editar.excluir']}" style="width:15%;text-align:center">
+						<p:column width="10" headerText="#{msg['label.editar.excluir']}" style="text-align:center">
 
 							<p:commandLink style="margin-right:30px" action="#{consultaFuncionarioController.prepararEdicao(funcionario)}"
 								process="@this" update="edicaoUsuarioForm" onstart="PF('statusDialog').show()"

@@ -19,7 +19,7 @@ html,body{
 footer.page-footer {
 	background-color: #0fa2ff !important;
 	position: relative;
-	top: 100px;
+	top: 120px;
 	bottom: 0px;
 }
 
@@ -181,6 +181,10 @@ button.ui-button.ui-state-default span, .btnDanger{
 .botoes{
 	font-size:13px !important;
 	
+}
+
+#panelGridFiltroServico_content {
+	border: none !important;
 }
 
 .menu{
