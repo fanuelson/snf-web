@@ -4,12 +4,12 @@
 	<ui:define name="corpoLayout">
 
 		<p:growl id="msgs" autoUpdate="true" showDetail="false" />
-		<p:panel header="#{msg['label.relatorio.servicos']}" style="width:90%;margin:10px auto 10px auto">
+		<p:panel header="#{msg['label.relatorio.servicos']}" style="margin:10px auto 10px auto">
 			<ui:include src="filtroRelatorioServico.xhtml" />
 			<hr width="50%" />
 			<br class="all" />
 			<p:chart id="grafico" type="line" model="#{relatorioServicoController.animatedModel1}"
-				style="margin:auto;margin-top:20px;width:80%" responsive="true" />
+				style="margin:auto;margin-top:20px;" responsive="true" />
 		</p:panel>
 		<br class="all" />
 
